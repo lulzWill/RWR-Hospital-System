@@ -1,24 +1,19 @@
 <?php 
 	require 'vendor/autoload.php';
 	use Parse\ParseClient;
-	use Parse\ParseQuery;
+	use Parse\ParseUser;
+	use Parse\ParseException;
 	
 	ParseClient::initialize('kHbyXSdw4DIXw4Q0DYDcdM8QTDQnOewKJhc9ppAr', '9h80LHVDFOSAgVQ1NSPf5IgaWAaDnHdPoJWt2CDc', '3q1HVOiiywyBdtalMN1sozceJbNXuD9WKZSSmgvI');
 	
-	$query = new ParseQuery("Users");
-	$query->equalTo("email", $_POST["username"]);
-	$query->equalTo("password", $_POST["password"]);
-	$results = $query->find();
-	
-	
-	if(count($results) === 1)
-	{
-		header("Location: loginsuccess.html");
-		exit;
-	}
-	else
-	{
-		header("Location: test.html");
-		exit;
+	try {
+	  $user = ParseUser::logIn($_POST["username"], $_POST["password"]);
+	  // Do stuff after successful login.
+	  header("Location: loginsuccess.html");
+	  exit;
+	} catch (ParseException $error) {
+	  // The login failed. Check error to see why.
+	  header("Location: test.html");
+	  exit;
 	}
 ?>
