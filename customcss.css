@@ -1,0 +1,28 @@
+body {
+	background-image: url("loginbg.jpg");
+	background-attachment: fixed;
+	background-size: 100% 100%;
+	margin-top: 15%;
+}
+
+h1 {
+	margin-left: 3%;
+	color: white;
+}
+
+h2 {
+	margin-left: 8%;
+	color: white;
+}
+
+.whitelabel {
+	color: white;
+}
+
+.hoverlight:hover {
+	color: gray;
+}
+
+.pad8left {
+	margin-left: 8%;
+}
