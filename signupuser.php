@@ -9,10 +9,11 @@
 	
 
 	$user = new ParseUser();
-	$user->set("firstname", $_POST["firstname"]);
-	$user->set("lastname", $_POST["lastname"]);
+	//$user->set("firstname", $_POST["firstname"]);
+	//$user->set("lastname", $_POST["lastname"]);
 	$user->set("password", $_POST["password"]);
 	$user->set("email", $_POST["username"]);
+	$user->set("username", $_POST["username"]);
 
 
 	try {
