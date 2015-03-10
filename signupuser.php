@@ -21,26 +21,7 @@
 	try {
 	  $user->signUp();
 	  // Hooray! Let them use the app now.
-	  if ($_POST["role"] == "physician") {
-	  	header("Location: physician_home.php");
-		exit;
-	  }
-	  else if ($_POST["role"] == "nurse") {
-	  	header("Location: nurse_home.php");
-		exit;
-	  }
-	  else if ($_POST["role"] == "admin") {
-	  	header("Location: admin_home.php");
-		exit;
-	  }
-	  else if ($_POST["role"] == "patient") {
-		header("Location: patient_home.php");
-		exit;
-	  }
-	  else {
 	  	header("Location: signupsuccess.php");
-	  	exit;
-	  }
 	} catch (ParseException $ex) {
 	  // Show the error message somewhere and let the user try again.
 
