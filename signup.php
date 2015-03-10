@@ -68,27 +68,28 @@
 		<h1>
 			RWR Hospital Management System
 		</h1>
-		<h2>
+		<h2 id="title">
 			Create an Account
 		</h2>
 		
-		<form class="form-horizontal" action="signupuser.php" method="post" id="signupForm">
+		<form class="form-horizontal" action="signupuser.php" method="post" id="signupForm" onsubmit="return validateForm()">
+
 			<div class="form-group">
 				<label for="username" class="col-sm-2 control-label whitelabel">Email Address:</label>
 				<div class="col-sm-10">
-					<input type="email" class="form-control" id="username" name="username" placeholder="Please enter your email address!">
+					<input type="email" class="form-control" id="username" name="username" placeholder="Please enter your email address!" required>
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="firstname" class="col-sm-2 control-label whitelabel">First Name:</label>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" id="firstname" name="firstname" placeholder="Your First Name">
+					<input type="text" class="form-control" id="firstname" name="firstname" placeholder="Your First Name" required>
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="lastname" class="col-sm-2 control-label whitelabel">Last Name:</label>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" id="lastname" name="lastname" placeholder="Your Last Name">
+					<input type="text" class="form-control" id="lastname" name="lastname" placeholder="Your Last Name" required>
 				</div>
 			</div>
 
@@ -96,45 +97,42 @@
 				<label for="dateofbirth" class="col-sm-2 control-label whitelabel">Birthdate:</label>
 				<div class="col-sm-2">
 					<div class="input-group input-append date" id="dateRangePicker">
-                		<input type="text" class="form-control" name="date" />
+                		<input type="text" class="form-control" name="date" required/>
                 		<span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
             		</div>
 				</div>
 			</div>
 
-
 			<div class="form-group">
 				<label for="role" class="col-sm-2 control-label whitelabel">Position:</label>
 				<div class="col-sm-10 selectContainer">
-		            <select class="form-control" name="role">
+		            <select class="form-control" name="role" required>
 		                <option value="">Choose a position</option>
-		                <option value="s">Physician</option>
-		                <option value="m">Nurse</option>
-		                <option value="l">Administrator</option>
-		                <option value="xl">Patient</option>
+		                <option value="physician">Physician</option>
+		                <option value="nurse">Nurse</option>
+		                <option value="admin">Administrator</option>
+		                <option value="patient">Patient</option>
 		            </select>
 		        </div>
 			</div>
 
-
 			<div class="form-group">
 			    <label for="password" class="col-sm-2 control-label whitelabel">Password</label>
 			    <div class="col-sm-10">
-			      	<input type="password" class="form-control" id="password" name="password" placeholder="Password">
+			      	<input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
 			    </div>
 			</div>
 
 			<div class="form-group">
 			    <label for="confirmPassword" class="col-sm-2 control-label whitelabel">Confirm Password</label>
 			    <div class="col-sm-10">
-			      	<input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Re-Enter Password">
+			      	<input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Re-Enter Password" required>
 			    </div>
 			</div>
 
-
 			<div class="form-group">
 			    <div class="col-sm-offset-2 col-sm-10">
-			      	<button type="submit" class="btn btn-default">Sign Up</button>
+			      	<button type="submit" class="btn btn-success">Sign Up</button>
 					<a href="test.php"><label class="whitelabel hoverlight pad8left">Log In</label></a>
 			    </div>
 			</div>
@@ -144,46 +142,126 @@
 		
 
 		<script>
-		$(document).ready(function() {
-		    $('#dateRangePicker')
-		        .datepicker({
-		            format: 'mm/dd/yyyy',
-		            startDate: '01/01/2010',
-		            endDate: '12/30/2020'
-		        })
-		        .on('changeDate', function(e) {
-		            // Revalidate the date field
-		            $('#dateRangeForm').formValidation('revalidateField', 'date');
-		        });
+			$(document).ready(function() {
+			    $('#dateRangePicker')
+			        .datepicker({
+			            format: 'mm/dd/yyyy',
+			            startDate: '01/01/1910',
 
-		    $('#dateRangeForm').formValidation({
-		        framework: 'bootstrap',
-		        icon: {
-		            valid: 'glyphicon glyphicon-ok',
-		            invalid: 'glyphicon glyphicon-remove',
-		            validating: 'glyphicon glyphicon-refresh'
-		        },
-		        fields: {
-		            date: {
-		                validators: {
-		                    notEmpty: {
-		                        message: 'The date is required'
-		                    },
-		                    date: {
-		                        format: 'MM/DD/YYYY',
-		                        min: '01/01/2010',
-		                        max: '12/30/2020',
-		                        message: 'The date is not a valid'
-		                    }
-		                }
-		            }
-		        }
-		    });
+			            /*
+			            var today = new Date();
+						var dd = today.getDate();
+						var mm = today.getMonth()+1; //January is 0!
+						var yyyy = today.getFullYear();
 
-		    
+						if(dd<10) {
+						    dd='0'+dd
+						} 
 
+						if(mm<10) {
+						    mm='0'+mm
+						} 
 
-		});
+						today = mm+'/'+dd+'/'+yyyy;
+						*/
+			            endDate: '12/30/2020'
+			            //endDate: today
+			        })
+			        .on('changeDate', function(e) {
+			            // Revalidate the date field
+			            $('#dateRangeForm').formValidation('revalidateField', 'date');
+			        });
+
+			    $('#dateRangeForm').formValidation({
+			        framework: 'bootstrap',
+			        icon: {
+			            valid: 'glyphicon glyphicon-ok',
+			            invalid: 'glyphicon glyphicon-remove',
+			            validating: 'glyphicon glyphicon-refresh'
+			        },
+			        fields: {
+			            date: {
+			                validators: {
+			                    notEmpty: {
+			                        message: 'The date is required'
+			                    },
+			                    date: {
+			                        format: 'MM/DD/YYYY',
+			                        min: '01/01/2010',
+			                        max: '12/30/2020',
+			                        message: 'The date is not a valid'
+			                    }
+			                }
+			            }
+			        }
+			    });
+
+			    $('#signupForm').validate({
+				  rules: {
+				    firstname: {
+				      minlength: 3,
+				      maxlength: 15,
+				      required: true
+				    },
+				    lastname: {
+				      minlength: 3,
+				      maxlength: 15,
+				      required: true
+				    }
+				  },
+				  highlight: function(element) {
+				    $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+				  },
+				  unhighlight: function(element) {
+				    $(element).closest('.form-group').removeClass('has-error').addClass('has-success');
+				  }
+				});
+
+			});
+
+			function validateForm() {
+			    var a = document.forms["signupForm"]["username"].value;
+			    if (a == null || a == "") {
+			        alert("Email must be filled out");
+			        return false;
+			    }
+
+			    var b = document.forms["signupForm"]["firstname"].value;
+			    if (b == null || b == "") {
+			        alert("First name must be filled out");
+			        return false;
+			    }
+
+			    var c = document.forms["signupForm"]["lastname"].value;
+			    if (c == null || c == "") {
+			        alert("Last name must be filled out");
+			        return false;
+			    }
+
+			    var d = document.forms["signupForm"]["role"].value;
+			    if (d == null || d == "") {
+			        alert("Position must be selected");
+			        return false;
+			    }
+
+			    var e = document.forms["signupForm"]["password"].value;
+			    if (e == null || e == "") {
+			        alert("Must enter a password");
+			        return false;
+			    }
+
+			    var f = document.forms["signupForm"]["confirmPassword"].value;
+			    if (f == null || f == "") {
+			        alert("Re-enter your password");
+			        return false;
+			    }
+
+			    var g = document.forms["signupForm"]["date"].value;
+			    if (g == null || g == "") {
+			        alert("Select a birthdate");
+			        return false;
+			    }
+			}
 		</script>
 
 	</body>

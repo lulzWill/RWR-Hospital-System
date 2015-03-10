@@ -9,22 +9,24 @@
 	
 
 	$user = new ParseUser();
-	//$user->set("firstname", $_POST["firstname"]);
-	//$user->set("lastname", $_POST["lastname"]);
+	$user->set("firstname", $_POST["firstname"]);
+	$user->set("lastname", $_POST["lastname"]);
+	$user->set("position", $_POST["role"]);
 	$user->set("password", $_POST["password"]);
 	$user->set("email", $_POST["username"]);
 	$user->set("username", $_POST["username"]);
+	$user->set("dateOfBirth", $_POST["date"]);
 
 
 	try {
 	  $user->signUp();
 	  // Hooray! Let them use the app now.
-	  header("Location: signupsuccess.html");
+	  header("Location: signupsuccess.php");
 		  exit;
 	} catch (ParseException $ex) {
 	  // Show the error message somewhere and let the user try again.
-	  echo "Error: " . $ex->getCode() . " " . $ex->getMessage();
-	  header("Location: test.html");
+	  $error_message = "Error: " . $ex->getCode() . " " . $ex->getMessage();
+	  header("Location: signup.php?error_message=$error_message");
 		  exit;
 	}
 
