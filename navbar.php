@@ -63,6 +63,7 @@ EOL;
 	      </div>
 	      <button type="submit" class="btn btn-default">Log In</button>
 	    </form>
+		<li><a href="signup.php">Sign Up</a></li>
 EOL;
 	}
 	?>
