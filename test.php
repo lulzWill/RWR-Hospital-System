@@ -18,11 +18,26 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    
-    <?php include_once("navbar.html"); ?>
 
-
-
+<?php
+	include_once("navbar.php"); 
+	require 'vendor/autoload.php';
+	use Parse\ParseClient;
+	use Parse\ParseUser;
+	use Parse\ParseException;
+	use Parse\ParseQuery;
+	use Parse\ParseSessionStorage;
+	session_start();
+	
+	ParseClient::initialize('kHbyXSdw4DIXw4Q0DYDcdM8QTDQnOewKJhc9ppAr', '9h80LHVDFOSAgVQ1NSPf5IgaWAaDnHdPoJWt2CDc', '3q1HVOiiywyBdtalMN1sozceJbNXuD9WKZSSmgvI');
+	
+	ParseClient::setStorage( new ParseSessionStorage() );
+	
+	$currentUser = ParseUser::getCurrentUser();
+	
+	if(!$currentUser)
+	{
+		echo <<<EOL
   </head>
   <body>
 	<body>
@@ -61,3 +76,32 @@
     <script src="js/bootstrap.min.js"></script>
   </body>
 </html>
+EOL;
+}
+else
+{
+	echo <<<EOL
+	    </head>
+	    <body>
+	  	<body>
+
+	  		<h1>
+	  			RWR Hospital Management System
+	  		</h1>
+	  		<h2>
+	  			Welcome Back 
+EOL;
+echo $currentUser->get("firstname");
+echo <<<EOL
+	  		</h2>
+	  	</body>
+
+	      <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	      <!-- Include all compiled plugins (below), or include individual files as needed -->
+	      <script src="js/bootstrap.min.js"></script>
+	    </body>
+	  </html>
+EOL;
+}
+?>

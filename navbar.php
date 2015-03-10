@@ -32,6 +32,30 @@
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
+<?php
+	require 'vendor/autoload.php';
+	use Parse\ParseClient;
+	use Parse\ParseUser;
+	use Parse\ParseException;
+	use Parse\ParseQuery;
+	use Parse\ParseSessionStorage;
+	session_start();
+	
+	ParseClient::initialize('kHbyXSdw4DIXw4Q0DYDcdM8QTDQnOewKJhc9ppAr', '9h80LHVDFOSAgVQ1NSPf5IgaWAaDnHdPoJWt2CDc', '3q1HVOiiywyBdtalMN1sozceJbNXuD9WKZSSmgvI');
+	
+	ParseClient::setStorage( new ParseSessionStorage() );
+	
+	$currentUser = ParseUser::getCurrentUser();
+	
+	if($currentUser)
+	{
+		echo <<<EOL
+        <li><a href="logoutcurusr.php">Log Out</a></li>
+EOL;
+	}
+	else
+	{
+		echo <<<EOL
 	    <form class="navbar-form navbar-left" method="POST" action="logincheck.php">
 	      <div class="form-group">
 			 <input type="email" class="form-control" id="username" name="username" placeholder="Email">
@@ -39,7 +63,9 @@
 	      </div>
 	      <button type="submit" class="btn btn-default">Log In</button>
 	    </form>
-        <li><a href="logoutcurusr.php">Log Out</a></li>
+EOL;
+	}
+	?>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
