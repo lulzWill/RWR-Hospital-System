@@ -55,6 +55,8 @@
 
 	<script src="/vendor/bootstrap-combobox/js/bootstrap-combobox.js"></script>
 
+	<?php include_once("navbar.html"); ?>
+
     
   </head>
   <body>
@@ -133,7 +135,7 @@
 			<div class="form-group">
 			    <div class="col-sm-offset-2 col-sm-10">
 			      	<button type="submit" class="btn btn-default">Sign Up</button>
-					<a href="test.html"><label class="whitelabel hoverlight pad8left">Log In</label></a>
+					<a href="test.php"><label class="whitelabel hoverlight pad8left">Log In</label></a>
 			    </div>
 			</div>
 

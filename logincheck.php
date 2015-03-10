@@ -11,11 +11,11 @@
 	try {
 	  $user = ParseUser::logIn($_POST["username"], $_POST["password"]);
 	  // Do stuff after successful login.
-	  header("Location: loginsuccess.html");
+	  header("Location: loginsuccess.php");
 	  exit;
 	} catch (ParseException $error) {
 	  // The login failed. Check error to see why.
-	  header("Location: test.html");
+	  header("Location: test.php");
 	  exit;
 	}
 ?>

@@ -18,35 +18,13 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <?php include_once("navbar.html"); ?>
   </head>
   <body>
 	<body>
 		<h1>
-			RWR Hospital Management System
+			Signup Successful. Welcome!
 		</h1>
-		<h2>
-			Sign In Please
-		</h2>
-		<form class="form-horizontal" action="logincheck.php" method="POST">
-			<div class="form-group">
-				<label for="username" class="col-sm-2 control-label whitelabel">Email Address:</label>
-				<div class="col-sm-10">
-					<input type="email" class="form-control" id="username" name="username" placeholder="Please enter your email address!">
-				</div>
-			</div>
-			<div class="form-group">
-			    <label for="password" class="col-sm-2 control-label whitelabel">Password</label>
-			    <div class="col-sm-10">
-			      	<input type="password" class="form-control" id="password" name="password" placeholder="Password">
-			    </div>
-			</div>
-			<div class="form-group">
-			    <div class="col-sm-offset-2 col-sm-10">
-			      	<button type="submit" class="btn btn-default">Sign In</button>
-					<a href="signup.html"><label class="whitelabel hoverlight pad8left">Sign Up</label></a>
-			    </div>
-			</div>
-		</form>
 	</body>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
