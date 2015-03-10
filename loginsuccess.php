@@ -1,18 +1,12 @@
-<HTML>
-<HEAD>
-	<Title>Error: Must Validate Email</Title>
-</HEAD>
-<BODY>
-	<!DOCTYPE html>
-	<html lang="en">
-	  <head>
-	  	<title>
-	  		Hospital Login Page
-	  	</title>
-	    <meta charset="utf-8">
-	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-	    <meta name="viewport" content="width=device-width, initial-scale=1">
-
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  	<title>
+  		Hospital Login Page
+  	</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 	    <!-- Bootstrap -->
 	    <link href="css/bootstrap.min.css" rel="stylesheet">
 		<link href="errMess.css" rel="stylesheet">
@@ -30,7 +24,7 @@
 			<div class="opbox h1">
 				<p>
 				</br>
-				</br>          Login Successful!
+				</br>Login Successful!
 				</p>
 				<div class="btn-group btn-group-justified" role="group" aria-label="...">
 				  <div class="btn-group" role="group">
@@ -42,12 +36,9 @@
 				</div>
 			</div>
 		</body>
-
-	    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-	    <!-- Include all compiled plugins (below), or include individual files as needed -->
-	    <script src="js/bootstrap.min.js"></script>
-	  </body>
-	</html>
-</BODY>
-</HTML>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>
