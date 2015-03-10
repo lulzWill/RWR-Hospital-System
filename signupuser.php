@@ -11,10 +11,7 @@
 	$user = new ParseUser();
 	$user->set("firstname", $_POST["firstname"]);
 	$user->set("lastname", $_POST["lastname"]);
-<<<<<<< HEAD
-=======
 	$user->set("position", $_POST["role"]);
->>>>>>> ross_signup
 	$user->set("password", $_POST["password"]);
 	$user->set("email", $_POST["username"]);
 	$user->set("username", $_POST["username"]);
@@ -24,17 +21,32 @@
 	try {
 	  $user->signUp();
 	  // Hooray! Let them use the app now.
-	  header("Location: signupsuccess.php");
-		  exit;
+	  if ($_POST["role"] == "physician") {
+	  	header("Location: physician_home.php");
+		exit;
+	  }
+	  else if ($_POST["role"] == "nurse") {
+	  	header("Location: nurse_home.php");
+		exit;
+	  }
+	  else if ($_POST["role"] == "admin") {
+	  	header("Location: admin_home.php");
+		exit;
+	  }
+	  else if ($_POST["role"] == "patient") {
+		header("Location: patient_home.php");
+		exit;
+	  }
+	  else {
+	  	header("Location: signupsuccess.php");
+	  	exit;
+	  }
 	} catch (ParseException $ex) {
 	  // Show the error message somewhere and let the user try again.
-<<<<<<< HEAD
-	  echo "Error: " . $ex->getCode() . " " . $ex->getMessage();
-	  header("Location: test.php");
-=======
+
 	  $error_message = "Error: " . $ex->getCode() . " " . $ex->getMessage();
 	  header("Location: signup.php?error_message=$error_message");
->>>>>>> ross_signup
+
 		  exit;
 	}
 
