@@ -28,11 +28,8 @@
 				</p>
 				<div class="btn-group btn-group-justified" role="group" aria-label="...">
 				  <div class="btn-group" role="group">
-				    <a href="test.php" class="btn btn-default">Log In</a>
+				    <a href="test.php" class="btn btn-default">Return</a>
 				  </div>
-				  	<div class="btn-group" role="group">
-				    	<a href="signup.php" class="btn btn-default">Sign Up</a>
-				  	</div>
 				</div>
 			</div>
 		</body>
