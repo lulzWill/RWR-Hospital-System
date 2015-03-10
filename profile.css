@@ -1,5 +1,5 @@
 body {
-	background-image: url("bgs/loginbg.jpg");
+	background-image: url("bgs/profilebg.jpg");
 	background-attachment: fixed;
 	background-size: 100% 100%;
 	margin-top: 0%;
@@ -7,12 +7,13 @@ body {
 
 h1 {
 	margin-left: 3%;
-	margin-top: 10%;
+	margin-top: 1%;
 	color: white;
 }
 
 h2 {
 	margin-left: 8%;
+	font-size: 16px;
 	color: white;
 }
 

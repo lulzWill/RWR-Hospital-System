@@ -50,7 +50,8 @@
 	if($currentUser)
 	{
 		echo <<<EOL
-        <li><a href="logoutcurusr.php">Log Out</a></li>
+			<li><a href="logoutcurusr.php">Log Out</a></li>
+			<li><a href="viewprofile.php">View Profile</a></li>
 EOL;
 	}
 	else
