@@ -10,7 +10,8 @@
 	$currentUser = ParseUser::getCurrentUser();
 	if($currentUser)
 	{
-		echo $currentUser->get("email");
+		header("Location: test.php");
+		exit;
 	}
 	else
 	{
