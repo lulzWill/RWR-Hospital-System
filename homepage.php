@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
   	<title>
-  		Nurse Home Page
+  		Admin Home Page
   	</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,7 +11,7 @@
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-	  <link href="customcss.css" rel="stylesheet">
+	  <link href="homepage.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -28,7 +28,7 @@
   </head>
   
   <body>
-	 <h1>Welcome Nurse</h1>
+	 <h1>Welcome Admin</h1>
 
     
   </body>

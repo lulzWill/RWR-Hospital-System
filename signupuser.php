@@ -22,6 +22,7 @@
 	  $user->signUp();
 	  // Hooray! Let them use the app now.
 	  	header("Location: signupsuccess.php");
+		exit;
 	} catch (ParseException $ex) {
 	  // Show the error message somewhere and let the user try again.
 
