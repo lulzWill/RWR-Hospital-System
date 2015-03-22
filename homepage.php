@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
   	<title>
-  		Admin Home Page
+  		Home
   	</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -28,8 +28,10 @@
   </head>
   
   <body>
-	 <h1>Welcome Admin</h1>
-
-    
+	  <div class="header-image">
+		  <div style="position: absolute; bottom: 0; left: 30%; width: 100%; font-weight: bold; font-size: 32px; color: #fff; margin-bottom: 5px;">
+		  	<p>RWR Hospital Management System</p>
+	  	  </div>
+	  </div>
   </body>
 </html>

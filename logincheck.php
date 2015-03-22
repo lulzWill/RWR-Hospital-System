@@ -27,26 +27,7 @@
 	try {
 	  $user = ParseUser::logIn($_POST["username"], $_POST["password"]);
 	  // Do stuff after successful login.
-	  if ($user->get("position") == "physician") {
-	  	header("Location: physician_home.php");
-		exit;
-	  }
-	  else if ($user->get("position") == "nurse") {
-	  	header("Location: nurse_home.php");
-		exit;
-	  }
-	  else if ($user->get("position") == "admin") {
-	  	header("Location: admin_home.php");
-		exit;
-	  }
-	  else if ($user->get("position") == "patient") {
-		header("Location: patient_home.php");
-		exit;
-	  }
-	  else {
-	  	header("Location: loginsuccess.php");
-	  	exit;
-	  }
+  	  header("Location: homepage.php");
 	  exit;
 	} catch (ParseException $error) {
 	  // The login failed. Check error to see why.
