@@ -27,7 +27,8 @@
 	
 	if(!$userValidate)
 	{
-		$user = ParseUser::logIn($_POST["username"], $_POST["password"]);
+		$_SESSION["emailattempt"] = $results[0]->get("email");
+		$_SESSION["temppassword"] = $_POST["password"];
 		header("Location: emailerr.php");
 		exit;
 	}

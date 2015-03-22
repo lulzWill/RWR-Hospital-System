@@ -24,7 +24,7 @@
 	  if($user->get("position") == "patient")
 	  {
 		  $patient = new ParseObject("Patient");
-		  $patient->set("email", $_POST["email"]);
+		  $patient->set("email", $_POST["username"]);
 	  	  $patient->set("first_name", $_POST["firstname"]);
 	  	  $patient->set("last_name", $_POST["lastname"]);
 		  $patient->set("date_of_birth", $_POST["date"]);
@@ -38,7 +38,7 @@
 	  else if($user->get("position") == "nurse")
 	  {
 		  $patient = new ParseObject("Nurse");
-		  $patient->set("email", $_POST["email"]);
+		  $patient->set("email", $_POST["username"]);
 	  	  $patient->set("first_name", $_POST["firstname"]);
 	  	  $patient->set("last_name", $_POST["lastname"]);
 		  $patient->set("date_of_birth", $_POST["date"]);
@@ -52,7 +52,7 @@
 	  else if($user->get("position") == "physician")
 	  {
 		  $patient = new ParseObject("Physician");
-		  $patient->set("email", $_POST["email"]);
+		  $patient->set("email", $_POST["username"]);
 	  	  $patient->set("first_name", $_POST["firstname"]);
 	  	  $patient->set("last_name", $_POST["lastname"]);
 		  $patient->set("date_of_birth", $_POST["date"]);
