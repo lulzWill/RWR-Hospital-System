@@ -17,10 +17,24 @@
 	$user->set("username", $_POST["username"]);
 	$user->set("dateOfBirth", $_POST["date"]);
 
-
+	
 	try {
 	  $user->signUp();
 	  // Hooray! Let them use the app now.
+	  if($_POST["role"] == "patient")
+	  {
+		  $patient = new ParseObject("Patient");
+		  $patient->set("email", $_POST["email"]);
+	  	  $patient->set("first_name", $_POST["firstname"]);
+	  	  $patient->set("last_name", $_POST["lastname"]);
+		  $patient->set("date_of_birth", $_POST["date"]);
+		  
+		  try {
+		    $patient->save();
+		  } catch (ParseException $ex) {  
+			  //send to errorpage here if something goes wrong.
+		  }
+	  }
 	  	header("Location: signupsuccess.php");
 		exit;
 	} catch (ParseException $ex) {
@@ -30,6 +44,4 @@
 	  header("Location: signup.php?error_message=$error_message");
 	  exit;
 	}
-
-	
 ?>

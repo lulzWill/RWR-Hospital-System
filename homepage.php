@@ -29,9 +29,14 @@
   
   <body>
 	  <div class="header-image">
-		  <div style="position: absolute; bottom: 0; left: 30%; width: 100%; font-weight: bold; font-size: 32px; color: #fff; margin-bottom: 5px;">
+		  <div style="position: absolute; bottom: 0; left: 30%; width: 100%; font-weight: bold; font-size: 32px; color: #fff; margin-bottom: 280px;">
 		  	<p>RWR Hospital Management System</p>
 	  	  </div>
 	  </div>
+	  <div style="position: relative; width: 100%; height: 160px">
+	  	<a href="makeappoint.php"><img src="icons/appointmenticon.png" alt="appointment temp" class="img-circle button-left" height="140px" width="140px"></a>
+	  	<a href="viewprofile.php"><img src="icons/viewprofileicon.png" alt="appointment temp" class="img-circle button-middle" height="140px" width="140px"></a>
+	  	<a href="#"><img src="bgs/homepageheader.jpg" alt="appointment temp" class="img-circle button-right" height="140px" width="140px"></a>
+  	  </div>
   </body>
 </html>
