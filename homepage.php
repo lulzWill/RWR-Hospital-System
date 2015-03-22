@@ -1,3 +1,26 @@
+<?php
+	require 'vendor/autoload.php';
+	use Parse\ParseClient;
+	use Parse\ParseUser;
+	use Parse\ParseException;
+	use Parse\ParseQuery;
+	use Parse\ParseSessionStorage;
+	
+	session_start();
+	
+	ParseClient::initialize('kHbyXSdw4DIXw4Q0DYDcdM8QTDQnOewKJhc9ppAr', '9h80LHVDFOSAgVQ1NSPf5IgaWAaDnHdPoJWt2CDc', '3q1HVOiiywyBdtalMN1sozceJbNXuD9WKZSSmgvI');
+	
+	ParseClient::setStorage( new ParseSessionStorage() );
+	
+	$currentUser = ParseUser::getCurrentUser();
+	
+	if(!$currentUser)
+	{
+		header("Location: test.php");
+		exit;
+		
+	}
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -33,10 +56,17 @@
 		  	<p>RWR Hospital Management System</p>
 	  	  </div>
 	  </div>
+	  <?php
+	  if($currentUser->get("position") == "patient")
+	  {
+		  echo <<<EOL
 	  <div style="position: relative; width: 100%; height: 160px">
 	  	<a href="makeappoint.php"><img src="icons/appointmenticon.png" alt="appointment temp" class="img-circle button-left" height="140px" width="140px"></a>
 	  	<a href="viewprofile.php"><img src="icons/viewprofileicon.png" alt="appointment temp" class="img-circle button-middle" height="140px" width="140px"></a>
-	  	<a href="#"><img src="bgs/homepageheader.jpg" alt="appointment temp" class="img-circle button-right" height="140px" width="140px"></a>
+	  	<a href="#"><img src="http://ih1.redbubble.net/image.16620010.6522/fc,140x140,white.jpg" alt="appointment temp" class="img-circle button-right" height="140px" width="140px"></a>
   	  </div>
+EOL;
+	  }
+?>
   </body>
 </html>
