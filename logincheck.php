@@ -15,6 +15,13 @@
 	$query = ParseUser::query();
 	$query->equalTo("username", $_POST["username"]);
 	$results = $query->find();
+	
+	if(empty($results[0]))
+	{
+  	  header("Location: test.php");
+  	  exit;
+	}
+	
 	$userValidate = $results[0];
 	$userValidate = $userValidate->get("emailVerified");
 	

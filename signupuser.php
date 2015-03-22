@@ -21,9 +21,37 @@
 	try {
 	  $user->signUp();
 	  // Hooray! Let them use the app now.
-	  if($_POST["role"] == "patient")
+	  if($user->get("position") == "patient")
 	  {
 		  $patient = new ParseObject("Patient");
+		  $patient->set("email", $_POST["email"]);
+	  	  $patient->set("first_name", $_POST["firstname"]);
+	  	  $patient->set("last_name", $_POST["lastname"]);
+		  $patient->set("date_of_birth", $_POST["date"]);
+		  
+		  try {
+		    $patient->save();
+		  } catch (ParseException $ex) {  
+			  //send to errorpage here if something goes wrong.
+		  }
+	  }
+	  else if($user->get("position") == "nurse")
+	  {
+		  $patient = new ParseObject("Nurse");
+		  $patient->set("email", $_POST["email"]);
+	  	  $patient->set("first_name", $_POST["firstname"]);
+	  	  $patient->set("last_name", $_POST["lastname"]);
+		  $patient->set("date_of_birth", $_POST["date"]);
+		  
+		  try {
+		    $patient->save();
+		  } catch (ParseException $ex) {  
+			  //send to errorpage here if something goes wrong.
+		  }
+	  }
+	  else if($user->get("position") == "physician")
+	  {
+		  $patient = new ParseObject("Physician");
 		  $patient->set("email", $_POST["email"]);
 	  	  $patient->set("first_name", $_POST["firstname"]);
 	  	  $patient->set("last_name", $_POST["lastname"]);
