@@ -1,0 +1,31 @@
+body {
+	background-image: url("bgs/profilebg.jpg");
+}
+
+.header-image {
+	background-image: url("bgs/homepageheader.jpg");
+	width: 100%;
+	height: 400px;
+	margin-top: -20px;
+	background-attachment: fixed;
+	background-size: 100%, 100%;
+	background-repeat: no-repeat;
+	background-position: bottom center;
+	position: relative;
+}
+
+.button-left {
+	margin-left: 20%;
+	margin-top: 10px;
+}
+
+.button-middle {
+	margin-left:15%;
+	margin-right:15%;
+	margin-top: 10px;
+}
+
+.button-right {
+	margin-right: 20%;
+	margin-top: 10px;
+}
