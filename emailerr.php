@@ -40,10 +40,11 @@
 				  	<div class="btn-group" role="group">
 				    	<a href="signup.php" class="btn btn-default">Sign Up</a>
 				  	</div>
-				  
+					<!-- Can't trigger a verification reset using Parse since Parse does not allow user email to be updated via PHP
 				  	<div class="btn-group" role="group">
 				    	<a href="resendconfirmation.php" class="btn btn-default">Resend Verification</a>
 				  	</div>
+					-->
 				</div>
 			</div>
 		</body>
