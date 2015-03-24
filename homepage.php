@@ -61,7 +61,7 @@
 	  {
 		  echo <<<EOL
 	  <div style="position: relative; width: 100%; height: 160px">
-	  	<a href="makeappoint.php"><img src="icons/appointmenticon.png" alt="appointment temp" class="img-circle button-left" height="140px" width="140px"></a>
+	  	<a href="makeappointment.php"><img src="icons/appointmenticon.png" alt="appointment temp" class="img-circle button-left" height="140px" width="140px"></a>
 	  	<a href="viewprofile.php"><img src="icons/viewprofileicon.png" alt="appointment temp" class="img-circle button-middle" height="140px" width="140px"></a>
 	  	<a href="#"><img src="http://ih1.redbubble.net/image.16620010.6522/fc,140x140,white.jpg" alt="appointment temp" class="img-circle button-right" height="140px" width="140px"></a>
   	  </div>
