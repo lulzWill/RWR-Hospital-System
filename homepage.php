@@ -46,13 +46,27 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
-
+	
+	<script type="text/javascript">
+	function changeOpacityIn(ele)
+	{
+		var element = document.getElementById(ele.id);
+		element.style.opacity = ".6";
+	}
+	
+	function changeOpacityOut(ele)
+	{
+		var element = document.getElementById(ele.id);
+		element.style.opacity = "1.0";
+	}
+	</script>
+	
     <?php include_once("navbar.php"); ?>
   </head>
   
   <body>
 	  <div class="header-image">
-		  <div style="position: absolute; bottom: 0; left: 30%; width: 70%; font-weight: bold; font-size: 32px; color: #fff; margin-bottom: 280px;">
+		  <div style="position: absolute; bottom: 0; left: 30%; width: 70%; font-weight: bold; font-size: 32px; color: #fff; margin-bottom: 220px;">
 		  	<p>RWR Hospital Management System</p>
 	  	  </div>
 	  </div>
@@ -61,9 +75,19 @@
 	  {
 		  echo <<<EOL
 	  <div style="position: relative; width: 100%; height: 160px">
-	  	<a href="makeappoint.php"><img src="icons/appointmenticon.png" alt="appointment temp" class="img-circle button-left" height="140px" width="140px"></a>
-	  	<a href="viewprofile.php"><img src="icons/viewprofileicon.png" alt="appointment temp" class="img-circle button-middle" height="140px" width="140px"></a>
-	  	<a href="#"><img src="http://ih1.redbubble.net/image.16620010.6522/fc,140x140,white.jpg" alt="appointment temp" class="img-circle button-right" height="140px" width="140px"></a>
+	  	<a href="makeappoint.php"><img src="icons/appointmenticon.png" alt="appointment temp" class="img-circle button-left" height="140px" width="140px" id="appt" onmouseover="changeOpacityIn(this);" onmouseout="changeOpacityOut(this);"></a>
+	  	<a href="viewprofile.php"><img src="icons/viewprofileicon.png" alt="prof temp" class="img-circle button-middle" height="140px" width="140px" id="prof" onmouseover="changeOpacityIn(this);" onmouseout="changeOpacityOut(this);"></a>
+	  	<a href="#"><img src="http://www.tessmeroffairfax.com/tof_iix_master_gallery_wedding_invitations/blank_white.jpg" alt="temp" class="img-circle button-right" height="140px" width="140px" id="temp" onmouseover="changeOpacityIn(this);" onmouseout="changeOpacityOut(this);"></a>
+  	  </div>
+EOL;
+	  }
+	  else
+	  {
+		  echo <<<EOL
+	  <div style="position: relative; width: 100%; height: 160px">
+	  	<a href="#"><img src="http://www.tessmeroffairfax.com/tof_iix_master_gallery_wedding_invitations/blank_white.jpg" alt="temp" class="img-circle button-left" height="140px" width="140px" id="temp1" onmouseover="changeOpacityIn(this);" onmouseout="changeOpacityOut(this);"></a>
+		<a href="#"><img src="http://www.tessmeroffairfax.com/tof_iix_master_gallery_wedding_invitations/blank_white.jpg" alt="temp" class="img-circle button-middle" height="140px" width="140px" id="temp2" onmouseover="changeOpacityIn(this);" onmouseout="changeOpacityOut(this);"></a>
+	  	<a href="#"><img src="http://www.tessmeroffairfax.com/tof_iix_master_gallery_wedding_invitations/blank_white.jpg" alt="temp" class="img-circle button-right" height="140px" width="140px" id="temp3" onmouseover="changeOpacityIn(this);" onmouseout="changeOpacityOut(this);"></a>
   	  </div>
 EOL;
 	  }
