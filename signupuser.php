@@ -24,7 +24,7 @@
 	  // Hooray! Let them use the app now.
 	  if($user->get("position") == "patient")
 	  {
-		  $patient = new ParseObject("Patient", $user->getObjectId());
+		  $patient = new ParseObject("Patient");
 		  $patient->set("email", $_POST["username"]);
 	  	  $patient->set("first_name", $_POST["firstname"]);
 	  	  $patient->set("last_name", $_POST["lastname"]);
@@ -38,7 +38,7 @@
 	  }
 	  else if($user->get("position") == "nurse")
 	  {
-		  $patient = new ParseObject("Nurse", $user->getObjectId());
+		  $patient = new ParseObject("Nurse");
 		  $patient->set("email", $_POST["username"]);
 	  	  $patient->set("first_name", $_POST["firstname"]);
 	  	  $patient->set("last_name", $_POST["lastname"]);
@@ -52,7 +52,7 @@
 	  }
 	  else if($user->get("position") == "physician")
 	  {
-		  $patient = new ParseObject("Physician", $user->getObjectId());
+		  $patient = new ParseObject("Physician");
 		  $patient->set("email", $_POST["username"]);
 	  	  $patient->set("first_name", $_POST["firstname"]);
 	  	  $patient->set("last_name", $_POST["lastname"]);

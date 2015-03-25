@@ -12,7 +12,17 @@
 	ParseClient::setStorage( new ParseSessionStorage() );
 	$currentUser = ParseUser::getCurrentUser();
 	$currentUser->set("sex", $_POST["sex"]);
-	$currentUser = ParseUser::become("patient");
-	$currentUser->set("insurance", $_POST["insurance"]);
 	$currentUser->save();
+	try {
+		if($currentUser->get("position") == "patient")
+		{
+			$query=new ParseQuery("Patient");
+			$query->equalTo("email", $currentUser->get("email"));
+			$patient=$query->first();
+			echo $patient->getObjectId() . $patient->get("email");
+		}
+	}
+	catch (ParseException $ex) {  
+			  //send to errorpage here if something goes wrong.
+	}
 ?>
