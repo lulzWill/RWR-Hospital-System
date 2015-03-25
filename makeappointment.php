@@ -57,7 +57,7 @@
   </head>
   
   <body>
-	<div style="position: relative; top: 5%; left: 30%; width: 70%; font-weight: bold; font-size: 32px; color: #fff; margin-bottom: 50px;">
+	<div style="position: relative; top: 5%; left: 30%; width: 70%; font-weight: bold; font-size: 32px; color: #fff; margin-bottom: 20px;">
 		<p>RWR Hospital Management System</p>
 	</div>
 	  
@@ -74,9 +74,13 @@
 	</div>
 
 	<script src="bower_components/underscore/underscore-min.js"></script>
-	<script src="bower_components/bootstrap-calendar/js/calendar.min.js"></script>
+	<script src="bower_components/bootstrap-calendar/js/calendar.js"></script>
 
-	<div id="calendar"></div>
+	
+		<div class="col-lg-10">
+			<div id="calendar" style="margin-left: 10%; margin-top: 5%;"></div>
+		</div>
+	
 
 	<script type="text/javascript">
      var calendar = $("#calendar").calendar(
