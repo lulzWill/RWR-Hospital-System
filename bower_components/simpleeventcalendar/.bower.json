@@ -1,0 +1,24 @@
+{
+  "name": "simplecalendar",
+  "authors": [
+    "Philip Ehsing <Philipehsing>"
+  ],
+  "description": "simplecalendar make it easier for you to create a clean flat calendar",
+  "main": "simplecalendar.js",
+  "keywords": [
+    "simple",
+    "calendar"
+  ],
+  "license": "MIT",
+  "homepage": "github.com/philipehsing",
+  "_release": "228eba9d3a",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "228eba9d3a52c62b992097b0d5283e4f3511a97c"
+  },
+  "_source": "git://github.com/philipehsing/jQuery.Simple-Event-Calendar.git",
+  "_target": "*",
+  "_originalSource": "simpleeventcalendar",
+  "_direct": true
+}

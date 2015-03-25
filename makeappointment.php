@@ -78,6 +78,9 @@
 	
 	<!-- Include Parse Stuff -->
     <script src="//www.parsecdn.com/js/parse-1.3.5.min.js"></script>
+
+
+    
   </head>
   
   <body>
@@ -96,7 +99,10 @@
 		                <option value="patient">Patient</option>
 		            </select>
 		        </div>
-			
+
+	
+		
+		
 	  
 
     <script>
