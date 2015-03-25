@@ -1,4 +1,5 @@
 body {
+	position:relative;
 	background-image: url("bgs/profilebg.jpg");
 	background-attachment: fixed;
 	background-size: 100% 100%;
@@ -6,15 +7,28 @@ body {
 }
 
 h1 {
-	margin-left: 3%;
+	margin-left: 10%;
 	margin-top: 1%;
 	color: white;
 }
 
 h2 {
-	margin-left: 8%;
+	margin-left: 10%;
+	margin-top: 1%;
 	font-size: 16px;
 	color: white;
+}
+
+h3 {
+	float: right;
+	margin-right: 5%;
+	color: yellow;
+}
+
+img {
+	margin-left: 10%;
+	height: 200px;
+	width: 200px;
 }
 
 .whitelabel {

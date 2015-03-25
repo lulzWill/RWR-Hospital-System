@@ -42,15 +42,25 @@
 		    </head>
 		    <body>
 		  	<body>
-
+			  <a href="editprofile.php">
+				<h3>Edit Profile</h3>
 		  		<h1>
+			  </a>
 EOL;
-				echo $currentUser->get("firstname") . "'s Profile";
+				echo $currentUser->getObjectId() . "'s Profile";
 				echo <<<EOL
 		  		</h1>
-		  		<h2>
 EOL;
-	echo "Name: " . $currentUser->get("firstname") . " " . $currentUser->get("lastname") . "</br>Type: " . $currentUser->get("position") . "</br>" . 		 	     "</br>email: " . $currentUser->get("email") . "</br>";
+    if($currentUser->get("sex") == "male")
+	{
+		echo '<img src="bgs/MaleStockPhoto.png"/>';
+	}
+	else if($currentUser->get("sex") == "female")
+	{
+		echo '<img src="bgs/FemaleStockPhoto.jpg"/>';
+	}
+	
+	echo "<h2> Name: " . $currentUser->get("firstname") . " " . $currentUser->get("lastname") . "</br>Type: " . $currentUser->get("position") . "</br>" . 		 	     "</br>email: " . $currentUser->get("email") . "</br>";
 	echo <<<EOL
 		  		</h2>
 		  	</body>
