@@ -220,7 +220,7 @@ final class ParseClient
    * @throws \Exception
    * @ignore
    */
-  public static function _request($method, $relativeUrl, $sessionToken = null,
+  public static function _requestXX($method, $relativeUrl, $sessionToken = null,
                                   $data = null, $useMasterKey = false)
   {
     if ($data === '[]') {
@@ -273,6 +273,57 @@ final class ParseClient
     }
     return $decoded;
 
+  }
+  
+   public static function log($log_string){
+  	// trigger_error($log_string, E_INF);
+  }
+
+  public static function _request($method, $relativeUrl, $sessionToken = null, $data = null, $useMasterKey = false) {
+    if ($data === '[]') {
+      $data = '{}';
+    }
+    self::assertParseInitialized();
+    $headers = self::_getRequestHeaders($sessionToken, $useMasterKey);
+	self::log("Headers are " . print_r($headers, true));
+
+	// Setup options for http connection
+	$opts = [ 'http' => [ 'method' => $method ] ];
+		
+	$url = self::HOST_NAME . $relativeUrl;
+	
+	if ($method === 'GET' && !empty($data)) {
+	 	$url .= '?' . http_build_query($data);
+	}
+
+	if ($method === 'POST' || $method === 'PUT') {
+      	$headers[] = 'Content-Type: application/json';
+		$opts['http']['content'] = $data;
+	}
+
+
+	$opts['http']['header'] = implode("\n", $headers);
+	
+	
+	self::log("opts are " . print_r($opts, true));
+	self::log("Calling url: $method $url");
+	
+	
+	$context = stream_context_create($opts);
+	$result = file_get_contents($url, false, $context);
+	self::log("Result is $result");
+	
+	$decoded = json_decode($result, true);
+	if (isset($decoded['error'])) {
+      throw new ParseException($decoded['error'],
+        isset($decoded['code']) ? $decoded['code'] : 0
+      );
+    }
+    
+	return $decoded; 
+	
+	
+		
   }
 
   /**
