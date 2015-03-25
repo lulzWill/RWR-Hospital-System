@@ -19,7 +19,17 @@
 			$query=new ParseQuery("Patient");
 			$query->equalTo("email", $currentUser->get("email"));
 			$patient=$query->first();
-			echo $patient->getObjectId() . $patient->get("email");
+			echo $patient->getobjectId();
+			$patient->set("insurance", $_POST["insurance"]);
+			$patient->set("allergies", $_POST["allergies"]);
+			$patient->set("pre_conditions", $_POST["pre_conditions"]);
+			$patient->set("emerg_name", $_POST["emerg_name"]);
+			$patient->set("emerg_num", $_POST["emerg_num"]);
+			$patient->set("address", $_POST["address"]);
+			$patient->set("citystate", $_POST["citystate"]);
+			$patient->set("cellphone", $_POST["cellphone"]);
+			$patient->set("homephone", $_POST["homephone"]);
+			$patient->save();
 		}
 	}
 	catch (ParseException $ex) {  

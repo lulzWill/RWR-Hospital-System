@@ -47,7 +47,7 @@
 		  		<h1>
 			  </a>
 EOL;
-				echo $currentUser->getObjectId() . "'s Profile";
+				echo $currentUser->get("firstname") . "'s Profile";
 				echo <<<EOL
 		  		</h1>
 EOL;
@@ -59,8 +59,16 @@ EOL;
 	{
 		echo '<img src="bgs/FemaleStockPhoto.jpg"/>';
 	}
-	
-	echo "<h2> Name: " . $currentUser->get("firstname") . " " . $currentUser->get("lastname") . "</br>Type: " . $currentUser->get("position") . "</br>" . 		 	     "</br>email: " . $currentUser->get("email") . "</br>";
+	if($currentUser->get("position") == "patient")
+	{
+		$query=new ParseQuery("Patient");
+		$query->equalTo("email", $currentUser->get("email"));
+		$patient=$query->first();
+		echo "<h2> Name: " . $patient->get("first_name") . " " . $patient->get("last_name") . "</br>";
+		echo "Home: " . $patient->get("address") . ", " . $patient->get("citystate") . "<br>";
+		echo "</h2>";
+	}
+}
 	echo <<<EOL
 		  		</h2>
 		  	</body>
@@ -72,9 +80,4 @@ EOL;
 		    </body>
 		  </html>
 EOL;
-}
-else
-{
-	header("Location: test.php");
-}
 ?>
