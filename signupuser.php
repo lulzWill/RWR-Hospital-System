@@ -12,6 +12,7 @@
 	$user->set("firstname", $_POST["firstname"]);
 	$user->set("lastname", $_POST["lastname"]);
 	$user->set("position", $_POST["role"]);
+	$user->set("sex", $_POST["sex"]);
 	$user->set("password", $_POST["password"]);
 	$user->set("email", $_POST["username"]);
 	$user->set("username", $_POST["username"]);
