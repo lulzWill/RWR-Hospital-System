@@ -25,16 +25,15 @@
 <html lang="en">
   <head>
   	<title>
-  		Home
+  		Schedule Appointments
   	</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap 101 Template</title>
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-	  <link href="makeappointment.css" rel="stylesheet">
+	<link href="makeappointment.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -49,58 +48,43 @@
 
     <?php include_once("navbar.php"); ?>
 
-    <!-- Include Bootstrap Datepicker -->
-	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.min.css" />
-	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />
 
-	<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
-
-	<style type="text/css">
-		/**
-		 * Override feedback icon position
-		 * See http://formvalidation.io/examples/adjusting-feedback-icon-position/
-		 */
-		#dateRangeForm .form-control-feedback {
-		    top: 0;
-		    right: -15px;
-		}
-		/* Adjust feedback icon position */
-		#signupForm .selectContainer .form-control-feedback,
-		#signupForm .inputGroupContainer .form-control-feedback {
-		    right: -15px;
-		}
-	</style>
-
-	<!-- Include Bootstrap Combobox -->
-	<link rel="stylesheet" href="/vendor/bootstrap-combobox/css/bootstrap-combobox.css">
-
-	<script src="/vendor/bootstrap-combobox/js/bootstrap-combobox.js"></script>
-	
 	<!-- Include Parse Stuff -->
     <script src="//www.parsecdn.com/js/parse-1.3.5.min.js"></script>
 
+    <link rel="stylesheet" href="bower_components/bootstrap-calendar/css/calendar.css">
 
-    
   </head>
   
   <body>
-	  <div style="position: relative; top: 5%; left: 30%; width: 70%; font-weight: bold; font-size: 32px; color: #fff; margin-bottom: 50px;">
-		  	<p>RWR Hospital Management System</p>
-	  </div>
+	<div style="position: relative; top: 5%; left: 30%; width: 70%; font-weight: bold; font-size: 32px; color: #fff; margin-bottom: 50px;">
+		<p>RWR Hospital Management System</p>
+	</div>
 	  
 	  
-				<label for="role" class="col-sm-2 control-label whitelabel">Select a Doctor:</label>
-				<div class="col-sm-10 selectContainer">
-		            <select class="form-control" name="role" onchange="validateRole()" required>
-		                <option value="">Choose one</option>
-		                <option value="physician">Physician</option>
-		                <option value="nurse">Nurse</option>
-		                <option value="admin">Administrator</option>
-		                <option value="patient">Patient</option>
-		            </select>
-		        </div>
+	<label for="doctor" class="col-sm-12 control-label whitelabel">Select a Physician:</label>
+	<div class="col-sm-10 selectContainer">
+		<select class="form-control" name="role" onchange="validateRole()" required>
+		    <option value="">Choose one</option>
+            <option value="physician">Physician</option>
+            <option value="nurse">Nurse</option>
+            <option value="admin">Administrator</option>
+            <option value="patient">Patient</option>
+        </select>
+	</div>
 
-	
+	<script src="bower_components/underscore/underscore-min.js"></script>
+	<script src="bower_components/bootstrap-calendar/js/calendar.min.js"></script>
+
+	<div id="calendar"></div>
+
+	<script type="text/javascript">
+     var calendar = $("#calendar").calendar(
+         {
+             tmpl_path: "bower_components/bootstrap-calendar/tmpls/",
+             events_source: function () { return []; }
+         });
+	</script>
 		
 		
 	  
