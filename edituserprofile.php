@@ -18,7 +18,6 @@
 			$query=new ParseQuery("Patient");
 			$query->equalTo("email", $currentUser->get("email"));
 			$patient=$query->first();
-			echo $patient->getobjectId();
 			$patient->set("insurance", $_POST["insurance"]);
 			$patient->set("allergies", $_POST["allergies"]);
 			$patient->set("pre_conditions", $_POST["pre_conditions"]);
@@ -28,9 +27,11 @@
 			$patient->set("citystate", $_POST["citystate"]);
 			$patient->set("cellphone", $_POST["cellphone"]);
 			$patient->set("homephone", $_POST["homephone"]);
-			$patient->set("relationship", $_POST["relationship"]);
+			$patient->set("emerg_rel", $_POST["emerg_rel"]);
 			$patient->save();
 		}
+		header('Location: viewprofile.php');
+		
 	}
 	catch (ParseException $ex) {  
 			  //send to errorpage here if something goes wrong.

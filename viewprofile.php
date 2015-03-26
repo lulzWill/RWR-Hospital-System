@@ -42,7 +42,7 @@
 		    </head>
 		    <body>
 		  	<body>
-			  <a href="editprofile.php">
+			  <a href="editmyprofile.php">
 				<h3>Edit Personal Information</h3>
 		  		<h1>
 			  </a>
@@ -66,7 +66,14 @@ EOL;
 		$patient=$query->first();
 		echo "<h4>Patient Contact Information</h4>";
 		echo "<h2> Patient Name: " . $patient->get("first_name") . " " . $patient->get("last_name") . "</br>";
-		echo "Home Address: " . $patient->get("address") . ", " . $patient->get("citystate") . ", " . $patient->get("zipcode") . "</br>";
+		if(!empty($patient->get("address")))
+		{
+			echo "Home Address: " . $patient->get("address") . ", " . $patient->get("citystate") . ", " . $patient->get("zipcode") . "</br>";
+		}
+		else
+		{
+			echo "Home Address: </br>";
+		}
 		echo "Home Phone: " . $patient->get("homephone") . " </br>";
 		echo "Cell Phone: " . $patient->get("cellphone") . "</br>";
 		echo "Email Address: " . $patient->get("email") . "</br>";
