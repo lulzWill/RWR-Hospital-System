@@ -54,10 +54,40 @@
 
     <link rel="stylesheet" href="bower_components/bootstrap-calendar/css/calendar.css">
 
+    <!-- Include Bootstrap Datepicker -->
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.min.css" />
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />
+
+	<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
+
+	<style type="text/css">
+		/**
+		 * Override feedback icon position
+		 * See http://formvalidation.io/examples/adjusting-feedback-icon-position/
+		 */
+		#dateRangeForm .form-control-feedback {
+		    top: 0;
+		    right: -15px;
+		}
+		/* Adjust feedback icon position */
+		#signupForm .selectContainer .form-control-feedback,
+		#signupForm .inputGroupContainer .form-control-feedback {
+		    right: -15px;
+		}
+	</style>
+
+
+	<script type="text/javascript" src="bower_components/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="bower_components/moment/min/moment.min.js"></script>
+  <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
+
   </head>
   
   <body>
-	<div style="position: relative; top: 5%; left: 30%; width: 70%; font-weight: bold; font-size: 32px; color: #fff; margin-bottom: 20px;">
+	<div style="position: relative; top: 5%; left: 30%; width: 70%; font-weight: bold; font-size: 32px; color: black; margin-bottom: 20px;">
 		<p>RWR Hospital Management System</p>
 	</div>
 	  
@@ -71,6 +101,50 @@
             <option value="admin">Administrator</option>
             <option value="patient">Patient</option>
         </select>
+	</div>
+
+	<a href="#" class="btn btn-info" data-toggle="modal" data-target="#basicModal">Make an Appointment</a>
+
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+
+	<div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	        <h4 class="modal-title" id="myModalLabel">Select a Date & Time</h4>
+	      </div>
+	      <div class="modal-body">
+	        <form class="form-horizontal" action="schedule.php" method="post" id="scheduleForm">
+	        	<div class="form-group">
+				<div class="container">
+				    <div class="col-sm-6">
+				        <div class="form-group">
+				            <div class="row">
+				                <div class="col-md-8">
+				                    <div id="datetimepicker12"></div>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				    <script type="text/javascript">
+				        $(function () {
+				            $('#datetimepicker12').datetimepicker({
+				                inline: true,
+				                sideBySide: true
+				            });
+				        });
+				    </script>
+				</div>
+				</div>
+	        </form>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" id="closeButton" class="btn btn-default" data-dismiss="modal">Close</button>
+	        <button type="button" id="apptButton" class="btn btn-primary">Schedule</button>
+	      </div>
+	    </div>
+	  </div>
 	</div>
 
 	<script src="bower_components/underscore/underscore-min.js"></script>
@@ -154,6 +228,74 @@
 					});
 				}
 			}
+
+			$(document).ready(function() {
+
+				$('#dateRangePicker')
+			        .datepicker({
+			            format: 'mm/dd/yyyy',
+			            startDate: '01/01/1910',
+
+			            /*
+			            var today = new Date();
+						var dd = today.getDate();
+						var mm = today.getMonth()+1; //January is 0!
+						var yyyy = today.getFullYear();
+
+						if(dd<10) {
+						    dd='0'+dd
+						} 
+
+						if(mm<10) {
+						    mm='0'+mm
+						} 
+
+						today = mm+'/'+dd+'/'+yyyy;
+						*/
+			            endDate: '12/30/2020'
+			            //endDate: today
+			        })
+			        .on('changeDate', function(e) {
+			            // Revalidate the date field
+			            $('#dateRangeForm').formValidation('revalidateField', 'date');
+			        });
+
+			    $('#dateRangeForm').formValidation({
+			        framework: 'bootstrap',
+			        icon: {
+			            valid: 'glyphicon glyphicon-ok',
+			            invalid: 'glyphicon glyphicon-remove',
+			            validating: 'glyphicon glyphicon-refresh'
+			        },
+			        fields: {
+			            date: {
+			                validators: {
+			                    notEmpty: {
+			                        message: 'The date is required'
+			                    },
+			                    date: {
+			                        format: 'MM/DD/YYYY',
+			                        min: '01/01/2010',
+			                        max: '12/30/2020',
+			                        message: 'The date is not a valid'
+			                    }
+			                }
+			            }
+			        }
+			    });
+
+
+				$('#apptButton').on('click', function (e) {
+
+     				var date1 = $("#datetimepicker12").data("datetimepicker").getDate();
+     				document.getElementById("closeButton").innerHTML= date1;
+
+				});
+			    
+
+			});
+
+			
 		</script>
 
   </body>
