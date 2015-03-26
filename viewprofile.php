@@ -62,20 +62,22 @@ EOL;
 			$profilePhoto = $patient->get("prof_pic");
 			echo '<img src="' . $profilePhoto->getURL() . '">';
 		}
-		else if($currentUser->get("sex") == "male")
+		else if($currentUser->get("sex") == "female")
 	    {
-			$filepath = "bgs/FemaleStockPhoto.jpg";
-			$file = ParseFile::createFromFile($filepath, "prof_pic");
-			$file->save();
+			// save file to Parse
+			$file = ParseFile::createFromFile("bgs/FemaleStockPhoto.jpg", "myprofilepic.jpg");
+			echo $file->getURL();
 			$patient->set("prof_pic", $file);
+			$patient->save();
 			echo '<img src="bgs/FemaleStockPhoto.jpg"/>';
 		} 
 		else
 		{
-			$filepath = "bgs/MaleStockPhoto.png";
-			$file = ParseFile::createFromFile($filepath, "profilepic");
+			// save file to Parse
+			$file = ParseFile::createFromFile("bgs/FemaleStockPhoto.jpg", "myprofilepic.jpg");
 			$file->save();
 			$patient->set("prof_pic", $file);
+			$patient->save();
 			echo '<img src="bgs/MaleStockPhoto.png"/>';
 		}
 		echo "<h4>Patient Contact Information</h4>";
