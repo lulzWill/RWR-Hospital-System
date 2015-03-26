@@ -5,6 +5,7 @@
 	use Parse\ParseException;
 	use Parse\ParseQuery;
 	use Parse\ParseSessionStorage;
+	use Parse\ParseFile;
 	
 	session_start();
 	
@@ -18,9 +19,6 @@
 			$query=new ParseQuery("Patient");
 			$query->equalTo("email", $currentUser->get("email"));
 			$patient=$query->first();
-			$patient->set("insurance", $_POST["insurance"]);
-			$patient->set("allergies", $_POST["allergies"]);
-			$patient->set("pre_conditions", $_POST["pre_conditions"]);
 			$patient->set("emerg_name", $_POST["emerg_name"]);
 			$patient->set("emerg_num", $_POST["emerg_num"]);
 			$patient->set("address", $_POST["address"]);
@@ -32,6 +30,9 @@
 			$patient->set("emerg_name2", $_POST["emerg_name2"]);
 			$patient->set("emerg_num2", $_POST["emerg_num2"]);
 			$patient->set("emerg_rel2", $_POST["emerg_rel2"]);
+			$file = ParseFile::createFromFile($_POST["prof_pic"], "myprofilepic.jpg");
+			$file->save();
+			$patient->set("prof_pic", $file);
 			$patient->save();
 		}
 		header('Location: viewprofile.php');
