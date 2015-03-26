@@ -1,0 +1,25 @@
+body {
+  background-color: black;
+}
+
+.continfo {
+	width: 100%;
+}
+.emerginfo {
+	width: 100%;
+}
+
+h1 {
+	color: white;
+}
+
+h2 {
+	margin-left: 2%;
+	color: cyan;
+	text-decoration: underline;
+}
+
+h3 {
+	margin-left: 3%;
+	color:white;
+}

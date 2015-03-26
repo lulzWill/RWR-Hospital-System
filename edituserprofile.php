@@ -28,6 +28,10 @@
 			$patient->set("cellphone", $_POST["cellphone"]);
 			$patient->set("homephone", $_POST["homephone"]);
 			$patient->set("emerg_rel", $_POST["emerg_rel"]);
+			$patient->set("zipcode", $_POST["zipcode"]);
+			$patient->set("emerg_name2", $_POST["emerg_name2"]);
+			$patient->set("emerg_num2", $_POST["emerg_num2"]);
+			$patient->set("emerg_rel2", $_POST["emerg_rel2"]);
 			$patient->save();
 		}
 		header('Location: viewprofile.php');

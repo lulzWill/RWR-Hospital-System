@@ -27,6 +27,7 @@
 	use Parse\ParseException;
 	use Parse\ParseQuery;
 	use Parse\ParseSessionStorage;
+	use Parse\ParseFile;
 	
 	session_start();
 	
@@ -36,14 +37,15 @@
 	
 	$currentUser = ParseUser::getCurrentUser();
 	
-	if($currentUser)
+	
+	if($currentUser->get("position") == "patient")
 	{
 		echo <<<EOL
 		    </head>
 		    <body>
 		  	<body>
 			  <a href="editmyprofile.php">
-				<h3>Edit Personal Information</h3>
+				<h3>Edit Profile Information</h3>
 		  		<h1>
 			  </a>
 EOL;
@@ -51,9 +53,6 @@ EOL;
 				echo <<<EOL
 		  		</h1>
 EOL;
-    
-	if($currentUser->get("position") == "patient")
-	{
 		$query=new ParseQuery("Patient");
 		$query->equalTo("email", $currentUser->get("email"));
 		$patient=$query->first();
@@ -65,13 +64,20 @@ EOL;
 		}
 		else if($currentUser->get("sex") == "male")
 	    {
-			echo '<img src="bgs/MaleStockPhoto.png"/>';
+			$filepath = "bgs/FemaleStockPhoto.jpg";
+			$file = ParseFile::createFromFile($filepath, "prof_pic");
+			$file->save();
+			$patient->set("prof_pic", $file);
+			echo '<img src="bgs/FemaleStockPhoto.jpg"/>';
 		} 
 		else
 		{
-			echo '<img src="bgs/FemaleStockPhoto.jpg"/>';
+			$filepath = "bgs/MaleStockPhoto.png";
+			$file = ParseFile::createFromFile($filepath, "profilepic");
+			$file->save();
+			$patient->set("prof_pic", $file);
+			echo '<img src="bgs/MaleStockPhoto.png"/>';
 		}
-		
 		echo "<h4>Patient Contact Information</h4>";
 		echo "<h2> Patient Name: " . $patient->get("first_name") . " " . $patient->get("last_name") . "</br>";
 		if(!empty($patient->get("address")))
@@ -88,19 +94,17 @@ EOL;
 		echo "</h2>";
 		
 		echo "<h4>Emergency Contact Information</h4>";
-		echo "<h2> Emergency Name: " . $patient->get("emerg_name") . "</br>";
-		echo "Emergency Number: " . $patient->get("emerg_num") . "</br>";
-		echo "Relationship: " . $patient->get("emerg_rel") . "</br>";
-		
-		echo "<h2> Emergency Name: " . $patient->get("emerg_name2") . "</br>";
-		echo "Emergency Number: " . $patient->get("emerg_num2") . "</br>";
-		echo "Relationship: " . $patient->get("emerg_rel2") . "</br>";
+		echo "<h2> Primary's Name: " . $patient->get("emerg_name") . "</br>";
+		echo "Primary's Number: " . $patient->get("emerg_num") . "</br>";
+		echo "Primary's Relationship: " . $patient->get("emerg_rel") . "</br>";
+		echo "<h2> Secondary's Name: " . $patient->get("emerg_name2") . "</br>";
+		echo "Secondary's Number: " . $patient->get("emerg_num2") . "</br>";
+		echo "Secondary's Relationship: " . $patient->get("emerg_rel2") . "</br>";
 		echo "</h2>";
 		
 		echo '<a href="medicalrecords.php"><h5>Link to Medical Information</h5></a>';
 		
 	}
-}
 	echo <<<EOL
 		  		</h2>
 		  	</body>

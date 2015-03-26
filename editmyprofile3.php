@@ -91,10 +91,78 @@ echo <<<EOL
 		<h1>
 			RWR Hospital Management System
 		</h1>
+		<h2 id="title">
+			Edit Fields
+		</h2>
 		
 		<form class="form-horizontal" action="edituserprofile.php" method="post" id="editProfile" onsubmit="return validateForm()">
-		<div class="continfo">
-			<h2>Patient Contact Information</h2>
+			
+			<div class="form-group">
+				<label for="insurance" class="col-sm-2 control-label whitelabel">Insurance:</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="insurance" name="insurance" value="
+EOL;
+echo $patient->get("insurance");
+echo <<<EOL
+" required>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label for="allergies" class="col-sm-2 control-label whitelabel">Allergies:</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="allergies" name="allergies" value="
+EOL;
+echo $patient->get("allergies");
+echo <<<EOL
+" required>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label for="pre_conditions" class="col-sm-2 control-label whitelabel">Preconditions:</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="pre_conditions" name="pre_conditions" value="
+EOL;
+echo $patient->get("pre_conditions");
+echo <<<EOL
+" required>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label for="emerg_name" class="col-sm-2 control-label whitelabel">Emergency Contact Name:</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="emerg_name" name="emerg_name" value="
+EOL;
+echo $patient->get("emerg_name");
+echo <<<EOL
+" required>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label for="emerg_num" class="col-sm-2 control-label whitelabel">Emergency Contact Phone Number:</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="emerg_num" name="emerg_num" value="
+EOL;
+echo $patient->get("emerg_num");
+echo <<<EOL
+" required>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label for="emerg_rel" class="col-sm-2 control-label whitelabel">Emergency Contact Relationship:</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="emerg_rel" name="emerg_rel" value="
+EOL;
+echo $patient->get("emerg_rel");
+echo <<<EOL
+" required>
+				</div>
+			</div>
+			
 			<div class="form-group">
 				<label for="address" class="col-sm-2 control-label whitelabel">Address:</label>
 				<div class="col-sm-10">
@@ -103,8 +171,9 @@ EOL;
 echo $patient->get("address");
 echo <<<EOL
 " required>
-                </div>			
+				</div>
 			</div>
+			
 			<div class="form-group">
 				<label for="citystate" class="col-sm-2 control-label whitelabel">City, State:</label>
 				<div class="col-sm-10">
@@ -115,28 +184,10 @@ echo <<<EOL
 " required>
 				</div>
 			</div>
+			
+			
 			<div class="form-group">
-				<label for="zipcode" class="col-sm-2 control-label whitelabel">Zipcode:</label>
-				<div class="col-sm-10">
-					<input type="text" class="form-control" id="zipcode" name="zipcode" value="
-EOL;
-echo $patient->get("zipcode");
-echo <<<EOL
-" required>
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="homephone" class="col-sm-2 control-label whitelabel">Home Phone:</label>
-				<div class="col-sm-10">
-					<input type="text" class="form-control" id="homephone" name="homephone" value="
-EOL;
-echo $patient->get("homephone");
-echo <<<EOL
-" required>
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="cellphone" class="col-sm-2 control-label whitelabel">Cell Phone:</label>
+				<label for="cellphone" class="col-sm-2 control-label whitelabel">Cellphone Number:</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" id="cellphone" name="cellphone" value="
 EOL;
@@ -145,79 +196,23 @@ echo <<<EOL
 " required>
 				</div>
 			</div>
-		</div>
-		<div class="emerginfo">
-			<h2>Emergency Contact Information</h2>
-			<h3>Primary</h3>
-			<div class="form-group">
-				<label for="emerg_name" class="col-sm-2 control-label whitelabel">Emergency Contact's Name:</label>
-				<div class="col-sm-10">
-					<input type="text" class="form-control" id="emerg_name" name="emerg_name" value="
-EOL;
-echo $patient->get("emerg_name");
-echo <<<EOL
-" required>
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="emerg_num" class="col-sm-2 control-label whitelabel">Emergency Contact's Number:</label>
-				<div class="col-sm-10">
-					<input type="text" size="8" class="form-control" id="emerg_num" name="emerg_num" value="
-EOL;
-echo $patient->get("emerg_num");
-echo <<<EOL
-" required>
-				</div>
-			</div>
 			
 			<div class="form-group">
-				<label for="emerg_rel" class="col-sm-2 control-label whitelabel">Relation to Emergency Contact:</label>
+				<label for="homephone" class="col-sm-2 control-label whitelabel">Homephone Number:</label>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" id="emerg_rel" name="emerg_rel" value="
+					<input type="text" class="form-control" id="homephone" name="homephone" value="
 EOL;
-echo $patient->get("emerg_rel");
+echo $patient->get("homephone");
 echo <<<EOL
 " required>
 				</div>
 			</div>
-			<h3>Secondary</h3>
+
 			<div class="form-group">
-				<label for="emerg_name2" class="col-sm-2 control-label whitelabel">Emergency Contact's Name:</label>
-				<div class="col-sm-10">
-					<input type="text" class="form-control" id="emerg_name2" name="emerg_name2" value="
-EOL;
-echo $patient->get("emerg_name2");
-echo <<<EOL
-" required>
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="emerg_num2" class="col-sm-2 control-label whitelabel">Emergency Contact's Number:</label>
-				<div class="col-sm-10">
-					<input type="text" size="8" class="form-control" id="emerg_num2" name="emerg_num2" value="
-EOL;
-echo $patient->get("emerg_num2");
-echo <<<EOL
-" required>
-				</div>
-			</div>
-			
-			<div class="form-group">
-				<label for="emerg_rel2" class="col-sm-2 control-label whitelabel">Relation to Emergency Contact:</label>
-				<div class="col-sm-10">
-					<input type="text" class="form-control" id="emerg_rel2" name="emerg_rel2" value="
-EOL;
-echo $patient->get("emerg_rel2");
-echo <<<EOL
-" required>
-				</div>
-			</div>
-		</div>
-		<div class="form-group">
 			    <div class="col-sm-offset-2 col-sm-10">
 			      	<button type="submit" class="btn btn-success">Save Settings</button>
 			    </div>
-		</div>
+			</div>
 		</form>
 
 		
