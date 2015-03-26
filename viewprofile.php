@@ -51,19 +51,27 @@ EOL;
 				echo <<<EOL
 		  		</h1>
 EOL;
-    if($currentUser->get("sex") == "male")
-	{
-		echo '<img src="bgs/MaleStockPhoto.png"/>';
-	}
-	else if($currentUser->get("sex") == "female")
-	{
-		echo '<img src="bgs/FemaleStockPhoto.jpg"/>';
-	}
+    
 	if($currentUser->get("position") == "patient")
 	{
 		$query=new ParseQuery("Patient");
 		$query->equalTo("email", $currentUser->get("email"));
 		$patient=$query->first();
+		
+		if(!empty($patient->get("prof_pic")))
+		{
+			$profilePhoto = $patient->get("prof_pic");
+			echo '<img src="' . $profilePhoto->getURL() . '">';
+		}
+		else if($currentUser->get("sex") == "male")
+	    {
+			echo '<img src="bgs/MaleStockPhoto.png"/>';
+		} 
+		else
+		{
+			echo '<img src="bgs/FemaleStockPhoto.jpg"/>';
+		}
+		
 		echo "<h4>Patient Contact Information</h4>";
 		echo "<h2> Patient Name: " . $patient->get("first_name") . " " . $patient->get("last_name") . "</br>";
 		if(!empty($patient->get("address")))
