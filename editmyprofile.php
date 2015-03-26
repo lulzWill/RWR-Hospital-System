@@ -90,13 +90,14 @@ echo <<<EOL
 
 		<h1>
 			RWR Hospital Management System
+			<a href="viewprofile.php">Exit without Saving</a>
 		</h1>
 		
 		<form class="form-horizontal" action="edituserprofile.php" method="post" id="editProfile" onsubmit="return validateForm()">
 		<div class="profpic">
 			<h2>Profile Picture</h2>
 			<div class="form-group">
-				<label for="prof_pic" class="col-sm-2 control-label whitelabel">Profile Picture:</label>
+				<label for="prof_pic" class="col-sm-2 control-label whitelabel">Profile Picture Link:</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" id="prof_pic" name="prof_pic" align="left" value="
 EOL;
@@ -104,6 +105,7 @@ $profilePhoto = $patient->get("prof_pic");
 echo $profilePhoto->getURL();
 echo <<<EOL
 " required>
+
                 </div>			
 			</div>
 		</div>

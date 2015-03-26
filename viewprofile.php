@@ -61,7 +61,6 @@ EOL;
 		{
 			$profilePhoto = $patient->get("prof_pic");
 			echo '<img src="' . $profilePhoto->getURL() . '">';
-			echo $profilePhoto->getURL();
 		}
 		else if($currentUser->get("sex") == "female")
 	    {
@@ -110,8 +109,139 @@ EOL;
 		echo '<a href="medicalrecords.php"><h5>Link to Medical Information</h5></a>';
 		
 	}
+	if($currentUser->get("position") == "physician")
+	{
+		echo <<<EOL
+		    </head>
+		    <body>
+		  	<body>
+			  <a href="editmyprofile.php">
+				<h3>Edit Profile Information</h3>
+		  		<h1>
+			  </a>
+EOL;
+				echo "Doctor " . $currentUser->get("firstname") . " " . $currentUser->get("lastname") . "</br>";
+				echo <<<EOL
+		  		</h1>
+EOL;
+		$query=new ParseQuery("Physician");
+		$query->equalTo("email", $currentUser->get("email"));
+		$physician=$query->first();
+		
+		if(!empty($physician->get("prof_pic")))
+		{
+			$profilePhoto = $physician->get("prof_pic");
+			echo '<img src="' . $profilePhoto->getURL() . '">';
+		}
+		else if($currentUser->get("sex") == "female")
+	    {
+			// save file to Parse
+			$file = ParseFile::createFromFile("bgs/FemaleStockPhoto.jpg", "myprofilepic.jpg");
+			$file->save();
+			$physician->set("prof_pic", $file);
+			$physician->save();
+			echo '<img src="bgs/FemaleStockPhoto.jpg"/>';
+		} 
+		else
+		{
+			// save file to Parse
+			$file = ParseFile::createFromFile("bgs/MaleStockPhoto.png", "myprofilepic.jpg");
+			$file->save();
+			$phsyician->set("prof_pic", $file);
+			$phsyician->save();
+			echo '<img src="bgs/MaleStockPhoto.png"/>';
+		}
+		echo "<h4>Physician Information</h4>";
+		echo "<h2> Physician's Name: " . $physician->get("first_name") . " " . $physician->get("last_name") . "</br>";
+		if(!empty($physician->get("degree")))
+		{
+			echo "Degree: " . $physician->get("degree") . " from  " . $physician->get("school") . "</br>";
+		}
+		else
+		{
+			echo "Degree: </br>";
+		}
+		echo "Specialties: " .$physician->get("area_of_spec") . "</br>";
+		echo "Experience: " . $physician->get("experience") . " </br>";
+		if(!empty($physician->get("address")))
+		{
+			echo "Location: " . $physician->get("address") . ", " . $physician->get("citystate") . ", " . $physician->get("zipcode") . "</br>";
+		}
+		else
+		{
+			echo "Location: </br>";
+		}
+		echo "Phone: " . $physician->get("phone") . "</br>";
+		echo "Email Address: " . $physician->get("email") . "</br>";
+		echo "</h2>";
+	}
+	if($currentUser->get("position") == "nurse")
+	{
+		echo <<<EOL
+		    </head>
+		    <body>
+		  	<body>
+			  <a href="editmyprofile.php">
+				<h3>Edit Profile Information</h3>
+		  		<h1>
+			  </a>
+EOL;
+				echo "Nurse " . $currentUser->get("firstname") . " " . $currentUser->get("lastname") . "</br>";
+				echo <<<EOL
+		  		</h1>
+EOL;
+		$query=new ParseQuery("Nurse");
+		$query->equalTo("email", $currentUser->get("email"));
+		$nurse=$query->first();
+		
+		if(!empty($nurse->get("prof_pic")))
+		{
+			$profilePhoto = $nurse->get("prof_pic");
+			echo '<img src="' . $profilePhoto->getURL() . '">';
+		}
+		else if($currentUser->get("sex") == "female")
+	    {
+			// save file to Parse
+			$file = ParseFile::createFromFile("bgs/FemaleStockPhoto.jpg", "myprofilepic.jpg");
+			$file->save();
+			$nurse->set("prof_pic", $file);
+			$nurse->save();
+			echo '<img src="bgs/FemaleStockPhoto.jpg"/>';
+		} 
+		else
+		{
+			// save file to Parse
+			$file = ParseFile::createFromFile("bgs/MaleStockPhoto.png", "myprofilepic.jpg");
+			$file->save();
+			$nurse->set("prof_pic", $file);
+			$nurse->save();
+			echo '<img src="bgs/MaleStockPhoto.png"/>';
+		}
+		echo "<h4>Nurse Information</h4>";
+		echo "<h2> Nurse's Name: " . $nurse->get("first_name") . " " . $nurse->get("last_name") . "</br>";
+		if(!empty($nurse->get("degree")))
+		{
+			echo "Degree: " . $nurse->get("degree") . " from  " . $nurse->get("school") . "</br>";
+		}
+		else
+		{
+			echo "Degree: </br>";
+		}
+		echo "Department(s): " . $nurse->get("department") . "</br>";
+		echo "Experience: " . $nurse->get("experience") . " </br>";
+		if(!empty($nurse->get("address")))
+		{
+			echo "Location: " . $nurse->get("address") . ", " . $nurse->get("citystate") . ", " . $nurse->get("zipcode") . "</br>";
+		}
+		else
+		{
+			echo "Location: </br>";
+		}
+		echo "Phone: " . $nurse->get("phone") . "</br>";
+		echo "Email Address: " . $nurse->get("email") . "</br>";
+		echo "</h2>";
+	}
 	echo <<<EOL
-		  		</h2>
 		  	</body>
 
 		      <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
