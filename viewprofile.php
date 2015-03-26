@@ -43,7 +43,7 @@
 		    <body>
 		  	<body>
 			  <a href="editprofile.php">
-				<h3>Edit Profile</h3>
+				<h3>Edit Personal Information</h3>
 		  		<h1>
 			  </a>
 EOL;
@@ -80,6 +80,10 @@ EOL;
 		echo "<h2> Emergency Name: " . $patient->get("emerg_name2") . "</br>";
 		echo "Emergency Number: " . $patient->get("emerg_num2") . "</br>";
 		echo "Relationship: " . $patient->get("emerg_rel2") . "</br>";
+		echo "</h2>";
+		
+		echo '<a href="medicalrecords.php"><h5>Link to Medical Information</h5></a>';
+		
 	}
 }
 	echo <<<EOL
