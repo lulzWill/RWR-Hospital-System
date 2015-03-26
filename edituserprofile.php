@@ -11,7 +11,6 @@
 	ParseClient::initialize('kHbyXSdw4DIXw4Q0DYDcdM8QTDQnOewKJhc9ppAr', '9h80LHVDFOSAgVQ1NSPf5IgaWAaDnHdPoJWt2CDc', '3q1HVOiiywyBdtalMN1sozceJbNXuD9WKZSSmgvI');
 	ParseClient::setStorage( new ParseSessionStorage() );
 	$currentUser = ParseUser::getCurrentUser();
-	$currentUser->set("sex", $_POST["sex"]);
 	$currentUser->save();
 	try {
 		if($currentUser->get("position") == "patient")
@@ -29,6 +28,7 @@
 			$patient->set("citystate", $_POST["citystate"]);
 			$patient->set("cellphone", $_POST["cellphone"]);
 			$patient->set("homephone", $_POST["homephone"]);
+			$patient->set("relationship", $_POST["relationship"]);
 			$patient->save();
 		}
 	}

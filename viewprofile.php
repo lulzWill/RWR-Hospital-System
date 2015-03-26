@@ -64,9 +64,22 @@ EOL;
 		$query=new ParseQuery("Patient");
 		$query->equalTo("email", $currentUser->get("email"));
 		$patient=$query->first();
-		echo "<h2> Name: " . $patient->get("first_name") . " " . $patient->get("last_name") . "</br>";
-		echo "Home: " . $patient->get("address") . ", " . $patient->get("citystate") . "<br>";
+		echo "<h4>Patient Contact Information</h4>";
+		echo "<h2> Patient Name: " . $patient->get("first_name") . " " . $patient->get("last_name") . "</br>";
+		echo "Home Address: " . $patient->get("address") . ", " . $patient->get("citystate") . ", " . $patient->get("zipcode") . "</br>";
+		echo "Home Phone: " . $patient->get("homephone") . " </br>";
+		echo "Cell Phone: " . $patient->get("cellphone") . "</br>";
+		echo "Email Address: " . $patient->get("email") . "</br>";
 		echo "</h2>";
+		
+		echo "<h4>Emergency Contact Information</h4>";
+		echo "<h2> Emergency Name: " . $patient->get("emerg_name") . "</br>";
+		echo "Emergency Number: " . $patient->get("emerg_num") . "</br>";
+		echo "Relationship: " . $patient->get("emerg_rel") . "</br>";
+		
+		echo "<h2> Emergency Name: " . $patient->get("emerg_name2") . "</br>";
+		echo "Emergency Number: " . $patient->get("emerg_num2") . "</br>";
+		echo "Relationship: " . $patient->get("emerg_rel2") . "</br>";
 	}
 }
 	echo <<<EOL
