@@ -6,7 +6,11 @@
 	use Parse\ParseQuery;
 	use Parse\ParseSessionStorage;
 	
+<<<<<<< HEAD
 	session_start();
+=======
+	include_once("navbar.php");
+>>>>>>> origin/best_working_version
 	
 	ParseClient::initialize('kHbyXSdw4DIXw4Q0DYDcdM8QTDQnOewKJhc9ppAr', '9h80LHVDFOSAgVQ1NSPf5IgaWAaDnHdPoJWt2CDc', '3q1HVOiiywyBdtalMN1sozceJbNXuD9WKZSSmgvI');
 	
@@ -61,7 +65,6 @@
 	}
 	</script>
 	
-    <?php include_once("navbar.php"); ?>
   </head>
   
   <body>
@@ -75,7 +78,7 @@
 	  {
 		  echo <<<EOL
 	  <div style="position: relative; width: 100%; height: 160px">
-	  	<a href="makeappoint.php"><img src="icons/appointmenticon.png" alt="appointment temp" class="img-circle button-left" height="140px" width="140px" id="appt" onmouseover="changeOpacityIn(this);" onmouseout="changeOpacityOut(this);"></a>
+	  	<a href="makeappointment.php"><img src="icons/appointmenticon.png" alt="appointment temp" class="img-circle button-left" height="140px" width="140px" id="appt" onmouseover="changeOpacityIn(this);" onmouseout="changeOpacityOut(this);"></a>
 	  	<a href="viewprofile.php"><img src="icons/viewprofileicon.png" alt="prof temp" class="img-circle button-middle" height="140px" width="140px" id="prof" onmouseover="changeOpacityIn(this);" onmouseout="changeOpacityOut(this);"></a>
 	  	<a href="#"><img src="http://www.tessmeroffairfax.com/tof_iix_master_gallery_wedding_invitations/blank_white.jpg" alt="temp" class="img-circle button-right" height="140px" width="140px" id="temp" onmouseover="changeOpacityIn(this);" onmouseout="changeOpacityOut(this);"></a>  	
   	  </div>
