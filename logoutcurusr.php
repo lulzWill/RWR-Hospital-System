@@ -15,6 +15,6 @@
 	ParseUser::logOut();
 	session_unset();
 	session_destroy();
-	header("Location: test.php");
+	header("Location: index.php");
 	exit;
 ?>
