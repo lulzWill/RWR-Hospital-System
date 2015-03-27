@@ -33,6 +33,7 @@
 			<meta name="viewport" content="width=device-width, initial-scale=1">
 
 		    <!-- Bootstrap -->
+			<link href="test.css" rel="stylesheet">
 		    <link href="css/bootstrap.min.css" rel="stylesheet">
 			<link href="customcss.css" rel="stylesheet">
 		    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
