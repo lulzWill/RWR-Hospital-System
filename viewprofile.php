@@ -65,20 +65,20 @@ EOL;
 		else if($currentUser->get("sex") === "female")
 	    {
 			// save file to Parse
-			$file = ParseFile::createFromFile("bgs/FemaleStockPhoto.jpg", "myprofilepic.jpg");
+			$file = ParseFile::createFromFile("bgs/Female.jpg", "myprofilepic.jpg");
 			$file->save();
 			$patient->set("prof_pic", $file);
 			$patient->save();
-			echo '<img src="bgs/FemaleStockPhoto.jpg"/>';
+			echo '<img src="bgs/Female.jpg"/>';
 		} 
 		else if($currentUser->get("sex") === "male")
 		{
 			// save file to Parse
-			$file = ParseFile::createFromFile("bgs/MaleStockPhoto.png", "myprofilepic.png");
+			$file = ParseFile::createFromFile("bgs/Male.jpg", "myprofilepic.jpg");
 			$file->save();
 			$patient->set("prof_pic", $file);
 			$patient->save();
-			echo '<img src="bgs/MaleStockPhoto.png"/>';
+			echo '<img src="bgs/Male.jpg"/>';
 		}
 		echo "<h4>Patient Contact Information</h4>";
 		echo "<h2> Patient Name: " . $patient->get("first_name") . " " . $patient->get("last_name") . "</br>";
@@ -134,20 +134,20 @@ EOL;
 		else if($currentUser->get("sex")==="female")
 	    {
 			// save file to Parse
-			$file = ParseFile::createFromFile("bgs/FemaleStockPhoto.jpg", "myprofilepic2.jpg");
+			$file = ParseFile::createFromFile("bgs/Female.jpg", "myprofilepic2.jpg");
 			$file->save();
 			$physician->set("prof_pic", $file);
 			$physician->save();
-			echo '<img src="bgs/FemaleStockPhoto.jpg"/>';
+			echo '<img src="bgs/Female.jpg"/>';
 		} 
 		else if($currentUser->get("sex")==="male")
 		{
 			// save file to Parse
-			$file2 = ParseFile::createFromFile("bgs/MaleStockPhoto.png", "myprofilepic2.png");
+			$file2 = ParseFile::createFromFile("bgs/Male.jpg", "myprofilepic2.jpg");
 			$file2->save();
 			$physician->set("prof_pic", $file2);
 			$physician->save();
-			echo '<img src="bgs/MaleStockPhoto.png"/>';
+			echo '<img src="bgs/Male.jpg"/>';
 		}
 		echo "<h4>Physician Information</h4>";
 		echo "<h2> Physician's Name: " . $physician->get("first_name") . " " . $physician->get("last_name") . "</br>";
@@ -200,20 +200,20 @@ EOL;
 		else if($currentUser->get("sex") === "female")
 	    {
 			// save file to Parse
-			$file = ParseFile::createFromFile("bgs/FemaleStockPhoto.jpg", "myprofilepic.jpg");
+			$file = ParseFile::createFromFile("bgs/Female.jpg", "myprofilepic.jpg");
 			$file->save();
 			$nurse->set("prof_pic", $file);
 			$nurse->save();
-			echo '<img src="bgs/FemaleStockPhoto.jpg"/>';
+			echo '<img src="bgs/Female.jpg"/>';
 		} 
 		else if($currentUser->get("sex") === "male")
 		{
 			// save file to Parse
-			$file = ParseFile::createFromFile("bgs/MaleStockPhoto.png", "myprofilepic.jpg");
+			$file = ParseFile::createFromFile("bgs/Male.jpg", "myprofilepic.jpg");
 			$file->save();
 			$nurse->set("prof_pic", $file);
 			$nurse->save();
-			echo '<img src="bgs/MaleStockPhoto.png"/>';
+			echo '<img src="bgs/Male.jpg"/>';
 		}
 		echo "<h4>Nurse Information</h4>";
 		echo "<h2> Nurse's Name: " . $nurse->get("first_name") . " " . $nurse->get("last_name") . "</br>";
