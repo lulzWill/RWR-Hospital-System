@@ -13,7 +13,6 @@
 	ParseClient::setStorage( new ParseSessionStorage() );
 	$currentUser = ParseUser::getCurrentUser();
 	$currentUser->save();
-	try {
 		if($currentUser->get("position") == "patient")
 		{
 			$query=new ParseQuery("Patient");
@@ -33,12 +32,40 @@
 			$file = ParseFile::createFromFile($_POST["prof_pic"], "myprofilepic.jpg");
 			$file->save();
 			$patient->set("prof_pic", $file);
-			$patient->save();
+			try {
+				$patient->save();
+			}
+			catch (ParseException $ex) {  
+				// Execute any logic that should take place if the save fails.
+				// error is a ParseException object with an error code and message.
+				echo 'Failed to create new object, with error message: ' + $ex->getMessage();
+			}
+			header('Location: viewprofile.php');
 		}
-		header('Location: viewprofile.php');
-		
-	}
-	catch (ParseException $ex) {  
-			  //send to errorpage here if something goes wrong.
-	}
+		else if($currentUser->get("position") == "physician")
+		{
+			$query=new ParseQuery("Physician");
+			$query->equalTo("email", $currentUser->get("email"));
+			$physician=$query->first();
+			$physician->set("degree", $_POST["degree"]);
+			$physician->set("school", $_POST["school"]);
+			$physician->set("area_of_spec", $_POST["area_of_spec"]);
+			$physician->set("experience", $_POST["experience"]);
+			$physician->set("address", $_POST["address"]);
+			$physician->set("citystate", $_POST["citystate"]);
+			$physician->set("phone", $_POST["phone"]);
+			$physician->set("zipcode", $_POST["zipcode"]);
+			$file = ParseFile::createFromFile($_POST["prof_pic"], "myprofilepic.jpg");
+			$file->save();
+			$physician->set("prof_pic", $file);
+			try {
+				$physician->save();
+			}
+			catch (ParseException $ex) {  
+				// Execute any logic that should take place if the save fails.
+				// error is a ParseException object with an error code and message.
+				echo 'Failed to create new object, with error message: ' + $ex->getMessage();
+			}
+			header('Location: viewprofile.php');
+		}
 ?>

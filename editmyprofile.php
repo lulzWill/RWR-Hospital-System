@@ -12,14 +12,38 @@ require 'vendor/autoload.php';
 	ParseClient::setStorage( new ParseSessionStorage() );
 	$currentUser = ParseUser::getCurrentUser();
 	$currentUser->save();
+	if($currentUser->get("position") == "patient")
+	{
+		try {
+			$query=new ParseQuery("Patient");
+			$query->equalTo("email", $currentUser->get("email"));
+			$patient=$query->first();
+		}
+		catch (ParseException $ex) {
 	
-	try {
-		$query=new ParseQuery("Patient");
-		$query->equalTo("email", $currentUser->get("email"));
-		$patient=$query->first();
+		}
 	}
-	catch (ParseException $ex) {
-		
+	else if($currentUser->get("position") == "physician")
+	{
+		try {
+			$query=new ParseQuery("Physician");
+			$query->equalTo("email", $currentUser->get("email"));
+			$physician=$query->first();
+		}
+		catch (ParseException $ex) {
+	
+		}
+	}
+	else if($currentUser->get("position") == "nurse")
+	{
+		try {
+			$query=new ParseQuery("Nurse");
+			$query->equalTo("email", $currentUser->get("email"));
+			$nurse=$query->first();
+		}
+		catch (ParseException $ex) {
+	
+		}
 	}
 echo <<<EOL
   <!DOCTYPE html>
@@ -87,8 +111,11 @@ echo <<<EOL
 		
 		<script type="text/javascript" src="js/bootstrap.js"></script>
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
-
-		<h1>
+EOL;
+if($currentUser->get("position") == "patient")
+{
+echo <<<EOL
+<h1>
 			RWR Hospital Management System
 			<a href="viewprofile.php">Exit without Saving</a>
 		</h1>
@@ -235,18 +262,125 @@ echo <<<EOL
 			    </div>
 		</div>
 		</form>
-
+EOL;
+}
+else if($currentUser->get("position") == "physician")
+{
+echo <<<EOL
+<h1>
+			RWR Hospital Management System
+			<a href="viewprofile.php">Exit without Saving</a>
+		</h1>
 		
+		<form class="form-horizontal" action="edituserprofile.php" method="post" id="editProfile1" onsubmit="return validateForm()">
+		<div class="profpic">
+			<h2>Profile Picture</h2>
+			<div class="form-group">
+				<label for="prof_pic" class="col-sm-2 control-label whitelabel">Profile Picture Link:</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="prof_pic" name="prof_pic" align="left" value="
+EOL;
+$profilePhoto = $physician->get("prof_pic");
+echo $profilePhoto->getURL();
+echo <<<EOL
+" required>
 
-		<script>
-			function validateForm() {
-				var h = document.forms["signupForm"]["sex"].value;
-				if (h == null || h == "" || h == "Choose a sex") {
-					alert("Select a sex");
-					return false;
-				}
-			}
-		</script>
+                </div>			
+			</div>
+		</div>
+		<div class="continfo">
+			<h2>Physician Information</h2>
+			<div class="form-group">
+				<label for="degree" class="col-sm-2 control-label whitelabel">Degree:</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="degree" name="degree" value="
+EOL;
+echo $physician->get("degree");
+echo <<<EOL
+" required>
+                </div>			
+			</div>
+			<div class="form-group">
+				<label for="school" class="col-sm-2 control-label whitelabel">College/University:</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="school" name="school" value="
+EOL;
+echo $physician->get("school");
+echo <<<EOL
+" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="area_of_spec" class="col-sm-2 control-label whitelabel">Area of Specialization(s):</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="area_of_spec" name="area_of_spec" value="
+EOL;
+echo $physician->get("area_of_spec");
+echo <<<EOL
+" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="experience" class="col-sm-2 control-label whitelabel">Experience (in years):</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="experience" name="experience" value="
+EOL;
+echo $physician->get("experience");
+echo <<<EOL
+" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="address" class="col-sm-2 control-label whitelabel">Work Address:</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="address" name="address" value="
+EOL;
+echo $physician->get("address");
+echo <<<EOL
+" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="citystate" class="col-sm-2 control-label whitelabel">City, State:</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="citystate" name="citystate" value="
+EOL;
+echo $physician->get("citystate");
+echo <<<EOL
+" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="zipcode" class="col-sm-2 control-label whitelabel">Zipcode:</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="zipcode" name="zipcode" value="
+EOL;
+echo $physician->get("zipcode");
+echo <<<EOL
+" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="phone" class="col-sm-2 control-label whitelabel">Work/Office Phone:</label>
+				<div class="col-sm-10">
+					<input type="text" size="8" class="form-control" id="phone" name="phone" value="
+EOL;
+echo $physician->get("phone");
+echo <<<EOL
+" required>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			    <div class="col-sm-offset-2 col-sm-10">
+			      	<button type="submit" class="btn btn-success">Save Settings</button>
+			    </div>
+		</div>
+		</form>
+EOL;
+}
+		
+echo <<<EOL
 	</body>
   </body>
 </html>
