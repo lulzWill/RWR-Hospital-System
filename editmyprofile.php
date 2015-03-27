@@ -142,7 +142,7 @@ echo <<<EOL
 				<div class="col-sm-10">
 					<input type="text" class="form-control" id="address" name="address" value="
 EOL;
-echo $patient->get("insurance");
+echo $patient->get("address");
 echo <<<EOL
 " required>
                 </div>			
