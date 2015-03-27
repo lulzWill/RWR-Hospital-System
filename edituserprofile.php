@@ -68,4 +68,30 @@
 			}
 			header('Location: viewprofile.php');
 		}
+		else if($currentUser->get("position") == "nurse")
+		{
+			$query=new ParseQuery("Nurse");
+			$query->equalTo("email", $currentUser->get("email"));
+			$nurse=$query->first();
+			$nurse->set("degree", $_POST["degree"]);
+			$nurse->set("school", $_POST["school"]);
+			$nurse->set("department", $_POST["department"]);
+			$nurse->set("experience", $_POST["experience"]);
+			$nurse->set("address", $_POST["address"]);
+			$nurse->set("citystate", $_POST["citystate"]);
+			$nurse->set("zipcode", $_POST["zipcode"]);
+			$nurse->set("phone", $_POST["phone"]);
+			$file = ParseFile::createFromFile($_POST["prof_pic"], "myprofilepic.jpg");
+			$file->save();
+			$nurse->set("prof_pic", $file);
+			try {
+				$nurse->save();
+			}
+			catch (ParseException $ex) {  
+				// Execute any logic that should take place if the save fails.
+				// error is a ParseException object with an error code and message.
+				echo 'Failed to create new object, with error message: ' + $ex->getMessage();
+			}
+			header('Location: viewprofile.php');
+		}
 ?>

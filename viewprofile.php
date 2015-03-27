@@ -160,7 +160,7 @@ EOL;
 			echo "Degree: </br>";
 		}
 		echo "Specialties: " .$physician->get("area_of_spec") . "</br>";
-		echo "Experience: " . $physician->get("experience") . " </br>";
+		echo "Years of Experience: " . $physician->get("experience") . "</br>";
 		if(!empty($physician->get("address")))
 		{
 			echo "Location: " . $physician->get("address") . ", " . $physician->get("citystate") . ", " . $physician->get("zipcode") . "</br>";
@@ -226,7 +226,7 @@ EOL;
 			echo "Degree: </br>";
 		}
 		echo "Department(s): " . $nurse->get("department") . "</br>";
-		echo "Experience: " . $nurse->get("experience") . " </br>";
+		echo "Years of Experience: " . $nurse->get("experience") . "</br>";
 		if(!empty($nurse->get("address")))
 		{
 			echo "Location: " . $nurse->get("address") . ", " . $nurse->get("citystate") . ", " . $nurse->get("zipcode") . "</br>";
