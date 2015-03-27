@@ -74,7 +74,7 @@
 	  {
 		  echo <<<EOL
 	  <div style="position: relative; width: 100%; height: 160px">
-	  	<a href="makeappoint.php"><img src="icons/appointmenticon.png" alt="appointment temp" class="img-circle button-left" height="140px" width="140px" id="appt" onmouseover="changeOpacityIn(this);" onmouseout="changeOpacityOut(this);"></a>
+	  	<a href="makeappointment.php"><img src="icons/appointmenticon.png" alt="appointment temp" class="img-circle button-left" height="140px" width="140px" id="appt" onmouseover="changeOpacityIn(this);" onmouseout="changeOpacityOut(this);"></a>
 	  	<a href="viewprofile.php"><img src="icons/viewprofileicon.png" alt="prof temp" class="img-circle button-middle" height="140px" width="140px" id="prof" onmouseover="changeOpacityIn(this);" onmouseout="changeOpacityOut(this);"></a>
 	  	<a href="#"><img src="http://www.tessmeroffairfax.com/tof_iix_master_gallery_wedding_invitations/blank_white.jpg" alt="temp" class="img-circle button-right" height="140px" width="140px" id="temp" onmouseover="changeOpacityIn(this);" onmouseout="changeOpacityOut(this);"></a>  	
   	  </div>
