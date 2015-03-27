@@ -23,8 +23,17 @@ h2 {
 
 .hoverlight:hover {
 	color: gray;
+	text-decoration: underline;
+	cursor: pointer;
 }
 
 .pad8left {
 	margin-left: 8%;
+}
+
+.col-sm-10 {
+  width: 80%;
+}
+
+.form-group {
 }
