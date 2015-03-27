@@ -7,6 +7,7 @@
 	use Parse\ParseSessionStorage;
 	
 	include_once('navbar.php');
+
 	
 	ParseClient::initialize('kHbyXSdw4DIXw4Q0DYDcdM8QTDQnOewKJhc9ppAr', '9h80LHVDFOSAgVQ1NSPf5IgaWAaDnHdPoJWt2CDc', '3q1HVOiiywyBdtalMN1sozceJbNXuD9WKZSSmgvI');
 	ParseClient::setStorage( new ParseSessionStorage() );
@@ -122,7 +123,8 @@ echo <<<EOL
 		<form class="form-horizontal" action="edituserprofile.php" method="post" id="editProfile" onsubmit="return validateForm()">
 		<div class="profpic">
 			<h2>Profile Picture</h2>
-			<div class="form-group">
+			<div class="container">
+			<div class="row">
 				<label for="prof_pic" class="col-sm-2 control-label whitelabel">Profile Picture Link:</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" id="prof_pic" name="prof_pic" align="left" value="
@@ -134,10 +136,12 @@ echo <<<EOL
 
                 </div>			
 			</div>
+			</div>
 		</div>
 		<div class="continfo">
 			<h2>Patient Contact Information</h2>
-			<div class="form-group">
+			<div class="container">
+			<div class="row">
 				<label for="address" class="col-sm-2 control-label whitelabel">Address:</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" id="address" name="address" value="
@@ -147,7 +151,9 @@ echo <<<EOL
 " required>
                 </div>			
 			</div>
-			<div class="form-group">
+			</div>
+			<div class="container">
+			<div class="row">
 				<label for="citystate" class="col-sm-2 control-label whitelabel">City, State:</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" id="citystate" name="citystate" value="
@@ -157,7 +163,9 @@ echo <<<EOL
 " required>
 				</div>
 			</div>
-			<div class="form-group">
+			</div>
+			<div class="container">
+			<div class="row">
 				<label for="zipcode" class="col-sm-2 control-label whitelabel">Zipcode:</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" id="zipcode" name="zipcode" value="
@@ -167,7 +175,9 @@ echo <<<EOL
 " required>
 				</div>
 			</div>
-			<div class="form-group">
+			</div>
+			<div class="container">
+			<div class="row">
 				<label for="homephone" class="col-sm-2 control-label whitelabel">Home Phone:</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" id="homephone" name="homephone" value="
@@ -177,7 +187,9 @@ echo <<<EOL
 " required>
 				</div>
 			</div>
-			<div class="form-group">
+			</div>
+			<div class="container">
+			<div class="row">
 				<label for="cellphone" class="col-sm-2 control-label whitelabel">Cell Phone:</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" id="cellphone" name="cellphone" value="
@@ -187,11 +199,13 @@ echo <<<EOL
 " required>
 				</div>
 			</div>
+			</div>
 		</div>
 		<div class="emerginfo">
 			<h2>Emergency Contact Information</h2>
 			<h3>Primary</h3>
-			<div class="form-group">
+			<div class="container">
+			<div class="row">
 				<label for="emerg_name" class="col-sm-2 control-label whitelabel">Emergency Contact's Name:</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" id="emerg_name" name="emerg_name" value="
@@ -201,7 +215,9 @@ echo <<<EOL
 " required>
 				</div>
 			</div>
-			<div class="form-group">
+			</div>
+			<div class="container">
+			<div class="row">
 				<label for="emerg_num" class="col-sm-2 control-label whitelabel">Emergency Contact's Number:</label>
 				<div class="col-sm-10">
 					<input type="text" size="8" class="form-control" id="emerg_num" name="emerg_num" value="
@@ -211,8 +227,9 @@ echo <<<EOL
 " required>
 				</div>
 			</div>
-			
-			<div class="form-group">
+			</div>
+            <div class="container">
+			<div class="row">
 				<label for="emerg_rel" class="col-sm-2 control-label whitelabel">Relation to Emergency Contact:</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" id="emerg_rel" name="emerg_rel" value="
@@ -222,8 +239,10 @@ echo <<<EOL
 " required>
 				</div>
 			</div>
+			</div>
 			<h3>Secondary</h3>
-			<div class="form-group">
+			<div class="container">
+			<div class="row">
 				<label for="emerg_name2" class="col-sm-2 control-label whitelabel">Emergency Contact's Name:</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" id="emerg_name2" name="emerg_name2" value="
@@ -233,7 +252,9 @@ echo <<<EOL
 " required>
 				</div>
 			</div>
-			<div class="form-group">
+			</div>
+			<div class="container">
+			<div class="row">
 				<label for="emerg_num2" class="col-sm-2 control-label whitelabel">Emergency Contact's Number:</label>
 				<div class="col-sm-10">
 					<input type="text" size="8" class="form-control" id="emerg_num2" name="emerg_num2" value="
@@ -243,8 +264,9 @@ echo <<<EOL
 " required>
 				</div>
 			</div>
-			
-			<div class="form-group">
+			</div>
+			<div class="container">
+			<div class="row">
 				<label for="emerg_rel2" class="col-sm-2 control-label whitelabel">Relation to Emergency Contact:</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" id="emerg_rel2" name="emerg_rel2" value="
@@ -254,11 +276,14 @@ echo <<<EOL
 " required>
 				</div>
 			</div>
+			</div>
 		</div>
-		<div class="form-group">
+		<div class="container">
+			<div class="row">>
 			    <div class="col-sm-offset-2 col-sm-10">
 			      	<button type="submit" class="btn btn-success">Save Settings</button>
 			    </div>
+			</div>
 		</div>
 		</form>
 EOL;
@@ -274,7 +299,8 @@ echo <<<EOL
 		<form class="form-horizontal" action="edituserprofile.php" method="post" id="editProfile1" onsubmit="return validateForm()">
 		<div class="profpic">
 			<h2>Profile Picture</h2>
-			<div class="form-group">
+			<div class="container">
+			<div class="row">
 				<label for="prof_pic" class="col-sm-2 control-label whitelabel">Profile Picture Link:</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" id="prof_pic" name="prof_pic" align="left" value="
@@ -286,10 +312,12 @@ echo <<<EOL
 
                 </div>			
 			</div>
+			</div>
 		</div>
 		<div class="continfo">
 			<h2>Physician Information</h2>
-			<div class="form-group">
+			<div class="container">
+			<div class="row">
 				<label for="degree" class="col-sm-2 control-label whitelabel">Degree:</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" id="degree" name="degree" value="
@@ -299,7 +327,9 @@ echo <<<EOL
 " required>
                 </div>			
 			</div>
-			<div class="form-group">
+			</div>
+			<div class="container">
+			<div class="row">
 				<label for="school" class="col-sm-2 control-label whitelabel">College/University:</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" id="school" name="school" value="
@@ -309,7 +339,9 @@ echo <<<EOL
 " required>
 				</div>
 			</div>
-			<div class="form-group">
+			</div>
+			<div class="container">
+			<div class="row">
 				<label for="area_of_spec" class="col-sm-2 control-label whitelabel">Area of Specialization(s):</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" id="area_of_spec" name="area_of_spec" value="
@@ -319,7 +351,9 @@ echo <<<EOL
 " required>
 				</div>
 			</div>
-			<div class="form-group">
+			</div>
+			<div class="container">
+			<div class="row">
 				<label for="experience" class="col-sm-2 control-label whitelabel">Years of Experience:</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" id="experience" name="experience" value="
@@ -329,7 +363,9 @@ echo <<<EOL
 " required>
 				</div>
 			</div>
-			<div class="form-group">
+			</div>
+			<div class="container">
+			<div class="row">
 				<label for="address" class="col-sm-2 control-label whitelabel">Work Address:</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" id="address" name="address" value="
@@ -339,7 +375,9 @@ echo <<<EOL
 " required>
 				</div>
 			</div>
-			<div class="form-group">
+			</div>
+			<div class="container">
+			<div class="row">
 				<label for="citystate" class="col-sm-2 control-label whitelabel">City, State:</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" id="citystate" name="citystate" value="
@@ -349,7 +387,9 @@ echo <<<EOL
 " required>
 				</div>
 			</div>
-			<div class="form-group">
+			</div>
+			<div class="container">
+			<div class="row">
 				<label for="zipcode" class="col-sm-2 control-label whitelabel">Zipcode:</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" id="zipcode" name="zipcode" value="
@@ -359,7 +399,9 @@ echo <<<EOL
 " required>
 				</div>
 			</div>
-			<div class="form-group">
+			</div>
+			<div class="container">
+			<div class="row">
 				<label for="phone" class="col-sm-2 control-label whitelabel">Work/Office Phone:</label>
 				<div class="col-sm-10">
 					<input type="text" size="8" class="form-control" id="phone" name="phone" value="
@@ -370,7 +412,9 @@ echo <<<EOL
 				</div>
 			</div>
 		</div>
-		<div class="form-group">
+		</div>
+			<div class="container">
+			<div class="row">
 			    <div class="col-sm-offset-2 col-sm-10">
 			      	<button type="submit" class="btn btn-success">Save Settings</button>
 			    </div>
@@ -389,7 +433,8 @@ echo <<<EOL
 		<form class="form-horizontal" action="edituserprofile.php" method="post" id="editProfile1" onsubmit="return validateForm()">
 		<div class="profpic">
 			<h2>Profile Picture</h2>
-			<div class="form-group">
+			<div class="container">
+			<div class="row">
 				<label for="prof_pic" class="col-sm-2 control-label whitelabel">Profile Picture Link:</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" id="prof_pic" name="prof_pic" align="left" value="
@@ -402,9 +447,11 @@ echo <<<EOL
                 </div>			
 			</div>
 		</div>
+		</div>
 		<div class="continfo">
 			<h2>Physician Information</h2>
-			<div class="form-group">
+			<div class="container">
+			<div class="row">
 				<label for="degree" class="col-sm-2 control-label whitelabel">Degree:</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" id="degree" name="degree" value="
@@ -414,7 +461,9 @@ echo <<<EOL
 " required>
                 </div>			
 			</div>
-			<div class="form-group">
+			</div>
+			<div class="container">
+			<div class="row">
 				<label for="school" class="col-sm-2 control-label whitelabel">College/University:</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" id="school" name="school" value="
@@ -424,7 +473,9 @@ echo <<<EOL
 " required>
 				</div>
 			</div>
-			<div class="form-group">
+			</div>
+			<div class="container">
+			<div class="row">
 				<label for="department" class="col-sm-2 control-label whitelabel">Department(s):</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" id="department" name="department" value="
@@ -434,7 +485,9 @@ echo <<<EOL
 " required>
 				</div>
 			</div>
-			<div class="form-group">
+			</div>
+			<div class="container">
+			<div class="row">
 				<label for="experience" class="col-sm-2 control-label whitelabel">Years of Experience:</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" id="experience" name="experience" value="
@@ -444,7 +497,9 @@ echo <<<EOL
 " required>
 				</div>
 			</div>
-			<div class="form-group">
+			</div>
+			<div class="container">
+			<div class="row">
 				<label for="address" class="col-sm-2 control-label whitelabel">Work Address:</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" id="address" name="address" value="
@@ -454,7 +509,9 @@ echo <<<EOL
 " required>
 				</div>
 			</div>
-			<div class="form-group">
+			</div>
+			<div class="container">
+			<div class="row">
 				<label for="citystate" class="col-sm-2 control-label whitelabel">City, State:</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" id="citystate" name="citystate" value="
@@ -464,7 +521,9 @@ echo <<<EOL
 " required>
 				</div>
 			</div>
-			<div class="form-group">
+			</div>
+			<div class="container">
+			<div class="row">
 				<label for="zipcode" class="col-sm-2 control-label whitelabel">Zipcode:</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" id="zipcode" name="zipcode" value="
@@ -474,7 +533,9 @@ echo <<<EOL
 " required>
 				</div>
 			</div>
-			<div class="form-group">
+			</div>
+			<div class="container">
+			<div class="row">
 				<label for="phone" class="col-sm-2 control-label whitelabel">Work/Office Phone:</label>
 				<div class="col-sm-10">
 					<input type="text" size="8" class="form-control" id="phone" name="phone" value="
@@ -485,7 +546,9 @@ echo <<<EOL
 				</div>
 			</div>
 		</div>
-		<div class="form-group">
+		</div>
+			<div class="container">
+			<div class="row">
 			    <div class="col-sm-offset-2 col-sm-10">
 			      	<button type="submit" class="btn btn-success">Save Settings</button>
 			    </div>

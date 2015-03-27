@@ -30,7 +30,9 @@ h2 {
 .pad8left {
 	margin-left: 8%;
 }
-
+.row {
+  padding-top: .5%;
+}
 .container {
    width: 100%;
 }

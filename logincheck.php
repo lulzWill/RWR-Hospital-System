@@ -39,7 +39,7 @@
 	  exit;
 	} catch (ParseException $error) {
 	  // The login failed. Check error to see why.
-	  header("Location: test.php");
+	  header("Location: index.php");
 	  exit;
 	}
 ?>

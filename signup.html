@@ -74,26 +74,33 @@
 		
 		<form class="form-horizontal" action="signupuser.php" method="post" id="signupForm" onsubmit="return validateForm()">
 
-			<div class="form-group">
+			<div class="container">
+			<div class="row">
 				<label for="username" class="col-sm-2 control-label whitelabel">Email Address:</label>
 				<div class="col-sm-10">
 					<input type="email" class="form-control" id="username" name="username" placeholder="Please enter your email address!" required>
 				</div>
 			</div>
-			<div class="form-group">
+			</div>
+			<div class="container">
+			<div class="row">
 				<label for="firstname" class="col-sm-2 control-label whitelabel">First Name:</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" id="firstname" name="firstname" placeholder="Your First Name" required>
 				</div>
 			</div>
-			<div class="form-group">
+			</div>
+			<div class="container">
+			<div class="row">
 				<label for="lastname" class="col-sm-2 control-label whitelabel">Last Name:</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" id="lastname" name="lastname" placeholder="Your Last Name" required>
 				</div>
 			</div>
             
-			<div class="form-group">
+			</div>
+			<div class="container">
+			<div class="row">
 				<label for="sex" class="col-sm-2 control-label whitelabel">Sex:</label>
 				<div class="col-sm-10">
 					<select class="form-control" name="sex" id="sex" name="sex" required>
@@ -104,7 +111,9 @@
 				</div>
 			</div>
 			
-			<div class="form-group">
+			</div>
+			<div class="container">
+			<div class="row">
 				<label for="dateofbirth" class="col-sm-2 control-label whitelabel">Birthdate:</label>
 				<div class="col-sm-2">
 					<div class="input-group input-append date" id="dateRangePicker">
@@ -114,7 +123,9 @@
 				</div>
 			</div>
 
-			<div class="form-group">
+			</div>
+			<div class="container">
+			<div class="row">
 				<label for="role" class="col-sm-2 control-label whitelabel">Position:</label>
 				<div class="col-sm-10 selectContainer">
 		            <select class="form-control" name="role" onchange="validateRole()" required>
@@ -127,21 +138,27 @@
 		        </div>
 			</div>
 
-			<div class="form-group">
+			</div>
+			<div class="container">
+			<div class="row">
 			    <label for="password" class="col-sm-2 control-label whitelabel">Password</label>
 			    <div class="col-sm-10">
 			      	<input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
 			    </div>
 			</div>
 
-			<div class="form-group">
+			</div>
+			<div class="container">
+			<div class="row">
 			    <label for="confirmPassword" class="col-sm-2 control-label whitelabel">Confirm Password</label>
 			    <div class="col-sm-10">
 			      	<input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Re-Enter Password" required>
 			    </div>
 			</div>
 
-			<div class="form-group">
+			</div>
+			<div class="container">
+			<div class="row">
 			    <div class="col-sm-offset-2 col-sm-10">
 			      	<button type="submit" class="btn btn-success">Sign Up</button>
 			    </div>
