@@ -31,9 +31,7 @@ h2 {
 	margin-left: 8%;
 }
 
-.col-sm-10 {
-  width: 80%;
+.container {
+   width: 100%;
 }
 
-.form-group {
-}

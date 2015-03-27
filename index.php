@@ -33,7 +33,6 @@
 			<meta name="viewport" content="width=device-width, initial-scale=1">
 
 		    <!-- Bootstrap -->
-			<link href="test.css" rel="stylesheet">
 		    <link href="css/bootstrap.min.css" rel="stylesheet">
 			<link href="customcss.css" rel="stylesheet">
 		    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -53,23 +52,29 @@
 			Sign In Please
 		</h2>
 		<form class="form-horizontal" action="logincheck.php" method="POST">
-			<div class="form-group">
-				<label for="username" class="col-sm-2 control-label whitelabel">Email Address:</label>
-				<div class="col-sm-10">
+			<div class="container">
+			<div class="row">
+				<label for="username" class="col-lg-2 control-label whitelabel">Email Address:</label>
+				<div class="col-lg-10">
 					<input type="email" class="form-control" id="username" name="username" placeholder="Please enter your email address!">
 				</div>
 			</div>
-			<div class="form-group">
+			</div>
+			<div class="container">
+			<div class="row">
 			    <label for="password" class="col-sm-2 control-label whitelabel">Password:</label>
 			    <div class="col-sm-10">
 			      	<input type="password" class="form-control" id="password" name="password" placeholder="Password">
 			    </div>
 			</div>
-			<div class="form-group">
+			</div>
+			<div class="container">
+			<div class="row">
 			    <div class="col-sm-offset-2 col-sm-10">
 			      	<button type="submit" class="btn btn-default">Sign In</button>
 					<a href="signup.php"><label class="whitelabel hoverlight pad8left">Sign Up</label></a>
 			    </div>
+			</div>
 			</div>
 		</form>
 	</body>
