@@ -1,12 +1,11 @@
 <?php
+	include_once("navbar.php");
 	require 'vendor/autoload.php';
 	use Parse\ParseClient;
 	use Parse\ParseUser;
 	use Parse\ParseException;
 	use Parse\ParseQuery;
 	use Parse\ParseSessionStorage;
-	
-	session_start();
 	
 	ParseClient::initialize('kHbyXSdw4DIXw4Q0DYDcdM8QTDQnOewKJhc9ppAr', '9h80LHVDFOSAgVQ1NSPf5IgaWAaDnHdPoJWt2CDc', '3q1HVOiiywyBdtalMN1sozceJbNXuD9WKZSSmgvI');
 	
@@ -45,8 +44,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
-
-    <?php include_once("navbar.php"); ?>
 
 
 	<!-- Include Parse Stuff -->

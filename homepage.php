@@ -6,11 +6,7 @@
 	use Parse\ParseQuery;
 	use Parse\ParseSessionStorage;
 	
-<<<<<<< HEAD
-	session_start();
-=======
 	include_once("navbar.php");
->>>>>>> origin/best_working_version
 	
 	ParseClient::initialize('kHbyXSdw4DIXw4Q0DYDcdM8QTDQnOewKJhc9ppAr', '9h80LHVDFOSAgVQ1NSPf5IgaWAaDnHdPoJWt2CDc', '3q1HVOiiywyBdtalMN1sozceJbNXuD9WKZSSmgvI');
 	
