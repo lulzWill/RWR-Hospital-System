@@ -87,12 +87,12 @@
   </head>
   
   <body>
-	<div style="position: relative; top: 5%; left: 30%; width: 70%; font-weight: bold; font-size: 32px; color: black; margin-bottom: 20px;">
+	<div style="position: relative; top: 5%; left: 30%; width: 70%; font-weight: bold; font-size: 32px; color: white; margin-bottom: 20px;">
 		<p>RWR Hospital Management System</p>
 	</div>
 	  
 	  
-	<label for="doctor" class="col-sm-12 control-label whitelabel">Select a Physician:</label>
+	<label for="doctor" class="col-sm-12 control-label whitelabel" style="color: white;">Select a Physician:</label>
 	<div class="col-sm-10 selectContainer">
 		<select class="form-control" name="role" onchange="validateRole()" required>
 		    <option value="">Choose one</option>
@@ -152,7 +152,7 @@
 
 	
 		<div class="col-lg-10">
-			<div id="calendar" style="margin-left: 10%; margin-top: 5%;"></div>
+			<div id="calendar" style="margin-left: 10%; margin-top: 5%; background-color: #ffffff; opacity: 0.8;"></div>
 		</div>
 	
 
@@ -288,6 +288,7 @@
 				$('#apptButton').on('click', function (e) {
 
      				var date1 = $("#datetimepicker12").data("datetimepicker").getDate();
+     				console.log(date1);
      				document.getElementById("closeButton").innerHTML= date1;
 
 				});
