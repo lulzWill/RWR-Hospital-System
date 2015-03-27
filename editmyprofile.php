@@ -6,7 +6,7 @@ require 'vendor/autoload.php';
 	use Parse\ParseQuery;
 	use Parse\ParseSessionStorage;
 	
-	session_start();
+	require_once('navbar.php');
 	
 	ParseClient::initialize('kHbyXSdw4DIXw4Q0DYDcdM8QTDQnOewKJhc9ppAr', '9h80LHVDFOSAgVQ1NSPf5IgaWAaDnHdPoJWt2CDc', '3q1HVOiiywyBdtalMN1sozceJbNXuD9WKZSSmgvI');
 	ParseClient::setStorage( new ParseSessionStorage() );
@@ -56,7 +56,6 @@ echo <<<EOL
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bootstrap 101 Template</title>
-
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 	<link href="editprofile.css" rel="stylesheet">
