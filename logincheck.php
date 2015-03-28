@@ -18,7 +18,7 @@
 	
 	if(empty($results[0]))
 	{
-  	  header("Location: test.php");
+  	  header("Location: index.php");
   	  exit;
 	}
 	
