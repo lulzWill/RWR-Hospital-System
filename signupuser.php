@@ -24,11 +24,14 @@
 	  // Hooray! Let them use the app now.
 	  if($user->get("position") == "patient")
 	  {
+		  $tempname = $_POST["firstname"] . " " . $_POST["lastname"];
+		  $name = strtolower($tempname);
 		  $patient = new ParseObject("Patient");
 		  $patient->set("email", $_POST["username"]);
 	  	  $patient->set("first_name", $_POST["firstname"]);
 	  	  $patient->set("last_name", $_POST["lastname"]);
 		  $patient->set("date_of_birth", $_POST["date"]);
+		  $patient->set("name", $name);
 		  
 		  try {
 		    $patient->save();
@@ -43,6 +46,7 @@
 	  	  $patient->set("first_name", $_POST["firstname"]);
 	  	  $patient->set("last_name", $_POST["lastname"]);
 		  $patient->set("date_of_birth", $_POST["date"]);
+		  $patient->set("sex", $_POST["sex"]);
 		  
 		  try {
 		    $patient->save();

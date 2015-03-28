@@ -52,9 +52,8 @@ h3:hover{
 }
 
 img {
-	margin-left: 10%;
-	height: 200px;
-	width: 200px;
+	height: 300px;
+	width: 300px;
 }
 
 .whitelabel {
@@ -67,4 +66,21 @@ img {
 
 .pad8left {
 	margin-left: 8%;
+}
+
+.image {
+  float: left;
+  margin-left: 10%;
+  padding-right: 70%;
+}
+.container  {
+  width: 33%;
+  margin-left: 6%;
+  float: left;
+}
+
+.container2 {
+  width: 33%;
+  float:left;
+  padding-left: 2%;
 }

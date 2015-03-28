@@ -15,7 +15,7 @@
 	
 	if(!$currentUser)
 	{
-		header("Location: test.php");
+		header("Location: index.php");
 		exit;
 		
 	}

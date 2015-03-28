@@ -35,6 +35,12 @@
 	
 	$currentUser = ParseUser::getCurrentUser();
 	
+	if(!$currentUser)
+	{
+		header("Location: index.php");
+		exit;
+	}
+	
 	
 	if($currentUser->get("position") == "patient")
 	{
@@ -43,7 +49,7 @@
 		    <body>
 		  	<body>
 			  <a href="editmyprofile.php">
-				<h3>Edit Profile Information</h3>
+				<h3>Edit Contact Information</h3>
 		  		<h1>
 			  </a>
 EOL;
@@ -170,6 +176,8 @@ EOL;
 		echo "Phone: " . $physician->get("phone") . "</br>";
 		echo "Email Address: " . $physician->get("email") . "</br>";
 		echo "</h2>";
+		echo "<h4>Search for Patient Information</h4>";
+		include_once("patientsearchbar.php");
 	}
 	if($currentUser->get("position") == "nurse")
 	{
