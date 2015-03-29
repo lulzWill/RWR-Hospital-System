@@ -91,7 +91,12 @@ EOL;
 		echo '<div class="container2">';
 		echo "<h4>Patient Personal Information</h4>";
 		echo "<h2> Sex: " . $patient->get("sex") . "</br>";
-		echo "Date of Birth: " . $patient->get("date_of_birth") . " </br>";
+		$dob = $patient->get("date_of_birth");
+		$bday = new DateTime($patient->get("date_of_birth"));
+		$today = new DateTime('00:00:00');
+		echo "Age: ";
+		echo $bday->diff($today)->format("%y year(s), %m month(s), %d day(s) old");
+		echo "</br>Date of Birth: " . $patient->get("date_of_birth") . " </br>";
 		echo "Insurance: " . $patient->get("insurance") . "</br>";
 		echo "Allergies: " . $patient->get("allergies") . "</br>";
 		echo "Pre-existing Conditions: " . $patient->get("pre_conditions") . "</br>";
@@ -102,9 +107,8 @@ EOL;
 	}
 	else
 	{
-		header('Location: viewprofile.php');
+		echo 'HI';
+		echo $_POST["patientname"];
+		//header('Location: viewprofile.php');
 	}
-	
-	
-
 ?>
