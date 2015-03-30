@@ -1,24 +1,36 @@
 body {
-	position:relative;
 	background-image: url("bgs/profilebg.jpg");
-	background-attachment: fixed;
-	background-size: 100% 100%;
 	padding-top: 70px;
-	margin-top: 0%;
 }
 
 h2 {
   color: white;
   margin: 1% 0% 0% 0%;
+  font-size: 1.5em;
 }
 
 img {
-  height: 50px;
-  width: 50px;
+  float: none;
+  margin-left: auto;
+  margin-right: auto;
+  height: 100px;
+  width: 100px;
+  
+}
+
+h6 {
+  text-decoration: underline;
+  color: cyan;
+  font-size: 1.5em;
+}
+
+.row {
+  padding-bottom: .5%;
+  vertical-align: center;
 }
 
 .container {
-  padding: 0% 0% 0% 0%;
-  margin: 0% 0% 0% 5%;
-  
+  width: 100%;
 }
+
+

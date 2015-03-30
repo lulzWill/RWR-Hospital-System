@@ -32,6 +32,7 @@
 	  	  $patient->set("last_name", $_POST["lastname"]);
 		  $patient->set("date_of_birth", $_POST["date"]);
 		  $patient->set("name", $name);
+		  $patient->set("sex", $_POST["sex"]);
 		  
 		  try {
 		    $patient->save();

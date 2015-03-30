@@ -41,9 +41,9 @@
 		
 	}
 	
-	$name = strtolower($_POST["patientname"]);
+	$email = strtolower($_POST["patientemail"]);
 	$query=new ParseQuery("Patient");
-	$query->equalTo("name", $name);
+	$query->equalTo("email", $email);
 	$patient=$query->first();
 	if(!empty($patient))
 	{
