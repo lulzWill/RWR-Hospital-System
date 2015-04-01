@@ -27,6 +27,10 @@
 	use Parse\ParseQuery;
 	use Parse\ParseSessionStorage;
 	
+	header('Cache-Control: no cache'); //no cache
+	session_cache_limiter('private_no_expire'); // works
+	//session_cache_limiter('public'); // works too
+	
 	include_once("navbar.php");
 	
 	ParseClient::initialize('kHbyXSdw4DIXw4Q0DYDcdM8QTDQnOewKJhc9ppAr', '9h80LHVDFOSAgVQ1NSPf5IgaWAaDnHdPoJWt2CDc', '3q1HVOiiywyBdtalMN1sozceJbNXuD9WKZSSmgvI');
@@ -41,7 +45,7 @@
 		exit;
 		
 	}
-	
+
 	$name = strtolower($_POST["patientname"]);
 	$query=new ParseQuery("Patient");
 	$query->equalTo("name", $name);

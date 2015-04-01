@@ -9,5 +9,5 @@ echo <<<EOL
   </div><!-- /.col-lg-6 -->
 </form>
 EOL;
-
+unset($_SESSION["name"]);
 ?>
