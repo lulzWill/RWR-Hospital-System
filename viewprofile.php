@@ -49,9 +49,11 @@
 		    <body>
 		  	<body>
 			  <a href="editmyprofile.php">
-				<h3>Edit Contact Information</h3>
+			    <div class="myprofilecontainerright">
+				<h3>Edit Profile Information</h3></a><br><a href="editmymedical.php"><h3>Edit Medical Information</h3></a></div>
+				<div class="myprofilecontainerleft">
 		  		<h1>
-			  </a>
+			  
 EOL;
 				echo $currentUser->get("firstname") . "'s Profile";
 				echo <<<EOL
@@ -108,7 +110,7 @@ EOL;
 		echo "Secondary's Relationship: " . $patient->get("emerg_rel2") . "</br>";
 		echo "</h2>";
 		
-		echo '<a href="medicalrecords.php"><h5>Link to Medical Information</h5></a>';
+		echo '<a href="medicalrecords.php"><h5>Link to Medical Information</h5></a></div>';
 		
 	}
 	if($currentUser->get("position") == "physician")

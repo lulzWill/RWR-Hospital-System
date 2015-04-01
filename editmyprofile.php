@@ -13,6 +13,14 @@
 	ParseClient::setStorage( new ParseSessionStorage() );
 	$currentUser = ParseUser::getCurrentUser();
 	$currentUser->save();
+	
+	if(!$currentUser)
+	{
+		header("Location: index.php");
+		exit;
+		
+	}
+	
 	if($currentUser->get("position") == "patient")
 	{
 		try {

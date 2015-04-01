@@ -21,9 +21,10 @@ h2 {
 }
 
 h3 {
+	margin: 1% 5% 0% 0%;
 	float: right;
-	margin-right: 5%;
 	color: yellow;
+	clear: right;
 }
 
 h4 {
@@ -67,4 +68,16 @@ img {
 
 .pad8left {
 	margin-left: 8%;
+}
+
+.myprofilecontainerleft {
+	width: 50%;
+	background-color:red;
+	float: left;
+}
+
+.myprofilecontainerright {
+	width: 50%;
+	background-color: blue;
+	float: right;
 }
