@@ -49,8 +49,11 @@
 	$name = strtolower($_POST["patientname"]);
 	$query=new ParseQuery("Patient");
 	$query->equalTo("name", $name);
-	$patient=$query->find();
-	$query->descending("date_of_birth");
+	$query2=new ParseQuery("Patient");
+	$query2->equalTo("lower_last_name", $name);
+	$mainQuery = ParseQuery::orQueries([$query, $query2]);
+	$patient=$mainQuery->find();
+	$mainQuery->descending("date_of_birth");
 	if(!empty($patient))
 	{
 		if(count($patient) == 1)

@@ -25,13 +25,16 @@
 	  if($user->get("position") == "patient")
 	  {
 		  $tempname = $_POST["firstname"] . " " . $_POST["lastname"];
+		  $tempname2 = $_POST["lastname"];
 		  $name = strtolower($tempname);
+		  $name2 = strtolower($tempname2);
 		  $patient = new ParseObject("Patient");
 		  $patient->set("email", $_POST["username"]);
 	  	  $patient->set("first_name", $_POST["firstname"]);
 	  	  $patient->set("last_name", $_POST["lastname"]);
 		  $patient->set("date_of_birth", $_POST["date"]);
 		  $patient->set("name", $name);
+		  $patient->set("lower_last_name", $name2);
 		  $patient->set("sex", $_POST["sex"]);
 		  
 		  try {
