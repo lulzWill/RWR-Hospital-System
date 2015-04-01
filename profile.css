@@ -72,12 +72,10 @@ img {
 
 .myprofilecontainerleft {
 	width: 50%;
-	background-color:red;
 	float: left;
 }
 
 .myprofilecontainerright {
 	width: 50%;
-	background-color: blue;
 	float: right;
 }
