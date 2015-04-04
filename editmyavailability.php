@@ -98,6 +98,11 @@
 			<a href="viewprofile.php">Exit without Saving</a>
 		</h1>
 
+		<div style="margin-right: 30%">
+			<button class="btn btn-primary" style="float: right;" id="selNone" onclick="deselectAll()">Deselect All</button>
+			<button class="btn btn-primary" style="float: right;" id="selAll" onclick="selectAll()">Select All</button>
+	    </div>
+
 		<form class="form-horizontal" id="availForm">
 EOL;
 	echo '<input type="radio" hidden="true" name="physEmail" id="physEmail" value="' . $currentUser->get("email") . '"><input type="radio" hidden="true" name="curIndex" id="curIndex" value="0">';
@@ -105,7 +110,7 @@ echo <<<EOL
 			<label for="dateofavail" class="col-sm-2 control-label whitelabel" id="datelbl">Date:</label>
 					<div class="col-sm-2">
 						<div class="input-group input-append date" id="dateRangePicker">
-	                		<input type="text" class="form-control" name="dateofavail" id="dateofavail" onchange="editTimes()" required/>
+	                		<input type="text" class="form-control" name="dateofavail" id="dateofavail" required/>
 	                		<span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
 	            		</div>
 	            		</br>
@@ -176,7 +181,6 @@ echo <<<EOL
 				</table>
 			</div>
 		</form>
-
 		
 
 		<script>
@@ -291,6 +295,21 @@ echo <<<EOL
 				});
 			}
 
+			function deselectAll()
+			{
+				for(var i = 0; i < 18; i++)
+				{
+					document.getElementById(i).checked = false;
+				}
+			}
+
+			function selectAll()
+			{
+				for(var i = 0; i < 18; i++)
+				{
+					document.getElementById(i).checked = true;
+				}
+			}
 			$(document).ready(function() {
 			    $('#dateRangePicker')
 			        .datepicker({
@@ -318,6 +337,7 @@ echo <<<EOL
 			        })
 			        .on('changeDate', function(e) {
 			            // Revalidate the date field
+			            editTimes();
 			            $('#dateRangeForm').formValidation('revalidateField', 'date');
 			        });
 
