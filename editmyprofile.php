@@ -38,6 +38,9 @@
 			$query=new ParseQuery("Physician");
 			$query->equalTo("email", $currentUser->get("email"));
 			$physician=$query->first();
+			$query2=new ParseQuery("Specialties");
+			$query2->exists("name");
+			$specialties=$query2->find();
 		}
 		catch (ParseException $ex) {
 	
@@ -89,7 +92,13 @@ echo <<<EOL
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />
 
 	<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
-
+	<script>
+		$('option').mousedown(function(e) {
+			e.preventDefault();
+			$(this).prop('selected', !$(this).prop('selected')) ? false : true;
+			return false;
+		});
+	</script>
 	<style type="text/css">
 		/**
 		 * Override feedback icon position
@@ -326,6 +335,33 @@ echo <<<EOL
 			<h2>Physician Information</h2>
 			<div class="container">
 			<div class="row">
+				<label for="specialties" class="col-sm-2 control-label whitelabel">Specialties:</label>
+				<div class="col-sm-2 offset-2" style="font-size: em; color: gray; padding-right: 0%;">
+EOL;
+$myspecs = $physician->get("area_of_spec");
+$list = explode(", ", $myspecs);
+				for($i=0; $i < count($specialties); $i++)
+				{
+					$checked="unchecked";
+					foreach($list as $j)
+					{
+						if($specialties[$i]->get("name") === $j)
+						{
+							$checked="checked";
+						}
+					}
+					echo '<input type="checkbox" name="specialties[]" value="' . $specialties[$i]->get("name") . '"' . $checked . '>' . $specialties[$i]->get("name") . '</input></br>';
+					if($i%(count($specialties)/2)==0 && $i!=0)
+					{
+						echo '</div><div class="col-sm-2 offset-4" style="font-size: em; color: gray;">';
+					}
+				}
+echo <<<EOL
+				</div>
+			</div>
+			</div>
+			<div class="container">
+			<div class="row">
 				<label for="degree" class="col-sm-2 control-label whitelabel">Degree:</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" id="degree" name="degree" value="
@@ -343,18 +379,6 @@ echo <<<EOL
 					<input type="text" class="form-control" id="school" name="school" value="
 EOL;
 echo $physician->get("school");
-echo <<<EOL
-" required>
-				</div>
-			</div>
-			</div>
-			<div class="container">
-			<div class="row">
-				<label for="area_of_spec" class="col-sm-2 control-label whitelabel">Area of Specialization(s):</label>
-				<div class="col-sm-10">
-					<input type="text" class="form-control" id="area_of_spec" name="area_of_spec" value="
-EOL;
-echo $physician->get("area_of_spec");
 echo <<<EOL
 " required>
 				</div>

@@ -76,6 +76,8 @@ EOL;
 			echo <<<EOL
 			<body>
 			<body>
+			<div class="panel panel-default" style="margin-left: 1%; margin-right: 1%;">
+			<div class="panel-body">
 			<div class="container">
 			  <div class="row">
 			  <div class="col-sm-2">
@@ -104,11 +106,11 @@ EOL;
 			   $profilePhoto = $patient[$i]->get("prof_pic");
 			   echo '<div class="container"><div class="row"><div class="col-sm-2">';
 			   echo '<img class="center-block" src="' . $profilePhoto->getURL() . '"></div>';
-               echo '<div class="col-sm-2 "><h2>' . $patient[$i]->get("first_name") . ' ' . $patient[$i]->get("last_name") . '</h2>';
-			   echo '</div><div class="col-sm-1 "><h2>' . $patient[$i]->get("sex") . '</h2>';
-			   echo '</div><div class="col-sm-1 "><h2>' . $patient[$i]->get("date_of_birth") . '</h2>';
-			   echo '</div><div class="col-sm-3 "><h2>' . $patient[$i]->get("email") . '</h2>';
-			   echo '</div><div class="col-sm-3 ">';
+               echo '<div class="col-sm-2 " style="padding-top: 45px;"><h2>' . $patient[$i]->get("first_name") . ' ' . $patient[$i]->get("last_name") . '</h2>';
+			   echo '</div><div class="col-sm-1 " style="padding-top: 45px;"><h2>' . $patient[$i]->get("sex") . '</h2>';
+			   echo '</div><div class="col-sm-1 " style="padding-top: 45px;"><h2>' . $patient[$i]->get("date_of_birth") . '</h2>';
+			   echo '</div><div class="col-sm-3 " style="padding-top: 45px;"><h2>' . $patient[$i]->get("email") . '</h2>';
+			   echo '</div><div class="col-sm-3 " style="padding-top: 35px;">';
 echo <<<EOL
 			<form method="POST" action="patientsearch.php" id="patientsearch">
               <input type="hidden" class="form-control" name="patientemail" id="patientemail" value="
@@ -121,6 +123,7 @@ echo <<<EOL
 EOL;
 			   echo '</div></div></div>';
             }
+			echo '</div></div>';
 		}
 	}
 	else

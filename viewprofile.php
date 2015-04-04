@@ -164,7 +164,7 @@ EOL;
 		{
 			echo "Degree: </br>";
 		}
-		echo "Specialties: " .$physician->get("area_of_spec") . "</br>";
+		echo "Specialties: " . $physician->get("area_of_spec") . "</br>";
 		echo "Years of Experience: " . $physician->get("experience") . "</br>";
 		if(!empty($physician->get("address")))
 		{

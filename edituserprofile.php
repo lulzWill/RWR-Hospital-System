@@ -62,6 +62,19 @@
 		$physician->set("citystate", $_POST["citystate"]);
 		$physician->set("phone", $_POST["phone"]);
 		$physician->set("zipcode", $_POST["zipcode"]);
+		$physician->setArray("specialties", $_POST["specialties"]);
+		foreach($_POST["specialties"] as $spec)
+		{
+			if(empty($string))
+			{
+				$string = $spec;
+			}
+			else
+			{
+				$string = $string . ', ' . $spec;
+			}
+		}
+		$physician->set("area_of_spec", $string);
 		$file = ParseFile::createFromFile($_POST["prof_pic"], "myprofilepic.jpg");
 		$file->save();
 		$physician->set("prof_pic", $file);

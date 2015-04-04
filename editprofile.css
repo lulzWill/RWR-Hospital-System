@@ -42,6 +42,10 @@ h1 a:hover {
 	color:gray;
 }
 
+.form-control {
+	width: 40%;
+}
+
 .row {
 	padding-bottom: .5%;
 }
