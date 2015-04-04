@@ -91,7 +91,7 @@
 	  
 	  
 	<form class="form-inline" method="POST" action="scheduleApt.php" name="scheduleApt" id="scheduleApt">
-		<div class="form-group" style="margin-left: 8%;">
+		<div class="form-group" style="margin-left: 6%;">
 			<label for="specialty" class="col-sm-12 control-label whitelabel" style="color: white;">Select a Specialization:</label>
 			<div class="col-sm-10 selectContainer">
 				<select class="form-control" id="specialty" name="specialty" onchange="fillPhysicians()" required>
@@ -112,9 +112,31 @@ EOL;
 		<div class="form-group">
 			<label for="doctor" class="col-sm-12 control-label whitelabel" style="color: white;">Select a Physician:</label>
 			<div class="col-sm-10 selectContainer">
-				<select class="form-control" name="doctorSelect" id="doctorSelect" onchange="fillTimes()" disabled="true" required>
+				<select class="form-control" name="doctorSelect" id="doctorSelect" onchange="docChanged()" disabled="true" required>
 				    <option value="">Select a Doctor</option>
 		        </select>
+		        <!-- Button trigger modal -->
+				<button type="button" class="btn btn-primary btn-med" data-toggle="modal" data-target="#docModal" disabled="true" id="docModalBTN">
+					<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+				</button>
+
+				<!-- Modal -->
+				<div class="modal fade" id="docModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				  <div class="modal-dialog">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				        <h4 class="modal-title" id="docModalLbl">Modal title</h4>
+				      </div>
+				      <div class="modal-body" id="docInfoDiv">
+				        ...
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>
 			</div>
 		</div>
 
@@ -124,14 +146,13 @@ EOL;
 				<select class="form-control" name="doctor" id="time" onchange="" disabled="true" required>
 				    <option value="">Choose one</option>
 		        </select>
+		        <button type="submit" class="btn btn-primary" style="float: right;">Schedule Appointment</button>
 			</div>
 		</div>
-		
-		<button type="submit" class="btn btn-primary" style="float: right;">Schedule Appointment</button>
 	</form>
 
-	
-
+EOL;
+echo <<<EOL
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
 
 	<div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
@@ -190,11 +211,9 @@ EOL;
              events_source: function () { return []; }
          });
 	</script>
-		
-		
-	  
 
     <script type="text/javascript">
+
     	function fillPhysicians()
 			{
 				Parse.initialize("kHbyXSdw4DIXw4Q0DYDcdM8QTDQnOewKJhc9ppAr", "dnSrc9MZjvPGuruDghO4imSb6OHqoJb3vyElTJAH");
@@ -216,7 +235,7 @@ EOL;
 					  	{
 					  		var option = document.createElement("option");
 					  		option.label = results[i].get("last_name");
-					  		option.value = results[i].get("last_name");
+					  		option.value = results[i].get("email");
 					  		document.scheduleApt.doctorSelect.add(option);
 					  	}
 					  },
@@ -233,10 +252,52 @@ EOL;
 				{
 					document.scheduleApt.doctorSelect.disabled = true;
 				}
-
+				if(document.scheduleApt.doctorSelect.selectedIndex != 0)
+				{
+					document.getElementById("docModalBTN").disabled = false;
+				}
+				else
+				{
+					document.getElementById("docModalBTN").disabled = true;
+				}
 			}
-	</script>
-	<script>
+
+			function docChanged() {
+				Parse.initialize("kHbyXSdw4DIXw4Q0DYDcdM8QTDQnOewKJhc9ppAr", "dnSrc9MZjvPGuruDghO4imSb6OHqoJb3vyElTJAH");
+
+				var Physician = Parse.Object.extend("Physician");
+				var query = new Parse.Query(Physician);
+
+				var d = document.forms["scheduleApt"]["doctorSelect"].value;
+
+				query.equalTo("email", d);
+
+				query.find({
+					  success: function(results) {
+					  	Physician = results[0];
+					  	document.getElementById("docModalLbl").innerHTML = "Doctor " + Physician.get("last_name");
+
+					  	document.getElementById("docInfoDiv").innerHTML = '<img height="20%" width="20%" src="' + Physician.get("prof_pic").url() + '"></br>Name: ' + Physician.get("first_name") + " " + Physician.get("last_name") +
+					  														'</br>Years of Experience: ' + Physician.get("experience") +
+					  														'</br>Degree: ' + Physician.get("degree") +
+					  														'</br>School: ' + Physician.get("school") +
+					  														'</br></br>Phone: ' + Physician.get("phone") +
+																			'</br>Available Times: TODO!';
+					  },
+					  error: function(error) {
+					    alert("Error: " + error.code + " " + error.message);
+					  }
+				});
+
+				if(document.scheduleApt.doctorSelect.selectedIndex != 0)
+				{
+					document.getElementById("docModalBTN").disabled = false;
+				}
+				else
+				{
+					document.getElementById("docModalBTN").disabled = true;
+				}
+			}
 			$(document).ready(function() {
 
 				$('#dateRangePicker')

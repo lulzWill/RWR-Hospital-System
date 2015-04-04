@@ -120,9 +120,8 @@ EOL;
 		    <body>
 		  	<body>
 			  <a href="editmyprofile.php">
-				<h3>Edit Profile Information</h3>
+				<h3>Edit Profile Information</h3></a><br><a href="editmyavailability.php"><h3>Edit Availability</h3></a>
 		  		<h1>
-			  </a>
 EOL;
 				echo "Doctor " . $currentUser->get("firstname") . " " . $currentUser->get("lastname") . "</br>";
 				echo <<<EOL
