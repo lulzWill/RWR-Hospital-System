@@ -259,12 +259,17 @@ echo <<<EOL
 			{
 				document.getElementById("setavail").disabled = false;
  				document.getElementById("setavail").innerHTML = "Set Availability For Day";
-
+ 				Parse.initialize("kHbyXSdw4DIXw4Q0DYDcdM8QTDQnOewKJhc9ppAr", "dnSrc9MZjvPGuruDghO4imSb6OHqoJb3vyElTJAH");
  				var appointment = Parse.Object.extend("appointments");
 				var query = new Parse.Query(appointment);
 
 				query.equalTo("physicianEmail", document.getElementById("physEmail").value);
 				query.equalTo("Date", document.getElementById("dateofavail").value);
+
+				for(var i = 0; i < 18; i++)
+				{
+					document.getElementById(i).checked = false;
+				}
 
 				query.find({
 					  success: function(results) {
