@@ -81,6 +81,7 @@
   <script type="text/javascript" src="bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
   <link rel="stylesheet" href="bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
+  <link rel="stylesheet" href="css/calendar.css">
 
   </head>
   
@@ -153,64 +154,6 @@ EOL;
 
 EOL;
 echo <<<EOL
-	<script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
-
-	<div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	        <h4 class="modal-title" id="myModalLabel">Select a Date & Time</h4>
-	      </div>
-	      <div class="modal-body">
-	        <form class="form-horizontal" action="schedule.php" method="post" id="scheduleForm">
-	        	<div class="form-group">
-				<div class="container">
-				    <div class="col-sm-6">
-				        <div class="form-group">
-				            <div class="row">
-				                <div class="col-md-8">
-				                    <div id="datetimepicker12"></div>
-				                </div>
-				            </div>
-				        </div>
-				    </div>
-				    <script type="text/javascript">
-				        $(function () {
-				            $('#datetimepicker12').datetimepicker({
-				                inline: true,
-				                sideBySide: true
-				            });
-				        });
-				    </script>
-				</div>
-				</div>
-	        </form>
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" id="closeButton" class="btn btn-default" data-dismiss="modal">Close</button>
-	        <button type="button" id="apptButton" class="btn btn-primary">Schedule</button>
-	      </div>
-	    </div>
-	  </div>
-	</div>
-
-	<script src="bower_components/underscore/underscore-min.js"></script>
-	<script src="bower_components/bootstrap-calendar/js/calendar.js"></script>
-
-	
-		<div class="col-lg-10">
-			<div id="calendar" style="margin-left: 10%; margin-top: 5%; background-color: #ffffff; opacity: 0.8;"></div>
-		</div>
-	
-
-	<script type="text/javascript">
-     var calendar = $("#calendar").calendar(
-         {
-             tmpl_path: "bower_components/bootstrap-calendar/tmpls/",
-             events_source: function () { return []; }
-         });
-	</script>
 
     <script type="text/javascript">
 

@@ -86,16 +86,261 @@
 	
 	<!-- Include Parse Stuff -->
     <script src="//www.parsecdn.com/js/parse-1.3.5.min.js"></script>
-  </head>
+
+    <link href="availability.css" rel="stylesheet">
+    </head>
   <body>
 	<body>
-		
 		<script type="text/javascript" src="js/bootstrap.js"></script>
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
-<h1>
-			RWR Hospital Management System
+		<h1>
+			Edit Availability
 			<a href="viewprofile.php">Exit without Saving</a>
 		</h1>
+
+		<form class="form-horizontal" id="availForm">
+EOL;
+	echo '<input type="radio" hidden="true" name="physEmail" id="physEmail" value="' . $currentUser->get("email") . '"><input type="radio" hidden="true" name="curIndex" id="curIndex" value="0">';
+echo <<<EOL
+			<label for="dateofavail" class="col-sm-2 control-label whitelabel" id="datelbl">Date:</label>
+					<div class="col-sm-2">
+						<div class="input-group input-append date" id="dateRangePicker">
+	                		<input type="text" class="form-control" name="dateofavail" id="dateofavail" onchange="editTimes()" required/>
+	                		<span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+	            		</div>
+	            		</br>
+	                	<button type="submit" class="btn btn-primary" style="float: right;" id="setavail">Set Availability For Day</button>
+					</div>
+			<div class="col-md" style="margin: 5%">
+				<table class="table table-hover table-bordered table-condensed">
+	 				<tr class="active">
+	 					<th class="active tableDiv">Time</th>
+	 					<th class="active tableDiv">Available?</th>
+	 					<th class="active tableDiv">Time</th>
+	 					<th class="active tableDiv">Available?</th>
+	 				</tr>
+	 				<tr class="active">
+	 					<td class="active"><h3 class="tableDiv">8:30-9:00</h3></td>
+	 					<td class="active"><div class="checkboxDiv"><input type="checkbox" class="form-control" name="eightThirtyNine" value="8:30-9:00" id = "0"></div></td>
+	 					<td class="active"><h3 class="tableDiv">1:00-1:30</h3></td>
+	 					<td class="active"><div class="checkboxDiv"><input type="checkbox" class="form-control" name="oneOneThirty" value="1:00-1:30" id = "9"></div></td>
+	 				</tr>
+	 				<tr class="active">
+	 					<td class="active"><h3 class="tableDiv">9:00-9:30</h3></td>
+	 					<td class="active"><div class="checkboxDiv"><input type="checkbox" class="form-control" name="nineNineThirty" value="9:00-9:30" id = "1"></div></td>
+	 					<td class="active"><h3 class="tableDiv">1:30-2:00</h3></td>
+	 					<td class="active"><div class="checkboxDiv"><input type="checkbox" class="form-control" name="oneThirtyTwo" value="1:30-2:00" id="10"></div></td>
+	 				</tr>
+	 				<tr class="active">
+	 					<td class="active"><h3 class="tableDiv">9:30-10:00</h3></td>
+	 					<td class="active"><div class="checkboxDiv"><input type="checkbox" class="form-control" name="nineThirtyTen" value="9:30-10:00" id = "2"></div></td>
+	 					<td class="active"><h3 class="tableDiv">2:00-2:30</h3></td>
+	 					<td class="active"><div class="checkboxDiv"><input type="checkbox" class="form-control" name="twoTwoThirty" value="2:00-2:30" id="11"></div></td>
+	 				</tr>
+	 				<tr class="active">
+	 					<td class="active"><h3 class="tableDiv">10:00-10:30</h3></td>
+	 					<td class="active"><div class="checkboxDiv"><input type="checkbox" class="form-control" name="tenTenThirty" value="10:00-10:30" id = "3"></div></td>
+	 					<td class="active"><h3 class="tableDiv">2:30-3:00</h3></td>
+	 					<td class="active"><div class="checkboxDiv"><input type="checkbox" class="form-control" name="twoThirtyThree" value="2:30-3:00" id="12"></div></td>
+	 				</tr>
+	 				<tr class="active">
+	 					<td class="active"><h3 class="tableDiv">10:30-11:00</h3></td>
+	 					<td class="active"><div class="checkboxDiv"><input type="checkbox" class="form-control" name="tenThirtyEleven" value="10:30-11:00" id = "4"></div></td>
+	 					<td class="active"><h3 class="tableDiv">3:00-3:30</h3></td>
+	 					<td class="active"><div class="checkboxDiv"><input type="checkbox" class="form-control" name="threeThreeThirty" value="3:00-3:30" id="13"></div></td>
+	 				</tr>
+	 				<tr class="active">
+	 					<td class="active"><h3 class="tableDiv">11:00-11:30</h3></td>
+	 					<td class="active"><div class="checkboxDiv"><input type="checkbox" class="form-control" name="elevenElevenThirty" value="11:00-11:30" id = "5"></div></td>
+	 					<td class="active"><h3 class="tableDiv">3:30-4:00</h3></td>
+	 					<td class="active"><div class="checkboxDiv"><input type="checkbox" class="form-control" name="threeThirtyFour" value="3:30-4:00" id="14"></div></td>
+	 				</tr>
+	 				<tr class="active">
+	 					<td class="active"><h3 class="tableDiv">11:30-12:00</h3></td>
+	 					<td class="active"><div class="checkboxDiv"><input type="checkbox" class="form-control" name="elevenThirtyNoon" value="11:30-12:00" id = "6"></div></td>
+	 					<td class="active"><h3 class="tableDiv">4:00-4:30</h3></td>
+	 					<td class="active"><div class="checkboxDiv"><input type="checkbox" class="form-control" name="fourFourThirty" value="4:00-4:30" id="15"></div></td>
+	 				</tr>
+	 				<tr class="active">
+	 					<td class="active"><h3 class="tableDiv">12:00-12:30</h3></td>
+	 					<td class="active"><div class="checkboxDiv"><input type="checkbox" class="form-control" name="noonNoonThirty" value="12:00-12:30" id = "7"></div></td>
+	 					<td class="active"><h3 class="tableDiv">4:30-5:00</h3></td>
+	 					<td class="active"><div class="checkboxDiv"><input type="checkbox" class="form-control" name="fourThirtyFive" value="4:30-5:00" id="16"></div></td>
+	 				</tr>
+	 				<tr class="active">
+	 					<td class="active"><h3 class="tableDiv">12:30-1:00</h3></td>
+	 					<td class="active"><div class="checkboxDiv"><input type="checkbox" class="form-control" name="noonThirtyOne" value="12:30-1:00" id = "8"></div></td>
+	 					<td class="active"><h3 class="tableDiv">5:00-5:30</h3></td>
+	 					<td class="active"><div class="checkboxDiv"><input type="checkbox" class="form-control" name="fiveFiveThirty" value="5:00-5:30" id="17"></div></td>
+	 				</tr>
+				</table>
+			</div>
+		</form>
+
+		
+
+		<script>
+
+			$('#availForm').submit(function () {
+ 				updateTimes();
+ 				document.getElementById("setavail").disabled = true;
+ 				document.getElementById("setavail").innerHTML = "Updated!";
+ 				return false;
+			});
+
+			function updateTimes()
+			{
+				Parse.initialize("kHbyXSdw4DIXw4Q0DYDcdM8QTDQnOewKJhc9ppAr", "dnSrc9MZjvPGuruDghO4imSb6OHqoJb3vyElTJAH");
+
+				for(var i = 0; i < 18; i++)
+				{
+					(function(i){
+						var appointment = Parse.Object.extend("appointments");
+						var query = new Parse.Query(appointment);
+
+						query.equalTo("physicianEmail", document.getElementById("physEmail").value);
+						query.equalTo("Date", document.getElementById("dateofavail").value);
+						query.equalTo("Time", document.getElementById(i).value);
+
+						query.find({
+						  success: function(results) {
+						    // Do something with the returned Parse.Object values
+						    var index = i;
+
+						    if(!results[0])
+						    {
+							    var appointment = Parse.Object.extend("appointments");
+								var appoint = new appointment();
+								
+							   	appoint.set("physicianEmail", document.getElementById("physEmail").value);
+								appoint.set("Date", document.getElementById("dateofavail").value);
+								appoint.set("Time", document.getElementById(index).value);
+								appoint.set("timeID", document.getElementById(index).id);
+
+								if(document.getElementById(index).checked)
+								{
+									appoint.set("available", true);
+								}
+								else
+								{
+									appoint.set("available", false);
+								}
+
+								appoint.save(null, {
+								  success: function(appoint) {
+								  },
+								  error: function(appoint, error) {
+								  }
+								});
+							}
+							else
+							{
+								if(document.getElementById(index).checked)
+								{
+									results[0].set("available", false);
+								}
+								else
+								{
+									results[0].set("available", false);
+								}
+								results[0].save();
+							}
+						  },
+						  error: function(error) {
+						    alert("Error: " + error.code + " " + error.message);
+						  }
+						});
+					})(i);
+				}	
+
+
+			}
+			function editTimes()
+			{
+				document.getElementById("setavail").disabled = false;
+ 				document.getElementById("setavail").innerHTML = "Set Availability For Day";
+
+ 				var appointment = Parse.Object.extend("appointments");
+				var query = new Parse.Query(appointment);
+
+				query.equalTo("physicianEmail", document.getElementById("physEmail").value);
+				query.equalTo("Date", document.getElementById("dateofavail").value);
+
+				query.find({
+					  success: function(results) {
+					  	for(var i = 0; i < results.length; i++)
+					  	{
+					  		if(results[i].get("available") == true)
+					  		{
+					  			document.getElementById(results[i].get("timeID")).checked = true;
+					  		}
+					  		else
+					  		{
+					  			document.getElementById(results[i].get("timeID")).checked = false;
+					  		}
+					  	}
+					  },
+					  error: function(error) {
+					    alert("MADE IT!");
+					  }
+				});
+			}
+
+			$(document).ready(function() {
+			    $('#dateRangePicker')
+			        .datepicker({
+			            format: 'mm/dd/yyyy',
+			            startDate: '01/01/1910',
+
+			            /*
+			            var today = new Date();
+						var dd = today.getDate();
+						var mm = today.getMonth()+1; //January is 0!
+						var yyyy = today.getFullYear();
+
+						if(dd<10) {
+						    dd='0'+dd
+						} 
+
+						if(mm<10) {
+						    mm='0'+mm
+						} 
+
+						today = mm+'/'+dd+'/'+yyyy;
+						*/
+			            endDate: '12/30/2020'
+			            //endDate: today
+			        })
+			        .on('changeDate', function(e) {
+			            // Revalidate the date field
+			            $('#dateRangeForm').formValidation('revalidateField', 'date');
+			        });
+
+					$('#dateRangeForm').formValidation({
+			        framework: 'bootstrap',
+			        icon: {
+			            valid: 'glyphicon glyphicon-ok',
+			            invalid: 'glyphicon glyphicon-remove',
+			            validating: 'glyphicon glyphicon-refresh'
+			        },
+			        fields: {
+			            date: {
+			                validators: {
+			                    notEmpty: {
+			                        message: 'The date is required'
+			                    },
+			                    date: {
+			                        format: 'MM/DD/YYYY',
+			                        min: '01/01/2010',
+			                        max: '12/30/2020',
+			                        message: 'The date is not a valid'
+			                    }
+			                }
+			            }
+			        }
+			    });
+			});
+		</script>
 	</body>
   </body>
 </html>
