@@ -19,7 +19,8 @@
 		exit;
 		
 	}
-?>
+	echo <<<EOL
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -89,18 +90,47 @@
 	</div>
 	  
 	  
-	<label for="doctor" class="col-sm-12 control-label whitelabel" style="color: white;">Select a Physician:</label>
-	<div class="col-sm-10 selectContainer">
-		<select class="form-control" name="role" onchange="validateRole()" required>
-		    <option value="">Choose one</option>
-            <option value="physician">Physician</option>
-            <option value="nurse">Nurse</option>
-            <option value="admin">Administrator</option>
-            <option value="patient">Patient</option>
-        </select>
-	</div>
+	<form class="form-inline" method="POST" action="scheduleApt.php" name="scheduleApt" id="scheduleApt">
+		<div class="form-group" style="margin-left: 8%;">
+			<label for="specialty" class="col-sm-12 control-label whitelabel" style="color: white;">Select a Specialization:</label>
+			<div class="col-sm-10 selectContainer">
+				<select class="form-control" id="specialty" name="specialty" onchange="fillPhysicians()" required>
+				    <option value="">Choose one</option>
+EOL;
+		            	$query = new ParseQuery("Specialties");
+		            	$results = $query->find();
 
-	<a href="#" class="btn btn-info" data-toggle="modal" data-target="#basicModal">Make an Appointment</a>
+		            	for($i = 0; $i < count($results); $i++)
+		            	{
+		            		echo '<option value="'; echo $results[$i]->get("name"); echo '">'; echo $results[$i]->get("name"); echo '</option>';
+		            	}
+
+		            	echo <<<EOL
+		        </select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="doctor" class="col-sm-12 control-label whitelabel" style="color: white;">Select a Physician:</label>
+			<div class="col-sm-10 selectContainer">
+				<select class="form-control" name="doctorSelect" id="doctorSelect" onchange="fillTimes()" disabled="true" required>
+				    <option value="">Select a Doctor</option>
+		        </select>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="time" class="col-sm-12 control-label whitelabel" style="color: white;">Select a Time:</label>
+			<div class="col-sm-10 selectContainer">
+				<select class="form-control" name="doctor" id="time" onchange="" disabled="true" required>
+				    <option value="">Choose one</option>
+		        </select>
+			</div>
+		</div>
+		
+		<button type="submit" class="btn btn-primary" style="float: right;">Schedule Appointment</button>
+	</form>
+
+	
 
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
 
@@ -164,68 +194,49 @@
 		
 	  
 
-    <script>
-    	function validateRole()
+    <script type="text/javascript">
+    	function fillPhysicians()
 			{
 				Parse.initialize("kHbyXSdw4DIXw4Q0DYDcdM8QTDQnOewKJhc9ppAr", "dnSrc9MZjvPGuruDghO4imSb6OHqoJb3vyElTJAH");
 				
-				var loginKeys = Parse.Object.extend("signupKeys");
-				var query = new Parse.Query(loginKeys);
+				var Physician = Parse.Object.extend("Physician");
+				var query = new Parse.Query(Physician);
 				
-				var d = document.forms["signupForm"]["role"].value;
-				if(d == "physician")
-				{
-					var physpass = prompt("Please Enter the Physician Creation Password", "");
-					query.equalTo("position", "physician");
-					query.find({
-					  success: function(results) {
-						var key = results[0].get("key");
-						if(physpass != key)
-						{
-							document.forms["signupForm"]["role"].selectedIndex = 0;
-						}
-					  },
-					  error: function(error) {
-					    alert("Error: " + error.code + " " + error.message);
-					  }
-					});
-				}
-				else if(d == "nurse")
-				{
-					var nursepass = prompt("Please Enter the Nurse Creation Password", "");
-					query.equalTo("position", "nurse");
-					query.find({
-					  success: function(results) {
-						var key = results[0].get("key");
-						if(nursepass != key)
-						{
-							document.forms["signupForm"]["role"].selectedIndex = 0;
-						}
-					  },
-					  error: function(error) {
-					    alert("Error: " + error.code + " " + error.message);
-					  }
-					});
-				}
-				else if(d == "admin")
-				{
-					var adminpass = prompt("Please Enter the Admin Creation Password", "");
-					query.equalTo("position", "admin");
-					query.find({
-					  success: function(results) {
-						var key = results[0].get("key");
-						if(adminpass != key)
-						{
-							document.forms["signupForm"]["role"].selectedIndex = 0;
-						}
-					  },
-					  error: function(error) {
-					    alert("Error: " + error.code + " " + error.message);
-					  }
-					});
-				}
-			}
+				var d = document.forms["scheduleApt"]["specialty"].value;
 
+				query.equalTo("area_of_spec", d);
+				document.scheduleApt.doctorSelect.options.length = 0;
+				var option = document.createElement("option");
+				option.label = "Select a Doctor";
+				document.scheduleApt.doctorSelect.add(option);
+
+				query.find({
+					  success: function(results) {
+					  	for(var i = 0; i < results.length; i++)
+					  	{
+					  		var option = document.createElement("option");
+					  		option.label = results[i].get("last_name");
+					  		option.value = results[i].get("last_name");
+					  		document.scheduleApt.doctorSelect.add(option);
+					  	}
+					  },
+					  error: function(error) {
+					    alert("Error: " + error.code + " " + error.message);
+					  }
+				});
+
+				if(document.scheduleApt.specialty.selectedIndex != 0)
+				{
+					document.scheduleApt.doctorSelect.disabled = false;
+				}
+				else
+				{
+					document.scheduleApt.doctorSelect.disabled = true;
+				}
+
+			}
+	</script>
+	<script>
 			$(document).ready(function() {
 
 				$('#dateRangePicker')
@@ -298,3 +309,5 @@
 
   </body>
 </html>
+EOL;
+?>
