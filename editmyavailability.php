@@ -235,9 +235,9 @@ echo <<<EOL
 							}
 							else
 							{
-								if(document.getElementById(index).checked)
+								if(document.getElementById(index).checked == true)
 								{
-									results[0].set("available", false);
+									results[0].set("available", true);
 								}
 								else
 								{
