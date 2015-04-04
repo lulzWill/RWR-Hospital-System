@@ -275,13 +275,14 @@ echo <<<EOL
 				query.find({
 					  success: function(results) {
 					  	Physician = results[0];
-					  	document.getElementById("docModalLbl").innerHTML = "Doctor " + Physician.get("last_name");
+					  	document.getElementById("docModalLbl").innerHTML = "Doctor " + Physician.get("first_name") + " " + Physician.get("last_name") + ", " + Physician.get("area_of_spec");
 
-					  	document.getElementById("docInfoDiv").innerHTML = '<img height="20%" width="20%" src="' + Physician.get("prof_pic").url() + '"></br>Name: ' + Physician.get("first_name") + " " + Physician.get("last_name") +
+					  	document.getElementById("docInfoDiv").innerHTML = '<img height="65%" width="65%" src="' + Physician.get("prof_pic").url() + '"></br>Name: ' + Physician.get("first_name") + " " + Physician.get("last_name") +
 					  														'</br>Years of Experience: ' + Physician.get("experience") +
 					  														'</br>Degree: ' + Physician.get("degree") +
 					  														'</br>School: ' + Physician.get("school") +
 					  														'</br></br>Phone: ' + Physician.get("phone") +
+					  														'</br>Location: ' + Physician.get("address") +
 																			'</br>Available Times: TODO!';
 					  },
 					  error: function(error) {
