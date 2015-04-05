@@ -243,7 +243,12 @@ echo <<<EOL
 
 				query.equalTo("physicianEmail", d);
 				query.ascending("Date");
-								
+				
+				document.scheduleApt.timeSelect.options.length = 0;
+				var option = document.createElement("option");
+				option.label = "Choose one";
+				document.scheduleApt.timeSelect.add(option);
+
 				query.find({
 					  success: function(results) {
 					  	for(var i = 0; i < results.length; i++)
