@@ -33,7 +33,6 @@
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-	<link href="makeappointment.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -82,7 +81,7 @@
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
   <link rel="stylesheet" href="bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
   <link rel="stylesheet" href="css/calendar.css">
-
+  <link href="makeappointment.css" rel="stylesheet">
   </head>
   
   <body>
@@ -90,72 +89,88 @@
 		<p>RWR Hospital Management System</p>
 	</div>
 	  
-	  
-	<form class="form-inline" method="POST" action="scheduleApt.php" name="scheduleApt" id="scheduleApt">
-		<div class="form-group">
-			<label for="specialty" class="col-sm-12 control-label whitelabel" style="color: white;">Select a Specialization:</label>
-			<div class="col-sm-10 selectContainer">
-				<select class="form-control" id="specialty" name="specialty" onchange="fillPhysicians()" required>
-				    <option value="">Choose one</option>
+	<div class="panel panel-default" style="margin-left: 12%; margin-right: 12%;">
+  		<div class="panel-body">  
+			<form class="form-inline" method="POST" action="scheduleApt.php" name="scheduleApt" id="scheduleApt">
+				<div class="form-group">
+					<label for="specialty" class="col-sm-12 control-label blacklabel">Select a Specialization:</label>
+					<div class="col-sm-10 selectContainer">
+						<select class="form-control" id="specialty" name="specialty" onchange="fillPhysicians()" required>
+						    <option value="">Choose one</option>
 EOL;
-		            	$query = new ParseQuery("Specialties");
-		            	$results = $query->find();
+				            	$query = new ParseQuery("Specialties");
+				            	$results = $query->find();
 
-		            	for($i = 0; $i < count($results); $i++)
-		            	{
-		            		echo '<option value="'; echo $results[$i]->get("name"); echo '">'; echo $results[$i]->get("name"); echo '</option>';
-		            	}
+				            	for($i = 0; $i < count($results); $i++)
+				            	{
+				            		echo '<option value="'; echo $results[$i]->get("name"); echo '">'; echo $results[$i]->get("name"); echo '</option>';
+				            	}
 
-		            	echo <<<EOL
-		        </select>
-			</div>
-		</div>
-		<div class="form-group">
-			<label for="doctor" class="col-sm-12 control-label whitelabel" style="color: white;">Select a Physician:</label>
-			<div class="col-sm-10 selectContainer">
-				<select class="form-control" name="doctorSelect" id="doctorSelect" onchange="docChanged()" disabled="true" required>
-				    <option value="">Select a Doctor</option>
-		        </select>
-		        <!-- Button trigger modal -->
-				<button type="button" class="btn btn-primary btn-med" data-toggle="modal" data-target="#docModal" disabled="true" id="docModalBTN">
-					<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-				</button>
-
-				<!-- Modal -->
-				<div class="modal fade" id="docModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-				  <div class="modal-dialog">
-				    <div class="modal-content">
-				      <div class="modal-header">
-				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				        <h4 class="modal-title" id="docModalLbl">Modal title</h4>
-				      </div>
-				      <div class="modal-body" id="docInfoDiv">
-				        ...
-				      </div>
-				      <div class="modal-footer">
-				        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-				      </div>
-				    </div>
-				  </div>
+				            	echo <<<EOL
+				        </select>
+					</div>
 				</div>
-			</div>
-		</div>
+				<div class="form-group">
+					<label for="doctor" class="col-sm-12 control-label blacklabel">Select a Physician:</label>
+					<div class="col-sm-10 selectContainer">
+						<select class="form-control" name="doctorSelect" id="doctorSelect" onchange="docChanged()" disabled="true" required>
+						    <option value="">Select a Doctor</option>
+				        </select>
+				        <!-- Button trigger modal -->
+						<button type="button" class="btn btn-primary btn-med" data-toggle="modal" data-target="#docModal" disabled="true" id="docModalBTN">
+							<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+						</button>
 
-		<div class="form-group">
-			<label for="time" class="col-sm-12 control-label whitelabel" style="color: white;">Select a Time:</label>
-			<div class="col-sm-10 selectContainer">
-				<select class="form-control" name="doctor" id="timeSelect" onchange="" disabled="true" required>
-				    <option value="">Choose one</option>
-		        </select>
-		        <button type="submit" class="btn btn-primary" style="float: right;">Schedule Appointment</button>
-			</div>
+						<!-- Modal -->
+						<div class="modal fade" id="docModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+						  <div class="modal-dialog">
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						        <h4 class="modal-title" id="docModalLbl">Modal title</h4>
+						      </div>
+						      <div class="modal-body" id="docInfoDiv">
+						        ...
+						      </div>
+						      <div class="modal-footer">
+						        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+						      </div>
+						    </div>
+						  </div>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="time" class="col-sm-12 control-label blacklabel">Select a Time:</label>
+					<div class="col-sm-10 selectContainer">
+						<select class="form-control" name="timeSelect" id="timeSelect" onchange="dateChange()" disabled="true" required>
+						    <option value="">Choose one</option>
+				        </select>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-10 selectContainer" hidden="true">
+						<select class="form-control" name="dateSel" id="dateSel" onchange="" required>
+						    <option value="">Choose one</option>
+				        </select>
+					</div>
+				</div>
+				</br>
+				<button type="submit" class="btn btn-primary col-sm-2 pull-right">Schedule Appointment</button>
+			</form>
 		</div>
-	</form>
+	</div>
 
 EOL;
 echo <<<EOL
 
     <script type="text/javascript">
+
+    	function dateChange()
+    	{
+    		document.getElementById("dateSel").selectedIndex = document.getElementById("timeSelect").selectedIndex;
+    	}
 
     	function fillPhysicians()
 			{
@@ -259,6 +274,11 @@ echo <<<EOL
 					  			option.label = results[i].get("Date") + " - " + results[i].get("Time");
 					  			option.value = results[i].get("Time");
 					  			document.scheduleApt.timeSelect.add(option);
+
+					  			var option = document.createElement("option");
+					  			option.label = results[i].get("Date") + " - " + results[i].get("Time");
+					  			option.value = results[i].get("Date");
+					  			document.scheduleApt.dateSel.add(option);
 					  		}
 					  	}
 					  },

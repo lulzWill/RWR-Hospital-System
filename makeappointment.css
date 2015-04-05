@@ -1,6 +1,6 @@
 body {
 	
-	background-image: url("bgs/homepageheaderAlt.jpeg");
+	background-image: url("bgs/appointmentBG.jpg");
 	background-attachment: fixed;
 	background-size: 100% 100%;
 	padding-top: 70px;
@@ -17,6 +17,13 @@ label {
 	margin-left: 12%;
 }
 
+.blacklabel {
+	color: black;
+}
 
-
-
+.form-group {
+    width: 300px;
+}
+.form-group input {
+    width: 300px;
+}
