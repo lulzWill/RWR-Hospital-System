@@ -92,7 +92,7 @@
 	  
 	  
 	<form class="form-inline" method="POST" action="scheduleApt.php" name="scheduleApt" id="scheduleApt">
-		<div class="form-group" style="margin-left: 6%;">
+		<div class="form-group">
 			<label for="specialty" class="col-sm-12 control-label whitelabel" style="color: white;">Select a Specialization:</label>
 			<div class="col-sm-10 selectContainer">
 				<select class="form-control" id="specialty" name="specialty" onchange="fillPhysicians()" required>
@@ -144,7 +144,7 @@ EOL;
 		<div class="form-group">
 			<label for="time" class="col-sm-12 control-label whitelabel" style="color: white;">Select a Time:</label>
 			<div class="col-sm-10 selectContainer">
-				<select class="form-control" name="doctor" id="time" onchange="" disabled="true" required>
+				<select class="form-control" name="doctor" id="timeSelect" onchange="" disabled="true" required>
 				    <option value="">Choose one</option>
 		        </select>
 		        <button type="submit" class="btn btn-primary" style="float: right;">Schedule Appointment</button>
@@ -166,7 +166,7 @@ echo <<<EOL
 				
 				var d = document.forms["scheduleApt"]["specialty"].value;
 
-				query.equalTo("area_of_spec", d);
+				query.equalTo("specialties", d);
 				document.scheduleApt.doctorSelect.options.length = 0;
 				var option = document.createElement("option");
 				option.label = "Select a Doctor";
@@ -190,10 +190,12 @@ echo <<<EOL
 				if(document.scheduleApt.specialty.selectedIndex != 0)
 				{
 					document.scheduleApt.doctorSelect.disabled = false;
+					document.getElementById("timeSelect").disabled = false;
 				}
 				else
 				{
 					document.scheduleApt.doctorSelect.disabled = true;
+					document.getElementById("timeSelect").disabled = true;
 				}
 				if(document.scheduleApt.doctorSelect.selectedIndex != 0)
 				{
@@ -218,15 +220,42 @@ echo <<<EOL
 				query.find({
 					  success: function(results) {
 					  	Physician = results[0];
-					  	document.getElementById("docModalLbl").innerHTML = "Doctor " + Physician.get("first_name") + " " + Physician.get("last_name") + ", " + Physician.get("area_of_spec");
+					  	document.getElementById("docModalLbl").innerHTML = "Doctor " + Physician.get("first_name") + " " + Physician.get("last_name");
 
 					  	document.getElementById("docInfoDiv").innerHTML = '<img height="65%" width="65%" src="' + Physician.get("prof_pic").url() + '"></br>Name: ' + Physician.get("first_name") + " " + Physician.get("last_name") +
 					  														'</br>Years of Experience: ' + Physician.get("experience") +
 					  														'</br>Degree: ' + Physician.get("degree") +
 					  														'</br>School: ' + Physician.get("school") +
 					  														'</br></br>Phone: ' + Physician.get("phone") +
-					  														'</br>Location: ' + Physician.get("address") +
-																			'</br>Available Times: TODO!';
+					  														'</br>Location: ' + Physician.get("address");
+
+
+					  },
+					  error: function(error) {
+					    alert("Error: " + error.code + " " + error.message);
+					  }
+				});
+
+				var appt = Parse.Object.extend("appointments");
+				var query = new Parse.Query(appt);
+
+				var d = document.forms["scheduleApt"]["doctorSelect"].value;
+
+				query.equalTo("physicianEmail", d);
+				query.ascending("Date");
+								
+				query.find({
+					  success: function(results) {
+					  	for(var i = 0; i < results.length; i++)
+					  	{
+					  		if(results[i].get("available") == "true")
+					  		{
+					  			var option = document.createElement("option");
+					  			option.label = results[i].get("Date") + " - " + results[i].get("Time");
+					  			option.value = results[i].get("Time");
+					  			document.scheduleApt.timeSelect.add(option);
+					  		}
+					  	}
 					  },
 					  error: function(error) {
 					    alert("Error: " + error.code + " " + error.message);
@@ -236,10 +265,12 @@ echo <<<EOL
 				if(document.scheduleApt.doctorSelect.selectedIndex != 0)
 				{
 					document.getElementById("docModalBTN").disabled = false;
+					document.getElementById("timeSelect").disabled = false;
 				}
 				else
 				{
 					document.getElementById("docModalBTN").disabled = true;
+					document.getElementById("timeSelect").disabled = true;
 				}
 			}
 			$(document).ready(function() {

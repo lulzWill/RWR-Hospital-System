@@ -223,11 +223,11 @@ echo <<<EOL
 
 								if(document.getElementById(index).checked)
 								{
-									appoint.set("available", true);
+									appoint.set("available", "true");
 								}
 								else
 								{
-									appoint.set("available", false);
+									appoint.set("available", "false");
 								}
 
 								appoint.save(null, {
@@ -241,11 +241,17 @@ echo <<<EOL
 							{
 								if(document.getElementById(index).checked == true)
 								{
-									results[0].set("available", true);
+									if(!document.getElementById(index).disabled)
+									{
+										results[0].set("available", "true");
+									}
 								}
 								else
 								{
-									results[0].set("available", false);
+									if(!document.getElementById(index).disabled)
+									{
+										results[0].set("available", "false");
+									}
 								}
 								results[0].save();
 							}
@@ -279,13 +285,19 @@ echo <<<EOL
 					  success: function(results) {
 					  	for(var i = 0; i < results.length; i++)
 					  	{
-					  		if(results[i].get("available") == true)
+					  		if(results[i].get("available") == "true")
 					  		{
 					  			document.getElementById(results[i].get("timeID")).checked = true;
+					  			document.getElementById(results[i].get("timeID")).disabled = false;
+					  		}
+					  		else if(results[i].get("available") == "false")
+					  		{
+					  			document.getElementById(results[i].get("timeID")).checked = false;
+					  			document.getElementById(results[i].get("timeID")).disabled = false;
 					  		}
 					  		else
 					  		{
-					  			document.getElementById(results[i].get("timeID")).checked = false;
+					  			document.getElementById(results[i].get("timeID")).disabled = true;
 					  		}
 					  	}
 					  },
