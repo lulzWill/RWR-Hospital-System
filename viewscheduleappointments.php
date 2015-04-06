@@ -7,6 +7,10 @@ require 'vendor/autoload.php';
 	use Parse\ParseQuery;
 	use Parse\ParseSessionStorage;
 	
+	header('Cache-Control: no cache'); //no cache
+	session_cache_limiter('private_no_expire'); // works
+	//session_cache_limiter('public'); // works too
+	
 	include_once('navbar.php');
 
 	
@@ -87,7 +91,8 @@ require 'vendor/autoload.php';
 	
 	<!-- Include Parse Stuff -->
     <script src="//www.parsecdn.com/js/parse-1.3.5.min.js"></script>
-
+	<script language="javascript"> 
+	
     </head>
   <body>
 	<body>
@@ -101,6 +106,7 @@ require 'vendor/autoload.php';
 	 			<th class="active tableDiv">Date</th>
 	 			<th class="active tableDiv">Time</th>
 				<th class="active tableDiv">Patient</th>
+				<th class="active tableDiv">Link to Profile</th>
 	 		</tr>
 EOL;
 	$query = new ParseQuery("appointments");
@@ -109,20 +115,32 @@ EOL;
 	$results = $query->find();
 
 	for ($i = 0; $i < count($results); $i++) { 
+	
   		$object = $results[$i];
 
   		$innerQuery = new ParseQuery("Patient");
   		$innerQuery->equalTo("email", $object->get("patientEmail"));
 
   		$innerResults = $innerQuery->find();
-
-  		echo '<tr class="active">';
 	 	echo	'<td class="active tableDiv">' . $object->get("Date") . '</th>';
 	 	echo	'<td class="active tableDiv">' . $object->get("Time") . '</th>';
-		echo	'<td class="active tableDiv">Patient ' . $innerResults[$i]->get("first_name") . ' ' . $innerResults[$i]->get("last_name") . '</th></tr>';
+		echo	'<td class="active tableDiv">Patient ' . $innerResults[0]->get("first_name") . ' ' . $innerResults[0]->get("last_name"). '</th>';
+		echo    '<td class="active tableDiv">';
+echo <<<EOL
+<form method="POST" action="patientsearch.php" id="patientsearch">
+              <input type="hidden" class="form-control" name="patientemail" id="patientemail" value="
+EOL;
+echo $object->get("patientEmail");
+echo <<<EOL
+"> 
+               <button type="submit" class="btn btn-default">View Patient's Profile</button>
+            </form>
+		</th></tr>
+EOL;
 	}
 echo <<<EOL
 		</table>
+		
 	</body>
 </html>
 EOL;
