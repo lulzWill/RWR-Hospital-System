@@ -21,11 +21,11 @@
 		
 	}
 
-	if($currentUser->get("position") != "physician")
+	if($currentUser->get("position")=="nurse")
 	{
-		header("Location: index.php");
+	
 	}
-	else 
+	else if($currentUser->get("position")=="physician")
 	{
 		echo <<<EOL
   <!DOCTYPE html>
@@ -382,6 +382,10 @@ echo <<<EOL
   </body>
 </html>
 EOL;
+	}
+	else
+	{
+		header("Location: index.php");
 	}
 
 
