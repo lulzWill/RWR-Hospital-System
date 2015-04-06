@@ -100,6 +100,7 @@
 	 			<th class="active tableDiv">Date</th>
 	 			<th class="active tableDiv">Time</th>
 				<th class="active tableDiv">Doctor</th>
+				<th class="active tableDiv">Cancel Appointment</th>
 	 		</tr>
 EOL;
 	$query = new ParseQuery("appointments");
@@ -117,7 +118,19 @@ EOL;
   		echo '<tr class="active">';
 	 	echo	'<td class="active tableDiv">' . $object->get("Date") . '</th>';
 	 	echo	'<td class="active tableDiv">' . $object->get("Time") . '</th>';
-		echo	'<td class="active tableDiv">Doctor ' . $innerResults[0]->get("first_name") . ' ' . $innerResults[0]->get("last_name") . '</th></tr>';
+		echo	'<td class="active tableDiv">Doctor ' . $innerResults[0]->get("first_name") . ' ' . $innerResults[0]->get("last_name") . '</th>';
+		echo    '<td class="active tableDiv">';
+		echo <<<EOL
+<form method="POST" action="cancelappointment.php" id="object">
+              <input type="hidden" class="form-control" name="objectid" id="objectid" value="
+EOL;
+echo $results[$i]->getObjectId();
+echo <<<EOL
+"> 
+               <button type="submit" class="btn btn-default">Cancel Appointment</button>
+            </form>
+EOL;
+		echo    '</tr>';
 	}
 echo <<<EOL
 		</table>

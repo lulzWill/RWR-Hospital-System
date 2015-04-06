@@ -7,13 +7,8 @@ require 'vendor/autoload.php';
 	use Parse\ParseQuery;
 	use Parse\ParseSessionStorage;
 	
-	header('Cache-Control: no cache'); //no cache
-	session_cache_limiter('private_no_expire'); // works
-	//session_cache_limiter('public'); // works too
-	
 	include_once('navbar.php');
 
-	
 	ParseClient::initialize('kHbyXSdw4DIXw4Q0DYDcdM8QTDQnOewKJhc9ppAr', '9h80LHVDFOSAgVQ1NSPf5IgaWAaDnHdPoJWt2CDc', '3q1HVOiiywyBdtalMN1sozceJbNXuD9WKZSSmgvI');
 	ParseClient::setStorage( new ParseSessionStorage() );
 	$currentUser = ParseUser::getCurrentUser();
@@ -107,6 +102,7 @@ require 'vendor/autoload.php';
 	 			<th class="active tableDiv">Time</th>
 				<th class="active tableDiv">Patient</th>
 				<th class="active tableDiv">Link to Profile</th>
+				<th class="active tableDiv">Cancel Appointment</th>
 	 		</tr>
 EOL;
 	$query = new ParseQuery("appointments");
@@ -135,7 +131,23 @@ echo <<<EOL
 "> 
                <button type="submit" class="btn btn-default">View Patient's Profile</button>
             </form>
-		</th></tr>
+		</th>
+EOL;
+		echo    '<td class="active tableDiv">';
+echo <<<EOL
+<form method="POST" action="cancelappointment.php" id="object">
+              <input type="hidden" class="form-control" name="objectid" id="objectid" value="
+EOL;
+echo $results[$i]->getObjectId();
+echo <<<EOL
+"> 
+               <button type="submit" class="btn btn-default">Cancel Appointment</button>
+            </form>
+		</th>
+EOL;
+		
+echo <<<EOL
+		</tr>
 EOL;
 	}
 echo <<<EOL
