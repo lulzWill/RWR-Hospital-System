@@ -121,7 +121,7 @@ EOL;
 		  	<body>
 			  <div class="myprofilecontainerright">
 			  <a href="editmyprofile.php">
-				<h3>Edit Profile Information</h3></a><br><a href="editmyavailability.php"><h3>Edit Availability</h3></a></br><a href="viewscheduleappointments.php"><h3>View Scheduled Appointments</h3></a></div>
+				<h3>Edit Profile Information</h3></a><br><a href="editmyavailability.php"><h3>Edit Availability</h3></a></br><a href="viewappointments.php"><h3>View Scheduled Appointments</h3></a></div>
 		  		<div class="myprofilecontainerleft">
 				<h1>
 EOL;
@@ -191,7 +191,7 @@ EOL;
 		  	<body>
 			  <div class="myprofilecontainerright">
 			  <a href="editmyprofile.php">
-				<h3>Edit Profile Information</h3><br><a href="editmyavailability.php"><h3>Edit Availabilty</h3></a><a href="viewscheduleappointments.php"><h3>View Current Schedule</h3></a></div>
+				<h3>Edit Profile Information</h3><br><a href="editmyavailability.php"><h3>Edit Availabilty</h3></a><a href="viewappointments.php"><h3>View Current Schedule</h3></a></div>
 		  		<div class="myprofilecontainerleft">
 				<h1>
 			  </a>
