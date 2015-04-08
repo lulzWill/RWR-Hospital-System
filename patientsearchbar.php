@@ -1,12 +1,9 @@
 <?php
 echo <<<EOL
  
-  <form class="col-sm-2" style="margin-left:9%;" method="POST" action="patientsearchlist.php">
-    <div class="input-group">
-      <input type="text" class="form-control" id="patientname" name="patientname" placeholder="John Doe">
-        <button type="submit" class="btn btn-default">Go!</button>
-    </div><!-- /input-group -->
-  </div><!-- /.col-lg-6 -->
+  <form style="margin-left:10%;" method="POST" action="patientsearchlist.php">
+      <input type="text" class="form-control" id="patientname" style="width: 50%;" name="patientname" placeholder="John Doe">
+        <button type="submit" class="btn btn-success" style="float: right; margin-right: 50%;">Go!</button>
 </form>
 EOL;
 ?>
