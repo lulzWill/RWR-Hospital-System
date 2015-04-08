@@ -50,7 +50,7 @@
 		  	<body>
 			  <a href="editmyprofile.php">
 			    <div class="myprofilecontainerright">
-				<h3>Edit Profile Information</h3></a><br><a href="editmymedical.php"><h3>Edit Medical Information</h3></a></div>
+				<h3>Edit Profile Information</h3></a><br><a href="editmymedical.php"><h3>Edit Medical Information</h3></a><a href="viewappointments.php"><h3>View Scheduled Appointments</h3></a></div>
 				<div class="myprofilecontainerleft">
 		  		<h1>
 			  
