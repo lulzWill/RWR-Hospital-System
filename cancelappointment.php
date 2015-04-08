@@ -22,7 +22,6 @@
 	}
 	if($currentUser->get("position") == "physician")
 	{
-		echo $_POST["objectid"];
 		$query=new ParseQuery("appointments");
 		$query->equalTo("objectId", $_POST["objectid"]);
 		$appointment=$query->first();
@@ -50,6 +49,7 @@
 		$appointment->set("available", "true");
 		$appointment->delete("patientEmail");
 		$appointment->delete("nurseEmail");
+		$appointment->delete("specialty");
 		try {
 			$appointment->save();
 		}
