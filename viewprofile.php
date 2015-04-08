@@ -187,7 +187,7 @@ EOL;
 		    <body>
 		  	<body>
 			  <a href="editmyprofile.php">
-				<h3>Edit Profile Information</h3><br><a href="editnurseavailability.php"><h3>Edit Availabilty</h3></a><a href="viewscheduleappointments.php"><h3>View Current Schedule</h3></a>
+				<h3>Edit Profile Information</h3><br><a href="editmyavailability.php"><h3>Edit Availabilty</h3></a><a href="viewscheduleappointments.php"><h3>View Current Schedule</h3></a>
 		  		<h1>
 			  </a>
 EOL;
