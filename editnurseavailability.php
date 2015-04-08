@@ -100,7 +100,15 @@ $list = explode(" ", $workdays);
 $checked="unchecked";
 foreach($list as $j)
 {
-	$currentday = $month . "/" . $day_num;
+	if($day_num<10)
+	{
+		$currentday = $month . "/0" . $day_num;
+	}
+	else
+	{
+		$currentday = $month . "/" . $day_num;
+
+	}
 	if($currentday === $j)
 	{
 		$checked="checked";

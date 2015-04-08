@@ -17,11 +17,21 @@
 	$query->equalTo("physicianEmail", $_POST["doctorSelect"]);
 	$query->equalTo("Date", $_POST["dateSel"]);
 	$query->equalTo("Time", $_POST["timeSelect"]);
-
+	$myquery = new ParseQuery("Nurse");
+	$day = $_POST["dateSel"];
+	$correctday = substr($day, 0, -5);
+	echo $correctday;
+	$myquery->equalTo("WorkDays", $correctday);
+	$nurse = $myquery->first();
 	$results = $query->find();
 
 	$results[0]->set("available", "taken");
 	$results[0]->set("patientEmail", $currentUser->get("email"));
+	$results[0]->set("specialty", $_POST["specialty"]);
+	if(!empty($nurse))
+	{
+		$results[0]->set("nurseEmail", $nurse->get("email"));
+	}
 	$results[0]->save();
 
 

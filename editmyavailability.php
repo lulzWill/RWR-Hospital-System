@@ -23,7 +23,7 @@
 
 	if($currentUser->get("position")=="nurse")
 	{
-	
+
 	}
 	else if($currentUser->get("position")=="physician")
 	{
@@ -387,6 +387,4 @@ EOL;
 	{
 		header("Location: index.php");
 	}
-
-
 ?>

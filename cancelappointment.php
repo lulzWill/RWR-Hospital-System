@@ -29,6 +29,7 @@
 		$appointment->set("available", "true");
 		$appointment->delete("patientEmail");
 		$appointment->delete("nurseEmail");
+		$appointment->delete("specialty");
 		try {
 			$appointment->save();
 		}
