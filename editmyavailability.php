@@ -105,29 +105,38 @@ for($month;$month<=$amount_of_months;$month++)
 	$day_num=1;
 	while ($day_num <= $days_in_month )
 	{
-		echo '<td>' . $day_num;
-$workdays = $nurse->get("WDString");
-$list = explode(" ", $workdays);
+		
+		$workdays = $nurse->get("WDString");
+		$list = explode(" ", $workdays);
 				
-$checked="unchecked";
-foreach($list as $j)
-{
-	if($day_num<10)
-	{
-		$currentday = $month . "/0" . $day_num;
-	}
-	else
-	{
-		$currentday = $month . "/" . $day_num;
-
-	}
-	if($currentday === $j)
-	{
-		$checked="checked";
-	}
-}
-echo '<input type="checkbox" name="workdays[]" style="float: right;" value="' . $currentday . '"' . $checked . '></input></br>';
-echo '</td>';
+		$checked="unchecked";
+		$style="background-color: white;";
+		foreach($list as $j)
+		{
+			if($day_num<10)
+			{
+				$currentday = $month . "/0" . $day_num;
+			}
+			else
+			{
+				$currentday = $month . "/" . $day_num;
+			}
+			if($currentday === $j)
+			{
+				$checked="checked";
+				$style="background-color: lightgreen";
+			}
+		}
+		if(($month==$amount_of_months-3)  &&  ($day_num<=$day))
+		{
+			echo '<td style="background-color: red;">' . $day_num;
+		}
+		else
+		{
+			echo '<td style="' . $style . '">' . $day_num;
+			echo '<input type="checkbox" name="workdays[]" style="float: right;" value="' . $currentday . '"' . $checked . '></input></br>';
+		}
+		echo '</td>';
 		$day_num++;
 		$day_count++;
 		if ($day_count > 7)
