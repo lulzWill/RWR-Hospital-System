@@ -59,8 +59,10 @@
 	$day = date('d', $date);
 	$month = date('m', $date);
 	$year = date('Y', $date);
-	$amount_of_months = $month+1;
-	for($month;$month<=$amount_of_months;$month++)
+	$amount_of_months = $month+3;
+	echo '<body><div class="container4"><h1>My Availability</h1></div>';
+	
+for($month;$month<=$amount_of_months;$month++)
 {
 	$first_day = mktime(0,0,0,$month,1,$year);
 	$title = date('F', $first_day);
@@ -76,17 +78,25 @@
 		case "Fri": $blank = 5; break;
 		case "Sat": $blank = 6; break;
 	}
-	echo '</head><body><form class="form-horizontal" action="updatenurseavailability.php" method="post" id="editProfile1" onsubmit="return validateForm()">';
+	if($amount_of_months-3==$month)
+	{
+		echo '<div class="container2">';
+	}
+	if($amount_of_months-1==$month)
+	{
+		echo '</div><div class="container1">';
+	}
+	echo '<form class="form-horizontal" action="updatenurseavailability.php" method="post" id="editProfile1" onsubmit="return validateForm()">';
 	$days_in_month = cal_days_in_month(0, $month, $year);
 	echo '<table border=6 width=394>';
-	echo '<tr style="margin: auto; background-color:yellow;"><th colspan=60>' . $title . ' ' . $year . '</th></tr>';
-	echo '<tr><td width=62>S</td><<td width=62>M</td><td width=62>T</td><td width=62>W</td><td width=62>T</td><td width=62>F</td><td width=62>S</td></tr>';
+	echo '<tr style="background-color:blue;"><th colspan=60><h2>' . $title . ' ' . $year . '</h2></th></tr>';
+	echo '<tr><td width=62>S</td><td width=62>M</td><td width=62>T</td><td width=62>W</td><td width=62>T</td><td width=62>F</td><td width=62>S</td></tr>';
 	
 	$day_count = 1;
 	echo '<tr>';
 	while ($blank > 0 )
 	{
-		echo '<td></td>';
+		echo '<td style="background-color: gray;"></td>';
 		$blank = $blank-1;
 		$day_count++;
 	}
@@ -126,14 +136,14 @@ echo '</td>';
 	}
 	while ($day_count > 1 && $day_count <=7)
 	{
-		echo '<td></td>';
+		echo '<td style="background-color: gray;"></td>';
 		$day_count++;
 	}
 	
 	echo '</tr></table>';
 }
-echo '<div class="container">
-			      	<button type="submit" class="btn btn-success">Save Schedule</button>
+echo '</div><div class="container3">
+			      	<button type="submit" class="btn btn-success" style="float: right; margin-right: 20px; margin-top: 10px;">Save Schedule</button>
 			    </div>
 		</div></form></body>';
 ?>
