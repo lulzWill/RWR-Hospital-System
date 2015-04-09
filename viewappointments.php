@@ -113,11 +113,8 @@ EOL;
 echo $results[$i]->getObjectId();
 echo <<<EOL
 "> 
-<<<<<<< HEAD
-               <button type="submit" class="btn btn-danger">Cancel Appointment</button>
-=======
+
                <button type="submit" class="btn btn-danger">Cancel</button>
->>>>>>> reschedule_appt
             </form>
 EOL;
 echo    '<td class="active tableDiv">';
