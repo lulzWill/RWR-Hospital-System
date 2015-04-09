@@ -20,6 +20,7 @@
 		header("Location: index.php");
 		exit;
 	}
+	/*
 	if($currentUser->get("position") == "physician")
 	{
 		$query=new ParseQuery("appointments");
@@ -37,17 +38,31 @@
 			// error is a ParseException object with an error code and message.
 			echo 'Failed to create new object, with error message: ' + $ex->getMessage();
 		}
-		header('Location: viewappointments.php');
+		header('Location: viewprofile.php');
 	}
+	*/
 	
 	if($currentUser->get("position") == "patient")
 	{
-		//echo $_POST["objectid"];
-		
-		
+
+		/*
+		echo "old appt id: " . $_POST["currentObjectId2"];
+		echo "old appt date: " . $_POST["currentDate2"];
+		echo "old appt time: " . $_POST["currentTime2"];
+		echo "doc: " . $_POST["currentDoctor2"];
+		echo "doc email: " . $_POST["currentDoctorEmail2"];
+		echo "nurse: " . $_POST["currentNurse2"];
+		echo "nurse email: " . $_POST["currentNurseEmail2"];
+		echo "new appt date: " . $_POST["selectDate"];
+		echo "new appt time: " . $_POST["selectTime"];
+		*/
+
+		$myID = $_POST["currentObjectId2"];
 		$query=new ParseQuery("appointments");
-		$query->equalTo("objectId", $_POST["objectid"]);
+		$query->equalTo("objectId", $myID);
 		$appointment=$query->first();
+		var_dump($appointment);
+		/*
 		$appointment->set("available", "true");
 		$appointment->delete("patientEmail");
 		$appointment->delete("nurseEmail");
@@ -60,8 +75,8 @@
 			// error is a ParseException object with an error code and message.
 			echo 'Failed to create new object, with error message: ' + $ex->getMessage();
 		}
-		header('Location: viewappointments.php');
-		
+		header('Location: viewprofile.php');
+		*/
 	}
 
 ?>
