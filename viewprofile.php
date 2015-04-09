@@ -50,7 +50,7 @@
 		  	<body>
 			  <a href="editmyprofile.php">
 			    <div class="myprofilecontainerright">
-				<h3>Edit Profile Information</h3></a><br><a href="editmymedical.php"><h3>Edit Medical Information</h3></a></div>
+				<h3>Edit Profile Information</h3></a><br><a href="editmymedical.php"><h3>Edit Medical Information</h3></a><a href="viewappointments.php"><h3>View Scheduled Appointments</h3></a></div>
 				<div class="myprofilecontainerleft">
 		  		<h1>
 			  
@@ -119,9 +119,11 @@ EOL;
 		    </head>
 		    <body>
 		  	<body>
+			  <div class="myprofilecontainerright">
 			  <a href="editmyprofile.php">
-				<h3>Edit Profile Information</h3></a><br><a href="editmyavailability.php"><h3>Edit Availability</h3></a></br><a href="viewscheduleappointments.php"><h3>View Scheduled Appointments</h3></a>
-		  		<h1>
+				<h3>Edit Profile Information</h3></a><br><a href="editmyavailability.php"><h3>Edit Availability</h3></a></br><a href="viewappointments.php"><h3>View Scheduled Appointments</h3></a></div>
+		  		<div class="myprofilecontainerleft">
+				<h1>
 EOL;
 				echo "Doctor " . $currentUser->get("firstname") . " " . $currentUser->get("lastname") . "</br>";
 				echo <<<EOL
@@ -179,6 +181,7 @@ EOL;
 		echo "</h2>";
 		echo "<h4>Search for Patient Information</h4>";
 		include_once("patientsearchbar.php");
+		echo '</div>';
 	}
 	if($currentUser->get("position") == "nurse")
 	{
@@ -186,9 +189,11 @@ EOL;
 		    </head>
 		    <body>
 		  	<body>
+			  <div class="myprofilecontainerright">
 			  <a href="editmyprofile.php">
-				<h3>Edit Profile Information</h3>
-		  		<h1>
+				<h3>Edit Profile Information</h3><br><a href="editmyavailability.php"><h3>Edit Availabilty</h3></a><a href="viewappointments.php"><h3>View Current Schedule</h3></a></div>
+		  		<div class="myprofilecontainerleft">
+				<h1>
 			  </a>
 EOL;
 				echo "Nurse " . $currentUser->get("firstname") . " " . $currentUser->get("lastname") . "</br>";
@@ -245,6 +250,9 @@ EOL;
 		echo "Phone: " . $nurse->get("phone") . "</br>";
 		echo "Email Address: " . $nurse->get("email") . "</br>";
 		echo "</h2>";
+		echo "<h4>Search for Patient Information</h4>";
+		include_once("patientsearchbar.php");
+		echo '</div>';
 	}
 	echo <<<EOL
 		  	</body>

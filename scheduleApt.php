@@ -17,11 +17,52 @@
 	$query->equalTo("physicianEmail", $_POST["doctorSelect"]);
 	$query->equalTo("Date", $_POST["dateSel"]);
 	$query->equalTo("Time", $_POST["timeSelect"]);
-
+	$myquery = new ParseQuery("Nurse");
+	$day = $_POST["dateSel"];
+	$correctday = substr($day, 0, -5);
+	echo $correctday;
+	$myquery->equalTo("WorkDays", $correctday);
+	$myquery->equalTo("departments", $_POST["specialty"]);
+	$nurse = $myquery->find();
 	$results = $query->find();
-
 	$results[0]->set("available", "taken");
 	$results[0]->set("patientEmail", $currentUser->get("email"));
+	$results[0]->set("specialty", $_POST["specialty"]);
+	
+	$check = new ParseQuery("appointments");
+	$check->equalTo("Date", $_POST["dateSel"]);
+	$check->equalTo("Time", $_POST["timeSelect"]);
+	$checkresults = $check->find();
+	if(!empty($nurse) && !empty($checkresults))
+	{
+		$nursefound=false;
+		for($i=0;$i<count($nurse);$i++)
+		{
+			$counter=0;
+			for($j=0;$j<count($checkresults);$j++)
+			{
+				if($nurse[$i]->get("email")!=$checkresults[$j]->get("nurseEmail"))
+				{
+					$counter++;
+					if($counter==count($checkresults))
+					{
+						$results[0]->set("nurseEmail", $nurse[$i]->get("email"));
+						$j=count($checkresults)+1;
+						$i=count($nurse)+1;
+						$nursefound=true;
+					}
+				}
+			}
+		}
+		if($nursefound!=true)
+		{
+			$results[0]->set("nurseEmail", "none@none.com");
+		}
+	}
+	else
+	{
+		$results[0]->set("nurseEmail", "none@none.com");
+	}
 	$results[0]->save();
 
 

@@ -21,11 +21,144 @@
 		
 	}
 
-	if($currentUser->get("position") != "physician")
+	if($currentUser->get("position")=="nurse")
 	{
-		header("Location: index.php");
+echo <<<EOL
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  	<title>
+  		Hospital Login Page
+  	</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="calendar.css" rel="stylesheet" type="text/css">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+EOL;
+	
+	if($currentUser->get("position") == "nurse")
+	{
+		try {
+			$query=new ParseQuery("Nurse");
+			$query->equalTo("email", $currentUser->get("email"));
+			$nurse=$query->first();
+		}
+		catch (ParseException $ex) {
+	
+		}
 	}
-	else 
+	
+	$date = time();
+	$day = date('d', $date);
+	$month = date('m', $date);
+	$year = date('Y', $date);
+	$amount_of_months = $month+3;
+	echo '<body><div class="container4"><h1>My Availability</h1></div>';
+	
+for($month;$month<=$amount_of_months;$month++)
+{
+	$first_day = mktime(0,0,0,$month,1,$year);
+	$title = date('F', $first_day);
+	$day_of_week = date('D', $first_day);
+	
+	switch($day_of_week)
+	{
+		case "Sun": $blank = 0; break;
+		case "Mon": $blank = 1; break;
+		case "Tue": $blank = 2; break;
+		case "Wed": $blank = 3; break;
+		case "Thu": $blank = 4; break;
+		case "Fri": $blank = 5; break;
+		case "Sat": $blank = 6; break;
+	}
+	if($amount_of_months-3==$month)
+	{
+		echo '<div class="container2">';
+	}
+	if($amount_of_months-1==$month)
+	{
+		echo '</div><div class="container1">';
+	}
+	echo '<form class="form-horizontal" action="updatenurseavailability.php" method="post" id="editProfile1" onsubmit="return validateForm()">';
+	$days_in_month = cal_days_in_month(0, $month, $year);
+	echo '<table border=6 width=394>';
+	echo '<tr style="background-color:blue;"><th colspan=60><h2>' . $title . ' ' . $year . '</h2></th></tr>';
+	echo '<tr><td width=62>S</td><td width=62>M</td><td width=62>T</td><td width=62>W</td><td width=62>T</td><td width=62>F</td><td width=62>S</td></tr>';
+	
+	$day_count = 1;
+	echo '<tr>';
+	while ($blank > 0 )
+	{
+		echo '<td style="background-color: gray;"></td>';
+		$blank = $blank-1;
+		$day_count++;
+	}
+	$day_num=1;
+	while ($day_num <= $days_in_month )
+	{
+		
+		$workdays = $nurse->get("WDString");
+		$list = explode(" ", $workdays);
+				
+		$checked="unchecked";
+		$style="background-color: white;";
+		foreach($list as $j)
+		{
+			if($day_num<10)
+			{
+				$currentday = $month . "/0" . $day_num;
+			}
+			else
+			{
+				$currentday = $month . "/" . $day_num;
+			}
+			if($currentday === $j)
+			{
+				$checked="checked";
+				$style="background-color: lightgreen";
+			}
+		}
+		if(($month==$amount_of_months-3)  &&  ($day_num<=$day))
+		{
+			echo '<td style="background-color: red;">' . $day_num;
+		}
+		else
+		{
+			echo '<td style="' . $style . '">' . $day_num;
+			echo '<input type="checkbox" name="workdays[]" style="float: right;" value="' . $currentday . '"' . $checked . '></input></br>';
+		}
+		echo '</td>';
+		$day_num++;
+		$day_count++;
+		if ($day_count > 7)
+		{
+			echo '</tr><tr>';
+			$day_count=1;
+		}
+	}
+	while ($day_count > 1 && $day_count <=7)
+	{
+		echo '<td style="background-color: gray;"></td>';
+		$day_count++;
+	}
+	
+	echo '</tr></table>';
+}
+echo '</div><div class="container3">
+			      	<button type="submit" class="btn btn-success" style="float: right; margin-right: 20px; margin-top: 10px;">Save Schedule</button>
+			    </div>
+		</div></form></body>';
+	}
+	else if($currentUser->get("position")=="physician")
 	{
 		echo <<<EOL
   <!DOCTYPE html>
@@ -383,6 +516,8 @@ echo <<<EOL
 </html>
 EOL;
 	}
-
-
+	else
+	{
+		header("Location: index.php");
+	}
 ?>

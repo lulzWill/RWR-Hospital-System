@@ -95,12 +95,24 @@
 		$nurse=$query->first();
 		$nurse->set("degree", $_POST["degree"]);
 		$nurse->set("school", $_POST["school"]);
-		$nurse->set("department", $_POST["department"]);
 		$nurse->set("experience", $_POST["experience"]);
 		$nurse->set("address", $_POST["address"]);
 		$nurse->set("citystate", $_POST["citystate"]);
 		$nurse->set("zipcode", $_POST["zipcode"]);
 		$nurse->set("phone", $_POST["phone"]);
+		$nurse->setArray("departments", $_POST["specialties"]);
+		foreach($_POST["specialties"] as $spec)
+		{
+			if(empty($string))
+			{
+				$string = $spec;
+			}
+			else
+			{
+				$string = $string . ', ' . $spec;
+			}
+		}
+		$nurse->set("department", $string);
 		$file = ParseFile::createFromFile($_POST["prof_pic"], "myprofilepic.jpg");
 		$file->save();
 		$nurse->set("prof_pic", $file);
