@@ -98,7 +98,8 @@ EOL;
 
   		echo '<tr class="active"  data-target="#basicModal" data-id =" '.$i.' " data-object-id=" '.$results[$i]->getObjectId().' " data-date =" '.$object->get("Date").' " data-time =" '.$object->get("Time").' "
   		 data-doctor =" ' . $innerResults[0]->get("first_name") . ' ' . $innerResults[0]->get("last_name") . ' " data-doctor-email="'. $object->get("physicianEmail") .'"
-  		 data-nurse=" ' . $nurseResults[0]->get("first_name") . ' ' . $nurseResults[0]->get("last_name") . ' " data-nurse-email" ' . $object->get("nurseEmail") . ' ">';
+  		 data-nurse=" ' . $nurseResults[0]->get("first_name") . ' ' . $nurseResults[0]->get("last_name") . ' " data-nurse-email="' . $object->get("nurseEmail") . '"
+		 data-specialty="' .$object->get("specialty"). '">';
 	 	echo	'<td class="active tableDiv">' . $object->get("Date") . '</th>';
 	 	echo	'<td class="active tableDiv">' . $object->get("Time") . '</th>';
 		echo	'<td class="active tableDiv">Dr. ' . $innerResults[0]->get("first_name") . ' ' . $innerResults[0]->get("last_name") . '</th>';
@@ -169,6 +170,13 @@ echo <<<EOL
 				<div class="row">
 					<label for="currentDoctor" id="currentDoctor" class="col-sm-12 control-label blacklabel" style="text-align: left;">current doctor: </label>
 					<input type="hidden" id="currentDoctor2" name="currentDoctor2" class="form-control" value=''/>
+				</div>
+				</div>
+				
+				<div class="container">
+				<div class="row">
+					<label for="specialty" id="specialty" class="col-sm-12 control-label blacklabel" style="text-align: left;">Specialty: </label>
+					<input type="hidden" id="specialty2" name="specialty2" class="form-control" value=''/>
 				</div>
 				</div>
 				
@@ -358,6 +366,7 @@ EOL;
         	var getTime = document.getElementById("currentTime2").value;
         	var getDoctorEmail = document.getElementById("currentDoctorEmail2").value;
         	var getNurseEamil = document.getElementById("currentNurseEmail2").value;
+			var getSpecialty = document.getElementById("specialty2").value;
         	var newDate = document.getElementById("selectDate").value;
         	var newTime = document.getElementById("selectTime").value;
         	
@@ -376,9 +385,9 @@ EOL;
 
 				    object.set("available", "true");
 
-				    object.set("patientEmail", "(undefined)");
-				    object.set("nurseEmail", "(undefined)");
-				    object.set("specialty", "(undefined)");
+				    object.unset("patientEmail");
+				    object.unset("nurseEmail");
+				    object.unset("specialty");
 
 
 					object.save(null, {
@@ -400,6 +409,7 @@ EOL;
 								    object.set("available", "taken");
 								    //TODO set current nurse email
 								    console.log(object);
+									//object.set("specialty", getSpecialty).value)
 								    object.set("nurseEmail", "none@none.com");
 								    object.set("patientEmail", document.getElementById("currUserID").value);
 
