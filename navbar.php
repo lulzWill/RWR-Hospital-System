@@ -40,7 +40,14 @@
 	{
 		echo <<<EOL
 			<li><a href="homepage.php">Home</a></li>
+EOL;
+		if($currentUser->get("position") != "admin")
+		{
+		echo <<<EOL
 			<li><a href="viewprofile.php">View Profile</a></li>
+EOL;
+		}
+		echo <<<EOL
 			<li><a href="logoutcurusr.php">Log Out</a></li>
 			<li><a href="deleteaccount.php">Delete Account</a></li>
 EOL;
