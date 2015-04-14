@@ -702,9 +702,9 @@ EOL;
 				<th class="active tableDiv">Patient</th>
 				<th class="active tableDiv">Link to Profile</th>
 				<th class="active tableDiv">Cancel Appointment</th>
-				<th class="active tableDiv">Completed</th>
+				<th class="active tableDiv">Appt Status</th>
 				<th class="active tableDiv">Price</th>
-				<th class="active tableDiv">Status</th>
+				<th class="active tableDiv">Bill</th>
 	 		</tr>
 EOL;
 	$query = new ParseQuery("appointments");
@@ -763,7 +763,7 @@ EOL;
 echo $results[$i]->getObjectId();
 echo <<<EOL
 "> 
-               <button type="submit" class="btn btn-success">Complete</button>
+               <button type="submit" class="btn btn-warning">Incomplete</button>
             </form>
 		</th>
 EOL;
@@ -779,7 +779,7 @@ EOL;
 echo $results[$i]->getObjectId();
 echo <<<EOL
 "> 
-               <button type="submit" class="btn btn-warning">Incomplete</button>
+               <button type="submit" class="btn btn-success">Complete</button>
             </form>
 		</th>
 EOL;
