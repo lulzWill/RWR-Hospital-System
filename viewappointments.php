@@ -384,10 +384,15 @@ EOL;
 			  success: function(object) {
 
 				    object.set("available", "true");
+					
+					var spec = object.get("specialty");
+					var nuremail = object.get("nurseEmail");
 
 				    object.unset("patientEmail");
 				    object.unset("nurseEmail");
 				    object.unset("specialty");
+					object.unset("paymentStatus");
+					object.unset("price");
 
 
 					object.save(null, {
@@ -407,10 +412,10 @@ EOL;
 					  			success: function(object) {
 
 								    object.set("available", "taken");
-								    //TODO set current nurse email
+								    //TODO set current nurse email and specialty
 								    console.log(object);
-									//object.set("specialty", getSpecialty).value)
-								    object.set("nurseEmail", "none@none.com");
+									object.set("specialty", spec)
+								    object.set("nurseEmail", nuremail);
 								    object.set("patientEmail", document.getElementById("currUserID").value);
 
 								    object.save(null, {
@@ -477,6 +482,10 @@ EOL;
 			        var doctorEmail = $(event.target).closest('tr').data('doctor-email');
 			        $(this).find('#currentDoctorEmail').html($('<b> current doc email: ' + doctorEmail  + '</b>'));
 			        $(this).find('#currentDoctorEmail2').val(doctorEmail);
+					
+					var specialty = $(event.target).closest('tr').data('specialty');
+			        $(this).find('#specialty').html($('<b> Specialty: ' + specialty  + '</b>'));
+			        $(this).find('#specialty2').val(specialty);
 
 			        var nurse = $(event.target).closest('tr').data('nurse');
 			        $(this).find('#currentNurse').html($('<b> Current nurse: ' + nurse  + '</b>'));
@@ -700,8 +709,8 @@ EOL;
 				<th class="active tableDiv">Specialty</th>
 				<th class="active tableDiv">Nurse</th>
 				<th class="active tableDiv">Patient</th>
-				<th class="active tableDiv">Link to Profile</th>
 				<th class="active tableDiv">Cancel Appointment</th>
+				<th class="active tableDiv">Appt Info</th>
 				<th class="active tableDiv">Appt Status</th>
 				<th class="active tableDiv">Price</th>
 				<th class="active tableDiv">Bill</th>
@@ -726,8 +735,7 @@ EOL;
 	 	echo	'<td class="active tableDiv">' . $object->get("Date") . '</th>';
 	 	echo	'<td class="active tableDiv">' . $object->get("Time") . '</th>';
 		echo	'<td class="active tableDiv">' . $object->get("specialty") . '</th>';
-		echo    '<td class="active tableDiv">' . $innerResults2[0]->get("first_name") . ' ' . $innerResults2[0]->get("last_name") . '</th>';
-		echo	'<td class="active tableDiv">Patient ' . $innerResults[0]->get("first_name") . ' ' . $innerResults[0]->get("last_name"). '</th>';
+		echo	'<td class="active tableDiv">' . $innerResults2[0]->get("first_name") . ' ' . $innerResults2[0]->get("last_name"). '</th>';
 		echo    '<td class="active tableDiv">';
 echo <<<EOL
 <form method="POST" action="patientsearch.php" id="patientsearch">
@@ -736,7 +744,9 @@ EOL;
 echo $object->get("patientEmail");
 echo <<<EOL
 "> 
-               <button type="submit" class="btn btn-info">Patient's Profile</button>
+EOL;
+        echo '<button type="submit" class="btn btn-info">' . $innerResults[0]->get("first_name") . ' ' . $innerResults[0]->get("last_name") . '</button>';
+echo <<<EOL
             </form>
 		</th>
 EOL;
@@ -752,6 +762,9 @@ echo <<<EOL
             </form>
 		</th>
 EOL;
+echo    '<td class="active tableDiv">';
+
+echo '<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#basicModal">Appt Notes</a></th>';
 if($object->get("available")== "taken")
 {
 	echo    '<td class="active tableDiv">';

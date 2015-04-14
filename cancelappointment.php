@@ -52,6 +52,8 @@
 		$appointment->delete("patientEmail");
 		$appointment->delete("nurseEmail");
 		$appointment->delete("specialty");
+		$appointment->delete("paymentStatus");
+		$appointment->delete("price");
 		try {
 			$appointment->save();
 		}

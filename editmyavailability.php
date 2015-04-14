@@ -44,9 +44,6 @@ echo <<<EOL
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 EOL;
-	
-	if($currentUser->get("position") == "nurse")
-	{
 		try {
 			$query=new ParseQuery("Nurse");
 			$query->equalTo("email", $currentUser->get("email"));
@@ -55,8 +52,6 @@ EOL;
 		catch (ParseException $ex) {
 	
 		}
-	}
-	
 	$date = time();
 	$day = date('d', $date);
 	$month = date('m', $date);
