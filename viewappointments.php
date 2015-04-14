@@ -702,11 +702,14 @@ EOL;
 				<th class="active tableDiv">Patient</th>
 				<th class="active tableDiv">Link to Profile</th>
 				<th class="active tableDiv">Cancel Appointment</th>
+				<th class="active tableDiv">Completed</th>
+				<th class="active tableDiv">Price</th>
+				<th class="active tableDiv">Status</th>
 	 		</tr>
 EOL;
 	$query = new ParseQuery("appointments");
 	$query->equalTo("physicianEmail", $currentUser->get("email"));
-	$query->equalTo("available", "taken");
+	$query->containedIn("available", ["taken", "complete"]);
 	$results = $query->find();
 
 	for ($i = 0; $i < count($results); $i++) { 
@@ -733,7 +736,7 @@ EOL;
 echo $object->get("patientEmail");
 echo <<<EOL
 "> 
-               <button type="submit" class="btn btn-info">View Patient's Profile</button>
+               <button type="submit" class="btn btn-info">Patient's Profile</button>
             </form>
 		</th>
 EOL;
@@ -749,6 +752,41 @@ echo <<<EOL
             </form>
 		</th>
 EOL;
+if($object->get("available")== "taken")
+{
+	echo    '<td class="active tableDiv">';
+	echo <<<EOL
+			<form method="POST" action="complete.php" id="object">
+			   <input type="hidden" class="form-control" name="status" id="status" value="complete">
+              <input type="hidden" class="form-control" name="objectid" id="objectid" value="
+EOL;
+echo $results[$i]->getObjectId();
+echo <<<EOL
+"> 
+               <button type="submit" class="btn btn-success">Complete</button>
+            </form>
+		</th>
+EOL;
+}
+else if($object->get("available")=="complete")
+{
+	echo    '<td class="active tableDiv">';
+	echo <<<EOL
+			<form method="POST" action="complete.php" id="object">
+			  <input type="hidden" class="form-control" name="status" id="status" value="taken">
+              <input type="hidden" class="form-control" name="objectid" id="objectid" value="
+EOL;
+echo $results[$i]->getObjectId();
+echo <<<EOL
+"> 
+               <button type="submit" class="btn btn-warning">Incomplete</button>
+            </form>
+		</th>
+EOL;
+}
+
+echo    '<td class="active tableDiv">' . $object->get("price") . '</th>';
+echo    '<td class="active tableDiv">' . $object->get("paymentStatus") . '</th>';
 		
 echo <<<EOL
 		</tr>
