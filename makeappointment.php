@@ -160,6 +160,7 @@ EOL;
 				<div class="form-group">
 					<label for="aptNotes" class="col-sm-12 control-label blacklabel">Reason for Appointment:</label>
 					<div class="col-sm-10 selectContainer">
+						<textarea class="form-control" name="aptNotes" form="scheduleApt" rows="3" cols="60" style="resize: none;" onfocus="if(this.value==this.defaultValue)this.value='';" onblur="if(this.value=='')this.value=this.defaultValue;" required>Please Enter a reason for your appointment</textarea>
 					</div>
 				</div>
 				</br>
