@@ -95,7 +95,7 @@ EOL;
   		echo '<tr class="active"  data-target="#basicModal" data-id =" '.$i.' " data-object-id=" '.$results[$i]->getObjectId().' " data-date =" '.$object->get("Date").' " data-time =" '.$object->get("Time").' "
   		 data-doctor =" ' . $innerResults[0]->get("first_name") . ' ' . $innerResults[0]->get("last_name") . ' " data-doctor-email="'. $object->get("physicianEmail") .'"
   		 data-nurse=" ' . $nurseResults[0]->get("first_name") . ' ' . $nurseResults[0]->get("last_name") . ' " data-nurse-email" ' . $object->get("nurseEmail") . ' " data-payment-status ="'.$object->get("paymentStatus").'"
-  		 data-reason ="'.$object->get("specialty").'" data-cost ="'.$object->get("price").'" data-notes ="'.$object->get("apptInfo").'">';
+  		 data-reason ="'.$object->get("specialty").'" data-cost ="'.$object->get("price").'" data-notes ="'.$object->get("apptInfo").'" data-notes-init ="'.$object->get("reason").'">';
 	 	echo	'<td class="active tableDiv">' . $object->get("Date") . '</th>';
 		echo	'<td class="active tableDiv">Dr. ' . $innerResults[0]->get("first_name") . ' ' . $innerResults[0]->get("last_name") . '</th>';
 		
@@ -176,6 +176,13 @@ echo <<<EOL
 				<div class="row">
 					<label for="currentNurse" id="currentNurse" class="col-sm-12 control-label blacklabel" style="text-align: left; margin-bottom: 5px;">current nurse: </label>
 					<input type="hidden" id="currentNurse2" name="currentNurse2" class="form-control" value=''/>
+				</div>
+				</div>
+
+				<div class="container">
+				<div class="row">
+					<label for="apptNotesInit" id="apptNotesInit" class="col-sm-12 control-label blacklabel" style="text-align: left;"></label>
+					<input type="hidden" id="apptNotesInit2" name="apptNotesInit2" class="form-control" value=''/>
 				</div>
 				</div>
 
@@ -413,6 +420,10 @@ EOL;
 			        	$(this).find('#apptCost').html($('<b> Payment Due: ' + cost  + '</b>'));
 			        }
 			        $(this).find('#apptCost2').val(cost);
+
+			        var notesInit = $(event.target).closest('tr').data('notes-init');
+			        $(this).find('#apptNotesInit').html($('<b> Initial Apppointment Notes: ' + notesInit  + '</b>'));
+			        $(this).find('#apptNotesInit2').val(notesInit);
 
 			        var notes = $(event.target).closest('tr').data('notes');
 			        $(this).find('#apptNotes').html($('<b> Apppointment Notes: ' + notes  + '</b>'));
