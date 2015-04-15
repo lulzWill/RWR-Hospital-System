@@ -160,7 +160,6 @@ EOL;
 				<div class="form-group">
 					<label for="aptNotes" class="col-sm-12 control-label blacklabel">Reason for Appointment:</label>
 					<div class="col-sm-10 selectContainer">
-						<textarea class="form-control" name="aptNotes" form="scheduleApt" rows="3" cols="100" style="resize: none;">Default Text...</textarea>
 					</div>
 				</div>
 				</br>

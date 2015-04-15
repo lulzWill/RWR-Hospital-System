@@ -28,7 +28,8 @@
 	$results[0]->set("available", "taken");
 	$results[0]->set("patientEmail", $currentUser->get("email"));
 	$results[0]->set("specialty", $_POST["specialty"]);
-	
+	$results[0]->set("reason", $_POST["aptNotes"]);
+
 	$check = new ParseQuery("appointments");
 	$check->equalTo("Date", $_POST["dateSel"]);
 	$check->equalTo("Time", $_POST["timeSelect"]);
