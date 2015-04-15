@@ -157,6 +157,12 @@ EOL;
 					</div>
 				</div>
 				</br>
+				<div class="form-group">
+					<label for="aptNotes" class="col-sm-12 control-label blacklabel">Reason for Appointment:</label>
+					<div class="col-sm-10 selectContainer">
+					</div>
+				</div>
+				</br>
 				<button type="submit" class="btn btn-primary col-sm-2 pull-right">Schedule Appointment</button>
 			</form>
 		</div>
