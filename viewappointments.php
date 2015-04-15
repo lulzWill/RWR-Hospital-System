@@ -762,9 +762,124 @@ echo <<<EOL
             </form>
 		</th>
 EOL;
-echo    '<td class="active tableDiv">';
+echo <<<EOL
 
-echo '<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#basicModal">Appt Notes</a></th>';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ <td class="active tableDiv">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-info="
+EOL;
+echo $object->get("apptInfo") . '" data-objectid="' . $object->getObjectId() . '"';
+echo <<<EOL
+">
+		Appt Info
+	</button>
+	<div class="modal fade myModal
+EOL;
+echo $i;
+echo <<<EOL
+" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel
+EOL;
+echo $i;
+echo <<<EOL
+" aria-hidden="true">
+	  <div class="modal-dialog">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title" id="myModalLabel
+EOL;
+echo $i;
+echo <<<EOL
+">Appointment Info</h4>
+		  </div>
+		  <div class="modal-body">
+		     <form>
+				<textarea class="form-control" rows="10" style="width:100%" id="notes" name="notes">
+				</textarea>
+			 </form>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			<input type="button" class="btn btn-primary" onclick="saveNotes()" value="Save Changes"/>
+		  </div>
+		</div>
+	  </div>
+	</div>
+ </th>
+ <script>
+   $('#myModal').on('show.bs.modal', function (event) {
+		var button = $(event.relatedTarget) // Button that triggered the modal
+		var notes = button.data('info') // Extract info from data-* attributes
+		var id = button.data('objectid')
+		// If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+		// Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+		var modal = $(this)
+		modal.find('.modal-title').text('Appointment Info')
+		modal.find('.form-control').text(notes + id)
+})
+
+    function saveNotes()
+	{
+	
+	}
+ </script>
+EOL;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 if($object->get("available")== "taken")
 {
 	echo    '<td class="active tableDiv">';
