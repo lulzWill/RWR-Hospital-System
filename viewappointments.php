@@ -98,7 +98,8 @@ EOL;
 
   		echo '<tr class="active"  data-target="#basicModal" data-id =" '.$i.' " data-object-id=" '.$results[$i]->getObjectId().' " data-date =" '.$object->get("Date").' " data-time =" '.$object->get("Time").' "
   		 data-doctor =" ' . $innerResults[0]->get("first_name") . ' ' . $innerResults[0]->get("last_name") . ' " data-doctor-email="'. $object->get("physicianEmail") .'"
-  		 data-nurse=" ' . $nurseResults[0]->get("first_name") . ' ' . $nurseResults[0]->get("last_name") . ' " data-nurse-email" ' . $object->get("nurseEmail") . ' ">';
+  		 data-nurse=" ' . $nurseResults[0]->get("first_name") . ' ' . $nurseResults[0]->get("last_name") . ' " data-nurse-email="' . $object->get("nurseEmail") . '"
+		 data-specialty="' .$object->get("specialty"). '">';
 	 	echo	'<td class="active tableDiv">' . $object->get("Date") . '</th>';
 	 	echo	'<td class="active tableDiv">' . $object->get("Time") . '</th>';
 		echo	'<td class="active tableDiv">Dr. ' . $innerResults[0]->get("first_name") . ' ' . $innerResults[0]->get("last_name") . '</th>';
@@ -169,6 +170,13 @@ echo <<<EOL
 				<div class="row">
 					<label for="currentDoctor" id="currentDoctor" class="col-sm-12 control-label blacklabel" style="text-align: left;">current doctor: </label>
 					<input type="hidden" id="currentDoctor2" name="currentDoctor2" class="form-control" value=''/>
+				</div>
+				</div>
+				
+				<div class="container">
+				<div class="row">
+					<label for="specialty" id="specialty" class="col-sm-12 control-label blacklabel" style="text-align: left;">Specialty: </label>
+					<input type="hidden" id="specialty2" name="specialty2" class="form-control" value=''/>
 				</div>
 				</div>
 				
@@ -358,6 +366,7 @@ EOL;
         	var getTime = document.getElementById("currentTime2").value;
         	var getDoctorEmail = document.getElementById("currentDoctorEmail2").value;
         	var getNurseEamil = document.getElementById("currentNurseEmail2").value;
+			var getSpecialty = document.getElementById("specialty2").value;
         	var newDate = document.getElementById("selectDate").value;
         	var newTime = document.getElementById("selectTime").value;
         	
@@ -375,10 +384,15 @@ EOL;
 			  success: function(object) {
 
 				    object.set("available", "true");
+					
+					var spec = object.get("specialty");
+					var nuremail = object.get("nurseEmail");
 
-				    object.set("patientEmail", "(undefined)");
-				    object.set("nurseEmail", "(undefined)");
-				    object.set("specialty", "(undefined)");
+				    object.unset("patientEmail");
+				    object.unset("nurseEmail");
+				    object.unset("specialty");
+					object.unset("paymentStatus");
+					object.unset("price");
 
 
 					object.save(null, {
@@ -398,9 +412,10 @@ EOL;
 					  			success: function(object) {
 
 								    object.set("available", "taken");
-								    //TODO set current nurse email
+								    //TODO set current nurse email and specialty
 								    console.log(object);
-								    object.set("nurseEmail", "none@none.com");
+									object.set("specialty", spec)
+								    object.set("nurseEmail", nuremail);
 								    object.set("patientEmail", document.getElementById("currUserID").value);
 
 								    object.save(null, {
@@ -467,6 +482,10 @@ EOL;
 			        var doctorEmail = $(event.target).closest('tr').data('doctor-email');
 			        $(this).find('#currentDoctorEmail').html($('<b> current doc email: ' + doctorEmail  + '</b>'));
 			        $(this).find('#currentDoctorEmail2').val(doctorEmail);
+					
+					var specialty = $(event.target).closest('tr').data('specialty');
+			        $(this).find('#specialty').html($('<b> Specialty: ' + specialty  + '</b>'));
+			        $(this).find('#specialty2').val(specialty);
 
 			        var nurse = $(event.target).closest('tr').data('nurse');
 			        $(this).find('#currentNurse').html($('<b> Current nurse: ' + nurse  + '</b>'));
@@ -690,13 +709,16 @@ EOL;
 				<th class="active tableDiv">Specialty</th>
 				<th class="active tableDiv">Nurse</th>
 				<th class="active tableDiv">Patient</th>
-				<th class="active tableDiv">Link to Profile</th>
 				<th class="active tableDiv">Cancel Appointment</th>
+				<th class="active tableDiv">Appt Info</th>
+				<th class="active tableDiv">Appt Status</th>
+				<th class="active tableDiv">Price</th>
+				<th class="active tableDiv">Bill</th>
 	 		</tr>
 EOL;
 	$query = new ParseQuery("appointments");
 	$query->equalTo("physicianEmail", $currentUser->get("email"));
-	$query->equalTo("available", "taken");
+	$query->containedIn("available", ["taken", "complete"]);
 	$results = $query->find();
 
 	for ($i = 0; $i < count($results); $i++) { 
@@ -713,8 +735,7 @@ EOL;
 	 	echo	'<td class="active tableDiv">' . $object->get("Date") . '</th>';
 	 	echo	'<td class="active tableDiv">' . $object->get("Time") . '</th>';
 		echo	'<td class="active tableDiv">' . $object->get("specialty") . '</th>';
-		echo    '<td class="active tableDiv">' . $innerResults2[0]->get("first_name") . ' ' . $innerResults2[0]->get("last_name") . '</th>';
-		echo	'<td class="active tableDiv">Patient ' . $innerResults[0]->get("first_name") . ' ' . $innerResults[0]->get("last_name"). '</th>';
+		echo	'<td class="active tableDiv">' . $innerResults2[0]->get("first_name") . ' ' . $innerResults2[0]->get("last_name"). '</th>';
 		echo    '<td class="active tableDiv">';
 echo <<<EOL
 <form method="POST" action="patientsearch.php" id="patientsearch">
@@ -723,7 +744,9 @@ EOL;
 echo $object->get("patientEmail");
 echo <<<EOL
 "> 
-               <button type="submit" class="btn btn-info">View Patient's Profile</button>
+EOL;
+        echo '<button type="submit" class="btn btn-info">' . $innerResults[0]->get("first_name") . ' ' . $innerResults[0]->get("last_name") . '</button>';
+echo <<<EOL
             </form>
 		</th>
 EOL;
@@ -739,6 +762,159 @@ echo <<<EOL
             </form>
 		</th>
 EOL;
+echo <<<EOL
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ <td class="active tableDiv">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-info="
+EOL;
+echo $object->get("apptInfo") . '" data-objectid="' . $object->getObjectId() . '"';
+echo <<<EOL
+">
+		Appt Info
+	</button>
+	<div class="modal fade myModal
+EOL;
+echo $i;
+echo <<<EOL
+" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel
+EOL;
+echo $i;
+echo <<<EOL
+" aria-hidden="true">
+	  <div class="modal-dialog">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title" id="myModalLabel
+EOL;
+echo $i;
+echo <<<EOL
+">Appointment Info</h4>
+		  </div>
+		  <div class="modal-body">
+		     <form>
+				<textarea class="form-control" rows="10" style="width:100%" id="notes" name="notes">
+				</textarea>
+			 </form>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			<input type="button" class="btn btn-primary" onclick="saveNotes()" value="Save Changes"/>
+		  </div>
+		</div>
+	  </div>
+	</div>
+ </th>
+ <script>
+   $('#myModal').on('show.bs.modal', function (event) {
+		var button = $(event.relatedTarget) // Button that triggered the modal
+		var notes = button.data('info') // Extract info from data-* attributes
+		var id = button.data('objectid')
+		// If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+		// Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+		var modal = $(this)
+		modal.find('.modal-title').text('Appointment Info')
+		modal.find('.form-control').text(notes + id)
+})
+
+    function saveNotes()
+	{
+	
+	}
+ </script>
+EOL;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+if($object->get("available")== "taken")
+{
+	echo    '<td class="active tableDiv">';
+	echo <<<EOL
+			<form method="POST" action="complete.php" id="object">
+			   <input type="hidden" class="form-control" name="status" id="status" value="complete">
+              <input type="hidden" class="form-control" name="objectid" id="objectid" value="
+EOL;
+echo $results[$i]->getObjectId();
+echo <<<EOL
+"> 
+               <button type="submit" class="btn btn-warning">Incomplete</button>
+            </form>
+		</th>
+EOL;
+}
+else if($object->get("available")=="complete")
+{
+	echo    '<td class="active tableDiv">';
+	echo <<<EOL
+			<form method="POST" action="complete.php" id="object">
+			  <input type="hidden" class="form-control" name="status" id="status" value="taken">
+              <input type="hidden" class="form-control" name="objectid" id="objectid" value="
+EOL;
+echo $results[$i]->getObjectId();
+echo <<<EOL
+"> 
+               <button type="submit" class="btn btn-success">Complete</button>
+            </form>
+		</th>
+EOL;
+}
+
+echo    '<td class="active tableDiv">' . $object->get("price") . '</th>';
+echo    '<td class="active tableDiv">' . $object->get("paymentStatus") . '</th>';
 		
 echo <<<EOL
 		</tr>

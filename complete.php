@@ -25,10 +25,7 @@
 		$query=new ParseQuery("appointments");
 		$query->equalTo("objectId", $_POST["objectid"]);
 		$appointment=$query->first();
-		$appointment->set("available", "true");
-		$appointment->delete("patientEmail");
-		$appointment->delete("nurseEmail");
-		$appointment->delete("specialty");
+		$appointment->set("available", $_POST["status"]);
 		try {
 			$appointment->save();
 		}
@@ -39,31 +36,9 @@
 		}
 		header('Location: viewappointments.php');
 	}
-	
-	if($currentUser->get("position") == "patient")
+	else
 	{
-		//echo $_POST["objectid"];
-		
-		
-		$query=new ParseQuery("appointments");
-		$query->equalTo("objectId", $_POST["objectid"]);
-		$appointment=$query->first();
-		$appointment->set("available", "true");
-		$appointment->delete("patientEmail");
-		$appointment->delete("nurseEmail");
-		$appointment->delete("specialty");
-		$appointment->delete("paymentStatus");
-		$appointment->delete("price");
-		try {
-			$appointment->save();
-		}
-		catch (ParseException $ex) {  
-			// Execute any logic that should take place if the save fails.
-			// error is a ParseException object with an error code and message.
-			echo 'Failed to create new object, with error message: ' + $ex->getMessage();
-		}
-		header('Location: viewappointments.php');
-		
+		header('Location: index.php');
 	}
 
 ?>
