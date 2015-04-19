@@ -764,80 +764,54 @@ echo <<<EOL
                <button type="submit" class="btn btn-danger">Cancel Appointment</button>
             </form>
 		</th>
+<td class="active tableDiv">
 EOL;
+ 
+   echo '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#thisModal" data-id ="'.$i.'" data-objectid="' .$object->getObjectId(). '" data-price ="' . $object->get("price") . '" data-status ="'.$object->get("paymentStatus").'"
+  		 data-info ="' . $object->get("apptInfo") . '">';
+   echo $results[$i]->getObjectId();
+   echo '</button>';
 echo <<<EOL
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- <td class="active tableDiv">
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-info="
-EOL;
-echo $object->get("apptInfo") . '" data-objectid="' . $object->getObjectId() . '"';
-echo <<<EOL
-">
-		Appt Info
-	</button>
-	<div class="modal fade myModal
-EOL;
-echo $i;
-echo <<<EOL
-" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel
-EOL;
-echo $i;
-echo <<<EOL
-" aria-hidden="true">
+	<div class="modal fade" id="thisModal" tabindex="-1" role="dialog" aria-labelledby="thisModalLabel" aria-hidden="true">
 	  <div class="modal-dialog">
 		<div class="modal-content">
 		  <div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			<h4 class="modal-title" id="myModalLabel
-EOL;
-echo $i;
-echo <<<EOL
-">Appointment Info</h4>
+			<h4 class="modal-title" id="thisModalLabel">Appointment Info</h4>
 		  </div>
 		  <div class="modal-body">
-		     <form>
-				<textarea class="form-control" rows="10" style="width:100%" id="notes" name="notes">
-				</textarea>
-			 </form>
+			<form>
+			  <div class="form-group">
+				<label for="price" class="control-label">Price:</label>
+				<input type="text" class="form-control" id="price">
+			  </div>
+			  <div class="form-group">
+				<label for="notes" class="control-label">Notes:</label>
+				<textarea class="form-control" id="notes" rows="10" style="width: 100%;"></textarea>
+			  </div>
+			</form>
 		  </div>
 		  <div class="modal-footer">
 			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			<input type="button" class="btn btn-primary" onclick="saveNotes()" value="Save Changes"/>
+			<button type="button" class="btn btn-primary">Save Changes</button>
 		  </div>
 		</div>
 	  </div>
-	</div>
+    </div>
  </th>
+ 
+ 
+ 
  <script>
+	$('#thisModal').on('show.bs.modal', function (event) {
+	  var button = $(event.relatedTarget) // Button that triggered the 
+	  var price = button.data('price')
+	  var notes = button.data('notes') // Extract info from data-* attributes
+	  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+	  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+	  var modal = $(this)
+	  modal.find('.modal-title').text('Help')
+	  modal.find('.form-control').text('Why won't this work')
 })
  </script>
 EOL;
