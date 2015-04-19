@@ -732,6 +732,9 @@ EOL;
   		$innerQuery2->equalTo("email", $object->get("nurseEmail"));
   		$innerResults2 = $innerQuery2->find();
 		
+		echo '<tr class="active"  data-target="#myModal" data-id =" '.$i.'" data-objectid="' .$object->getObjectId(). '" data-price ="'.$object->get("price").'" data-status ="'.$object->get("paymentStatus").'"
+  		 data-info ="' . $object->get("apptInfo") .'">';
+		
 	 	echo	'<td class="active tableDiv">' . $object->get("Date") . '</th>';
 	 	echo	'<td class="active tableDiv">' . $object->get("Time") . '</th>';
 		echo	'<td class="active tableDiv">' . $object->get("specialty") . '</th>';
@@ -835,50 +838,9 @@ echo <<<EOL
 	</div>
  </th>
  <script>
-   $('#myModal').on('show.bs.modal', function (event) {
-		var button = $(event.relatedTarget) // Button that triggered the modal
-		var notes = button.data('info') // Extract info from data-* attributes
-		var id = button.data('objectid')
-		// If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-		// Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-		var modal = $(this)
-		modal.find('.modal-title').text('Appointment Info')
-		modal.find('.form-control').text(notes + id)
 })
-
-    function saveNotes()
-	{
-	
-	}
  </script>
 EOL;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 if($object->get("available")== "taken")
 {
