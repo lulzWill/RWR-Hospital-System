@@ -732,9 +732,6 @@ EOL;
   		$innerQuery2->equalTo("email", $object->get("nurseEmail"));
   		$innerResults2 = $innerQuery2->find();
 		
-		echo '<tr class="active"  data-target="#myModal" data-id =" '.$i.'" data-objectid="' .$object->getObjectId(). '" data-price ="'.$object->get("price").'" data-status ="'.$object->get("paymentStatus").'"
-  		 data-info ="' . $object->get("apptInfo") .'">';
-		
 	 	echo	'<td class="active tableDiv">' . $object->get("Date") . '</th>';
 	 	echo	'<td class="active tableDiv">' . $object->get("Time") . '</th>';
 		echo	'<td class="active tableDiv">' . $object->get("specialty") . '</th>';
@@ -764,57 +761,136 @@ echo <<<EOL
                <button type="submit" class="btn btn-danger">Cancel Appointment</button>
             </form>
 		</th>
-<td class="active tableDiv">
+
+ <td class="active tableDiv">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-info="
 EOL;
- 
-   echo '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#thisModal" data-id ="'.$i.'" data-objectid="' .$object->getObjectId(). '" data-price ="' . $object->get("price") . '" data-status ="'.$object->get("paymentStatus").'"
-  		 data-info ="' . $object->get("apptInfo") . '">';
-   echo $results[$i]->getObjectId();
-   echo '</button>';
+echo $object->get("notes") . '" data-objectid="' . $object->getObjectId() . '" data-price="' . $object->get("price"). '" data-paymentstatus="' . $object->get("paymentStatus") . '"';
+echo 'data-person="'. $innerResults[0]->get("first_name").' '.$innerResults[0]->get("last_name") .'" data-date="'.$object->get("Date").'"';
 echo <<<EOL
-	<div class="modal fade" id="thisModal" tabindex="-1" role="dialog" aria-labelledby="thisModalLabel" aria-hidden="true">
+">
+		Appt Info
+	</button>
+	<div class="modal fade myModal
+EOL;
+echo $i;
+echo <<<EOL
+" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel
+EOL;
+echo $i;
+echo <<<EOL
+" aria-hidden="true">
 	  <div class="modal-dialog">
 		<div class="modal-content">
 		  <div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			<h4 class="modal-title" id="thisModalLabel">Appointment Info</h4>
+			<h4 class="modal-title" id="myModalLabel
+EOL;
+echo $i;
+echo <<<EOL
+">Appointment Info</h4>
 		  </div>
 		  <div class="modal-body">
-			<form>
-			  <div class="form-group">
-				<label for="price" class="control-label">Price:</label>
-				<input type="text" class="form-control" id="price">
-			  </div>
-			  <div class="form-group">
-				<label for="notes" class="control-label">Notes:</label>
-				<textarea class="form-control" id="notes" rows="10" style="width: 100%;"></textarea>
-			  </div>
-			</form>
+		     <form>
+			    <input type="hidden" class="theid" name="myid" id="myid">
+			    <label for="price" class="control-label">Price:</label>
+				<input type="text" class="form-control" id="price" name="price">
+				<label for="notes" class="control-label" style="margin-top: 1px;">Appointment Notes:</label>
+				<textarea class="form-control1" rows="10" style="width:100%" id="notes" name="notes">
+				</textarea>
+			 </form>
 		  </div>
 		  <div class="modal-footer">
 			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			<button type="button" class="btn btn-primary">Save Changes</button>
+			<input type="button" class="btn btn-primary" onclick="saveNotes()" value="Save Changes"/>
 		  </div>
 		</div>
 	  </div>
-    </div>
+	</div>
  </th>
- 
- 
- 
  <script>
-	$('#thisModal').on('show.bs.modal', function (event) {
-	  var button = $(event.relatedTarget) // Button that triggered the 
-	  var price = button.data('price')
-	  var notes = button.data('notes') // Extract info from data-* attributes
-	  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-	  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-	  var modal = $(this)
-	  modal.find('.modal-title').text('Help')
-	  modal.find('.form-control').text('Why won't this work')
+   $('#myModal').on('show.bs.modal', function (event) {
+		var button = $(event.relatedTarget) // Button that triggered the modal
+		var notes = button.data('info') // Extract info from data-* attributes
+		var person = button.data('person')
+		var date = button.data('date')
+		var price = button.data('price')
+		var objectid = button.data('objectid')
+		// If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+		// Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+		var modal = $(this)
+		modal.find('.modal-title').text('Appointment for ' + person + ' on ' + date)
+		modal.find('.form-control').val(price)
+		modal.find('.form-control1').text(notes)
+		modal.find('.theid').val(objectid)
 })
+
+    function saveNotes()
+	{
+		var getID = document.getElementById("myid").value;
+		var getNotes = document.getElementById("notes").value;
+		var getPrice = document.getElementById("price").value;
+		
+		Parse.initialize("kHbyXSdw4DIXw4Q0DYDcdM8QTDQnOewKJhc9ppAr", "dnSrc9MZjvPGuruDghO4imSb6OHqoJb3vyElTJAH");
+		
+		var appt = Parse.Object.extend("appointments");
+		var query = new Parse.Query(appt);
+		query.equalTo("objectId", getID);
+		query.first({
+		success: function(object) {
+
+		object.set("price", getPrice);
+		object.set("notes", getNotes);
+
+			object.save(null, {
+				success: function(object) {
+					// Execute any logic that should take place after the object is saved.console.log("updated old");
+					// update new appt to taken
+					location.reload();
+
+				},
+				  error: function(object, error) {
+					// Execute any logic that should take place if the save fails.
+					// error is a Parse.Error with an error code and message.
+					alert('Failed to create new object, with error code: ' + error.message);
+				  }
+
+			});
+
+			},
+			  error: function(error) {
+			    alert("Error: " + error.code + " " + error.message);
+			  }
+			});
+	}
  </script>
 EOL;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 if($object->get("available")== "taken")
 {
