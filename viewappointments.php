@@ -80,6 +80,7 @@ echo <<<EOL
 EOL;
 	$query = new ParseQuery("appointments");
 	$query->equalTo("patientEmail", $currentUser->get("email"));
+	$query->equalTo("available", "taken");
 	$results = $query->find();
 
 	for ($i = 0; $i < count($results); $i++) 
@@ -291,10 +292,11 @@ EOL;
 
 				
 		      <div class="modal-footer">
-		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		        <input type="button" class="btn btn-primary" onclick="Update()" value="Save Changes"/>
+		        <button type="button" class="btn btn-default" id="closeBtn" data-dismiss="modal">Close</button>
+		        <input type="button" class="btn btn-primary" id="submitBtn" onclick="Update()" value="Save Changes"/>
 		      </div>
 		      </form>
+		      <div id="hidden_form_container" style="display:none;"></div>
 		    </div>
 		  </div>
 		</div>
@@ -358,7 +360,7 @@ EOL;
 		        selectbox.remove(i);
 		    }
 		}
-
+		
 		function Update(){
 			var currentUser = Parse.User.current();
         	var getID = document.getElementById("objectid").value;
@@ -422,7 +424,59 @@ EOL;
 									  success: function(object) {
 									    // Execute any logic that should take place after the object is saved.
 									    console.log("updated new");
-									    location.reload();
+
+									    var theForm, newInput1, newInput2;
+									  	// Start by creating a <form>
+									  	theForm = document.createElement('form');
+									  	theForm.action = 'notifyReschedule.php';
+									  	theForm.method = 'post';
+									  	// Next create the <input>s in the form and give them names and values
+										newInput1 = document.createElement('input');
+									  	newInput1.type = 'hidden';
+									  	newInput1.name = 'patientEmail';
+									  	newInput1.value = document.getElementById("currUserID").value;
+									  	newInput2 = document.createElement('input');
+									  	newInput2.type = 'hidden';
+									  	newInput2.name = 'nurseEmail';
+									  	newInput2.value = nuremail;
+									  	newInput3 = document.createElement('input');
+									  	newInput3.type = 'hidden';
+									  	newInput3.name = 'physicianEmail';
+									  	newInput3.value = getDoctorEmail;
+									  	newInput4 = document.createElement('input');
+									  	newInput4.type = 'hidden';
+									  	newInput4.name = 'newDate';
+									  	newInput4.value = newDate;
+									  	newInput5 = document.createElement('input');
+									  	newInput5.type = 'hidden';
+									  	newInput5.name = 'newTime';
+									  	newInput5.value = newTime;
+									  	newInput6 = document.createElement('input');
+									  	newInput6.type = 'hidden';
+									  	newInput6.name = 'oldDate';
+									  	newInput6.value = getDate;
+									  	newInput7 = document.createElement('input');
+									  	newInput7.type = 'hidden';
+									  	newInput7.name = 'oldTime';
+									  	newInput7.value = getTime;
+									  	// Now put everything together...
+									  	theForm.appendChild(newInput1);
+									  	theForm.appendChild(newInput2);
+									  	theForm.appendChild(newInput3);
+									  	theForm.appendChild(newInput4);
+									  	theForm.appendChild(newInput5);
+									  	theForm.appendChild(newInput6);
+									  	theForm.appendChild(newInput7);
+									  	// ...and it to the DOM...
+									  	document.getElementById('hidden_form_container').appendChild(theForm);
+									  	// ...and submit it
+									  	document.getElementById('submitBtn').disabled = true;
+									  	document.getElementById('submitBtn').value = "Please Wait";
+									  	document.getElementById('closeBtn').disabled = true;
+									  	document.getElementById('selectDate').disabled = true;
+									  	document.getElementById('selectTime').disabled = true;
+									  	theForm.submit();
+
 									  },
 									  error: function(object, error) {
 									    // Execute any logic that should take place if the save fails.
@@ -445,13 +499,7 @@ EOL;
 			  error: function(error) {
 			    alert("Error: " + error.code + " " + error.message);
 			  }
-			});
-		
-
-
-			
-
-			
+			});	
 			
     	}
 
@@ -497,7 +545,6 @@ EOL;
 
 			});
 		});
-
 
 	</script>
 
