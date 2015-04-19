@@ -49,7 +49,6 @@ EOL;
 		}
 		echo <<<EOL
 			<li><a href="logoutcurusr.php">Log Out</a></li>
-			<li><a href="deleteaccount.php">Delete Account</a></li>
 EOL;
 	}
 	else

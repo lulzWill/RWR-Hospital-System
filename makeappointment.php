@@ -164,7 +164,7 @@ EOL;
 					</div>
 				</div>
 				</br>
-				<button type="submit" class="btn btn-primary col-sm-2 pull-right">Schedule Appointment</button>
+				<button type="submit" class="btn btn-primary col-sm-2 pull-right" id="schedBtn">Schedule Appointment</button>
 			</form>
 		</div>
 	</div>
@@ -173,7 +173,6 @@ EOL;
 echo <<<EOL
 
     <script type="text/javascript">
-
     	function dateChange()
     	{
     		document.getElementById("dateSel").selectedIndex = document.getElementById("timeSelect").selectedIndex;
