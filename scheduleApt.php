@@ -148,6 +148,10 @@ EOL;
 	{
 		echo '<h3>Appointment Successfully made for: ' . $_POST["dateSel"] . ' at ' . $_POST["timeSelect"] . '</h3>';
 	}
+	else
+	{
+		echo '<h3>Appointment Successfully made for: ' . $_POST["dateSel"] . ' at ' . $_POST["timeSelect"] . '</h3><h6>No Email Sent</h6>';
+	}
 echo <<<EOL
 		<a href="homepage.php"><button type="button" class="btn btn-primary btn-med">Return to Homepage
 		</button></a>

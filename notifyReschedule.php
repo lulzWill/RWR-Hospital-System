@@ -23,10 +23,10 @@
 		$headers = "From:Appointments@rwrso.ls\r\n";
 		mail($_POST["nurseEmail"],$subject,$content,$headers);
 		mail($_POST["physicianEmail"],$subject,$content,$headers);
-		header("location: viewappointments.php");
+		header("location: " . $_SERVER['HTTP_REFERER']);
 	}
 	else
 	{
-		echo "an error has occurred";
+		header("location: " . $_SERVER['HTTP_REFERER']);
 	}
 ?>

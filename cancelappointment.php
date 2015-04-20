@@ -20,12 +20,21 @@
 		header("Location: index.php");
 		exit;
 	}
-	if($currentUser->get("position") == "physician")
+	if($currentUser->get("position") == "physician" || $currentUser->get("position") == "admin")
 	{
 		$query=new ParseQuery("appointments");
 		$query->equalTo("objectId", $_POST["objectid"]);
 		$appointment=$query->first();
 		$appointment->set("available", "true");
+
+		$to = $appointment->get("patientEmail");
+		$tonurse = $appointment->get("nurseEmail");
+		$toPhys = $appointment->get("physicianEmail");
+
+		$subject = "Appointment Canceled";
+		$content= 'Your appointment made for: ' . $appointment->get("Date") . ' at ' . $appointment->get("Time") . ' has been canceled.';
+		$headers = "From:Appointments@rwrso.ls\r\n";
+
 		$appointment->delete("patientEmail");
 		$appointment->delete("nurseEmail");
 		$appointment->delete("specialty");
@@ -37,9 +46,18 @@
 			// error is a ParseException object with an error code and message.
 			echo 'Failed to create new object, with error message: ' + $ex->getMessage();
 		}
-		header('Location: viewappointments.php');
+
+		if(mail($to,$subject,$content,$headers))
+		{
+			mail($tonurse,$subject,$content,$headers);
+			mail($toPhys,$subject,$content,$headers);
+			header("location: " . $_SERVER['HTTP_REFERER']);
+		}
+		else
+		{
+			header("location: " . $_SERVER['HTTP_REFERER']);
+		}
 	}
-	
 	if($currentUser->get("position") == "patient")
 	{
 		//echo $_POST["objectid"];
@@ -48,6 +66,15 @@
 		$query=new ParseQuery("appointments");
 		$query->equalTo("objectId", $_POST["objectid"]);
 		$appointment=$query->first();
+
+		$to = $appointment->get("patientEmail");
+		$tonurse = $appointment->get("nurseEmail");
+		$toPhys = $appointment->get("physicianEmail");
+
+		$subject = "Appointment Canceled";
+		$content= 'Your appointment made for: ' . $appointment->get("Date") . ' at ' . $appointment->get("Time") . ' has been canceled.';
+		$headers = "From:Appointments@rwrso.ls\r\n";
+
 		$appointment->set("available", "true");
 		$appointment->delete("patientEmail");
 		$appointment->delete("nurseEmail");
@@ -62,8 +89,16 @@
 			// error is a ParseException object with an error code and message.
 			echo 'Failed to create new object, with error message: ' + $ex->getMessage();
 		}
-		header('Location: viewappointments.php');
 		
+		if(mail($to,$subject,$content,$headers))
+		{
+			mail($tonurse,$subject,$content,$headers);
+			mail($toPhys,$subject,$content,$headers);
+			header("location: " . $_SERVER['HTTP_REFERER']);
+		}
+		else
+		{
+			header("location: " . $_SERVER['HTTP_REFERER']);
+		}
 	}
-
 ?>
