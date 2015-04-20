@@ -848,8 +848,8 @@ echo <<<EOL
 			 </form>
 		  </div>
 		  <div class="modal-footer">
-			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			<input type="button" class="btn btn-primary" onclick="saveNotes()" value="Save Changes"/>
+			<button type="button" class="btn btn-default" id="closeBtn" data-dismiss="modal">Close</button>
+			<input type="button" class="btn btn-primary" id="submitBtn" onclick="saveNotes()" value="Save Changes"/>
 		  </div>
 		</div>
 	  </div>
@@ -888,12 +888,63 @@ echo <<<EOL
 
 		object.set("price", getPrice);
 		object.set("notes", getNotes);
+		object.set("taken", "complete");
 
 			object.save(null, {
 				success: function(object) {
 					// Execute any logic that should take place after the object is saved.console.log("updated old");
 					// update new appt to taken
-					location.reload();
+					var theForm, newInput1, newInput2;
+					// Start by creating a <form>
+					theForm = document.createElement('form');
+				  	theForm.action = 'notifyComplete.php';
+				  	theForm.method = 'post';
+				  	// Next create the <input>s in the form and give them names and values
+					newInput1 = document.createElement('input');
+				  	newInput1.type = 'hidden';
+				  	newInput1.name = 'patientEmail';
+				  	newInput1.value = object.get("patientEmail");
+				  	newInput2 = document.createElement('input');
+					newInput2.type = 'hidden';
+				 	newInput2.name = 'nurseEmail';
+				  	newInput2.value = object.get("nurseEmail");
+				  	newInput3 = document.createElement('input');
+				  	newInput3.type = 'hidden';
+				  	newInput3.name = 'physicianEmail';
+				  	newInput3.value = object.get("physicianEmail");
+				  	newInput4 = document.createElement('input');
+				  	newInput4.type = 'hidden';
+				  	newInput4.name = 'aptNotes';
+				  	newInput4.value = object.get("notes");
+				  	newInput5 = document.createElement('input');
+				  	newInput5.type = 'hidden';
+				  	newInput5.name = 'aptPrive';
+				  	newInput5.value = object.get("price");
+				  	newInput6 = document.createElement('input');
+				  	newInput6.type = 'hidden';
+				  	newInput6.name = 'aptDate';
+				  	newInput6.value = object.get("Date");
+				  	newInput7 = document.createElement('input');
+				  	newInput7.type = 'hidden';
+				  	newInput7.name = 'aptTime';
+				  	newInput7.value = object.get("Time");
+				  	// Now put everything together...
+				  	theForm.appendChild(newInput1);
+					theForm.appendChild(newInput2);
+				  	theForm.appendChild(newInput3);
+				  	theForm.appendChild(newInput4);
+				  	theForm.appendChild(newInput5);
+				  	theForm.appendChild(newInput6);
+				  	theForm.appendChild(newInput7);
+				  	// ...and it to the DOM...
+				  	document.getElementById('hidden_form_container').appendChild(theForm);
+				  	// ...and submit it
+				  	document.getElementById('submitBtn').disabled = true;
+				  	document.getElementById('submitBtn').value = "Please Wait";
+				  	document.getElementById('closeBtn').disabled = true;
+				  	document.getElementById('price').disabled = true;
+				  	document.getElementById('notes').disabled = true;
+				  	theForm.submit();
 
 				},
 				  error: function(object, error) {
