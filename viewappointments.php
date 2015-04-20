@@ -237,6 +237,7 @@ EOL;
 				            	$results = $query->find();
 
 
+							  	$datesArray = array("0");
 
 				            	for($i = 0; $i < count($results); $i++)
 				            	{
@@ -250,22 +251,26 @@ EOL;
 
 							  		$innerResults = $innerQuery->find();
 
+							  		//unset($datesArray);
 							  		for($j = 0; $j < count($innerResults); $j++)
 				            		{
-				            			//echo("<script>console.log('innerDate: ".$innerResults[$j]->get("Date")."');</script>");
-							  			//echo("<script>console.log('innerTime: ".$innerResults[$j]->get("Time")."');</script>");
+				            			$tempDate = $innerResults[$j]->get("Date");
 
-				            			/*
-							  			echo '<option value="'; echo $innerResults[$j]->get("Date"); echo ' '; echo $innerResults[$j]->get("Time"); echo '">';
-							  			 echo $innerResults[$j]->get("Date");
-							  			 echo '  --  ';
-							  			 echo $innerResults[$j]->get("Time");
-							  			echo '</option>';
-							  			*/
-
-							  			echo '<option value="'; echo $innerResults[$j]->get("Date"); echo '">';
-							  			 echo $innerResults[$j]->get("Date");
-							  			echo '</option>';
+							  			if ((in_array($tempDate, $datesArray)) || $tempDate == "") {
+							  				
+							  			} else {
+							  				array_push($datesArray, $tempDate);
+							  				/*
+							  				echo '<option value="'; echo $innerResults[$j]->get("Date"); echo '">';
+							  			 	echo $innerResults[$j]->get("Date");
+							  				echo '</option>';
+							  				*/
+							  				echo '<option value="'; echo $tempDate; echo '">';
+							  			 	echo $tempDate;
+							  				echo '</option>';
+							  			}
+							  			//error_log(print_r($datesArray, true));
+							  			
 							  		}
 
 							  		
