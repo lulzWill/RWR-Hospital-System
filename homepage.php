@@ -65,7 +65,7 @@
   
   <body>
 	  <div class="header-image">
-		  <div style="position: absolute; bottom: 0; left: 30%; width: 70%; font-weight: bold; font-size: 32px; color: #fff; margin-bottom: 220px;">
+		  <div style="position: absolute; bottom: 0; left: 25%; width: 70%; font-weight: bold; font-size: 44px; color: #000; margin-bottom: 220px;">
 		  	<p>RWR Hospital Management System</p>
 	  	  </div>
 	  </div>
