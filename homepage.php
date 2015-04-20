@@ -66,8 +66,8 @@
   
   <body>
 	  <div class="header-image">
-		  <div style="position: absolute; bottom: 0; left: 25%; width: 70%; font-weight: bold; font-size: 44px; color: #000; margin-bottom: 200px;">
-		  	<p>RWR Hospital Management System</p>
+		  <div style="opacity: .6; position: absolute; bottom: 0; left: 28%; width: 70%; font-weight: bold; font-size: 44px; color: #000; margin-bottom: 170px;">
+		  	<h1 style="margin-left: 23%; font-size: 55px;">RWR</h1><p>Hospital Management System</p>
 	  	  </div>
 	  </div>
 	  <?php
