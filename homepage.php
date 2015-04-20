@@ -59,13 +59,14 @@
 		var element = document.getElementById(ele.id);
 		element.style.opacity = "1.0";
 	}
+
 	</script>
 	
   </head>
   
   <body>
 	  <div class="header-image">
-		  <div style="position: absolute; bottom: 0; left: 25%; width: 70%; font-weight: bold; font-size: 44px; color: #000; margin-bottom: 220px;">
+		  <div style="position: absolute; bottom: 0; left: 25%; width: 70%; font-weight: bold; font-size: 44px; color: #000; margin-bottom: 200px;">
 		  	<p>RWR Hospital Management System</p>
 	  	  </div>
 	  </div>
@@ -73,31 +74,33 @@
 	  if($currentUser->get("position") == "patient")
 	  {
 		  echo <<<EOL
-	  <div style="position: relative; width: 100%; height: 160px">
-	  	<a href="makeappointment.php"><img src="icons/appointmenticon.png" alt="appointment temp" class="img-circle button-left" height="140px" width="140px" id="appt" onmouseover="changeOpacityIn(this);" onmouseout="changeOpacityOut(this);"></a>
-	  	<a href="viewprofile.php"><img src="icons/viewprofileicon.png" alt="prof temp" class="img-circle button-middle" height="140px" width="140px" id="prof" onmouseover="changeOpacityIn(this);" onmouseout="changeOpacityOut(this);"></a>
+	  <div style="position: relative; margin-left: 30%; width: 70%; height: 160px">
+	  	<a href="makeappointment.php"><img src="icons/appointmenticon.png" alt="appointment temp" class="img-circle button-right" height="140px" width="140px" id="appt" onmouseover="changeOpacityIn(this);" onmouseout="changeOpacityOut(this);"></a>
+	  	<a href="viewprofile.php"><img src="icons/viewprofileicon.png" alt="prof temp" class="img-circle button-right" height="140px" width="140px" id="prof" onmouseover="changeOpacityIn(this);" onmouseout="changeOpacityOut(this);"></a>
 	  	<a href="viewappointments.php"><img src="icons/viewappointment.png" alt="temp" class="img-circle button-right" height="140px" width="140px" id="temp" onmouseover="changeOpacityIn(this);" onmouseout="changeOpacityOut(this);"></a> 
-	  	<a href="viewbilling.php"><img src="icons/billinghistoryicon.png" alt="billing temp" class="img-circle button-middle" height="140px" width="140px" id="billing" onmouseover="changeOpacityIn(this);" onmouseout="changeOpacityOut(this);"></a> 	
+	  	<a href="viewbilling.php"><img src="icons/billinghistoryicon.png" alt="billing temp" class="img-circle button-right" height="140px" width="140px" id="billing" onmouseover="changeOpacityIn(this);" onmouseout="changeOpacityOut(this);"></a> 	
   	  </div>
 EOL;
 	  }
 	  else if($currentUser->get("position") == "admin")
 	  {
 	  	  echo <<<EOL
-	  <div style="position: relative; width: 100%; height: 160px">
-	  	<a href=adminEditAppointments.php><img src="icons/adminEditAppts.png" alt="appointment temp" class="img-circle button-left" height="140px" width="140px" id="appt" onmouseover="changeOpacityIn(this);" onmouseout="changeOpacityOut(this);"></a>
-	  	<a href="editusers.php"><img src="icons/editusers.png" alt="prof temp" class="img-circle button-middle" height="140px" width="140px" id="prof" onmouseover="changeOpacityIn(this);" onmouseout="changeOpacityOut(this);"></a>
+	  <div style="position: relative; margin-left: 30%; width: 70%; height: 160px">
+	  	<a href=adminEditAppointments.php><img src="icons/adminEditAppts.png" alt="appointment temp" class="img-circle button-right" height="140px" width="140px" id="appt" onmouseover="changeOpacityIn(this);" onmouseout="changeOpacityOut(this);"></a>
+	  	<a href="editusers.php"><img src="icons/editusers.png" alt="prof temp" class="img-circle button-right" height="140px" width="140px" id="prof" onmouseover="changeOpacityIn(this);" onmouseout="changeOpacityOut(this);"></a>
 	  	<a href="#"><img src="http://www.tessmeroffairfax.com/tof_iix_master_gallery_wedding_invitations/blank_white.jpg" alt="temp" class="img-circle button-right" height="140px" width="140px" id="temp" onmouseover="changeOpacityIn(this);" onmouseout="changeOpacityOut(this);"></a>  	
+   	  	<a href="#"><img src="http://www.tessmeroffairfax.com/tof_iix_master_gallery_wedding_invitations/blank_white.jpg" alt="temp" class="img-circle button-right" height="140px" width="140px" id="temp" onmouseover="changeOpacityIn(this);" onmouseout="changeOpacityOut(this);"></a>  		
   	  </div>
 EOL;
 	  }
 	  else
 	  {
 		  echo <<<EOL
-	  <div style="position: relative; width: 100%; height: 160px">
-	  	<a href="#"><img src="http://www.tessmeroffairfax.com/tof_iix_master_gallery_wedding_invitations/blank_white.jpg" alt="appointment temp" class="img-circle button-left" height="140px" width="140px" id="appt" onmouseover="changeOpacityIn(this);" onmouseout="changeOpacityOut(this);"></a>
-	  	<a href="viewprofile.php"><img src="icons/viewprofileicon.png" alt="prof temp" class="img-circle button-middle" height="140px" width="140px" id="prof" onmouseover="changeOpacityIn(this);" onmouseout="changeOpacityOut(this);"></a>
+	  <div style="position: relative; margin-left: 30%; width: 70%; height: 160px">
+	  	<a href="#"><img src="http://www.tessmeroffairfax.com/tof_iix_master_gallery_wedding_invitations/blank_white.jpg" alt="appointment temp" class="img-circle button-right" height="140px" width="140px" id="appt" onmouseover="changeOpacityIn(this);" onmouseout="changeOpacityOut(this);"></a>
+	  	<a href="viewprofile.php"><img src="icons/viewprofileicon.png" alt="prof temp" class="img-circle button-right" height="140px" width="140px" id="prof" onmouseover="changeOpacityIn(this);" onmouseout="changeOpacityOut(this);"></a>
 	  	<a href="viewappointments.php"><img src="icons/viewappointment.png" alt="temp" class="img-circle button-right" height="140px" width="140px" id="temp" onmouseover="changeOpacityIn(this);" onmouseout="changeOpacityOut(this);"></a> 
+  	  	<a href="#"><img src="http://www.tessmeroffairfax.com/tof_iix_master_gallery_wedding_invitations/blank_white.jpg" alt="temp" class="img-circle button-right" height="140px" width="140px" id="temp" onmouseover="changeOpacityIn(this);" onmouseout="changeOpacityOut(this);"></a>  	  
   	  </div>
 EOL;
 	  }
