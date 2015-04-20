@@ -92,7 +92,7 @@ EOL;
 
   		$nurseResults = $nurseQuery->find();
 
-  		echo '<tr class="active"  data-target="#basicModal" data-id =" '.$i.' " data-object-id=" '.$results[$i]->getObjectId().' " data-date =" '.$object->get("Date").' " data-time =" '.$object->get("Time").' "
+  		echo '<tr class="active"  data-target="#basicModal" data-id =" '.$i.' " data-object-id="'.$results[$i]->getObjectId().'" data-date =" '.$object->get("Date").' " data-time =" '.$object->get("Time").' "
   		 data-doctor =" ' . $innerResults[0]->get("first_name") . ' ' . $innerResults[0]->get("last_name") . ' " data-doctor-email="'. $object->get("physicianEmail") .'"
   		 data-nurse=" ' . $nurseResults[0]->get("first_name") . ' ' . $nurseResults[0]->get("last_name") . ' " data-nurse-email" ' . $object->get("nurseEmail") . ' " data-payment-status ="'.$object->get("paymentStatus").'"
   		 data-reason ="'.$object->get("specialty").'" data-cost ="'.$object->get("price").'" data-notes ="'.$object->get("apptInfo").'" data-notes-init ="'.$object->get("reason").'">';
@@ -280,7 +280,7 @@ EOL;
 			-->
 				
 		      <div class="modal-footer">
-		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        <button type="button" class="btn btn-default" id="closeBtn" data-dismiss="modal">Close</button>
 		        <input type="button" id="payButton" class="btn btn-success" onclick="Update()" value="Pay Now"/>
 		      </div>
 		      </form>
@@ -289,7 +289,7 @@ EOL;
 		</div>
 	
 		
-
+		<div id="hidden_form_container" style="display:none;"></div>
 	</body>
 
 
@@ -350,13 +350,12 @@ EOL;
         	Parse.initialize("kHbyXSdw4DIXw4Q0DYDcdM8QTDQnOewKJhc9ppAr", "dnSrc9MZjvPGuruDghO4imSb6OHqoJb3vyElTJAH");
 
 			var currentUser = Parse.User.current();
-        	var getID = document.getElementById("objectid").value;
-        	
+        	var getID = document.getElementById("currentObjectId2").value;
         	// update appt to paid
-        	
 			var appt = Parse.Object.extend("appointments");
 			var query = new Parse.Query(appt);
 			query.equalTo("objectId", getID);
+
 			query.first({
 			  success: function(object) {
 
@@ -364,9 +363,41 @@ EOL;
 
 					object.save(null, {
 			  			success: function(object) {
-			    			// Execute any logic that should take place after the object is saved.
-			    			location.reload();
-		          			
+							// update new appt to taken
+							var theForm, newInput1, newInput2;
+							// Start by creating a <form>
+							theForm = document.createElement('form');
+						  	theForm.action = 'notifyPaid.php';
+						  	theForm.method = 'post';
+						  	// Next create the <input>s in the form and give them names and values
+							newInput1 = document.createElement('input');
+						  	newInput1.type = 'hidden';
+						  	newInput1.name = 'patientEmail';
+						  	newInput1.value = object.get("patientEmail");
+						  	newInput5 = document.createElement('input');
+						  	newInput5.type = 'hidden';
+						  	newInput5.name = 'aptPrice';
+						  	newInput5.value = object.get("price");
+						  	newInput6 = document.createElement('input');
+						  	newInput6.type = 'hidden';
+						  	newInput6.name = 'aptDate';
+						  	newInput6.value = object.get("Date");
+						  	newInput7 = document.createElement('input');
+						  	newInput7.type = 'hidden';
+						  	newInput7.name = 'aptTime';
+						  	newInput7.value = object.get("Time");
+						  	// Now put everything together...
+						  	theForm.appendChild(newInput1);
+						  	theForm.appendChild(newInput5);
+						  	theForm.appendChild(newInput6);
+						  	theForm.appendChild(newInput7);
+						  	// ...and it to the DOM...
+						  	document.getElementById('hidden_form_container').appendChild(theForm);
+						  	// ...and submit it
+						  	document.getElementById('payButton').disabled = true;
+						  	document.getElementById('payButton').value = "Please Wait";
+						  	document.getElementById('closeBtn').disabled = true;
+						  	theForm.submit();	
 			  			},
 						  error: function(object, error) {
 						    // Execute any logic that should take place if the save fails.
@@ -418,6 +449,7 @@ EOL;
 			        }
 			        else {
 			        	$(this).find('#apptCost').html($('<b> Payment Due: ' + cost  + '</b>'));
+			        	$(this).find('#payButton').show();
 			        }
 			        $(this).find('#apptCost2').val(cost);
 

@@ -888,7 +888,7 @@ echo <<<EOL
 
 		object.set("price", getPrice);
 		object.set("notes", getNotes);
-		object.set("taken", "complete");
+		object.set("available", "complete");
 
 			object.save(null, {
 				success: function(object) {
@@ -918,7 +918,7 @@ echo <<<EOL
 				  	newInput4.value = object.get("notes");
 				  	newInput5 = document.createElement('input');
 				  	newInput5.type = 'hidden';
-				  	newInput5.name = 'aptPrive';
+				  	newInput5.name = 'aptPrice';
 				  	newInput5.value = object.get("price");
 				  	newInput6 = document.createElement('input');
 				  	newInput6.type = 'hidden';
@@ -944,6 +944,7 @@ echo <<<EOL
 				  	document.getElementById('closeBtn').disabled = true;
 				  	document.getElementById('price').disabled = true;
 				  	document.getElementById('notes').disabled = true;
+
 				  	theForm.submit();
 
 				},
@@ -1032,7 +1033,7 @@ EOL;
 	}
 echo <<<EOL
 		</table>
-		
+		<div id="hidden_form_container" style="display:none;"></div>
 	</body>
 </html>
 EOL;
