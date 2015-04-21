@@ -234,7 +234,7 @@ echo <<<EOL
 						</div>
 						<div class="container">
 						<div class="row">
-							<input type="button" class="btn btn-primary pull-right" onclick="UpdatePhys()" value="Save Changes"/>
+							<input type="button" class="btn btn-primary pull-right" id="btnSub" onclick="UpdatePhys()" value="Save Changes"/>
 						</div>
 						</div>
 					</div>
@@ -428,7 +428,7 @@ echo <<<EOL
 
 					  		object.save(null, {
 					  				success: function(object) {
-					  					alert("Changes have been successfully made!");
+					  					document.getElementById("btnSub").disabled = true;
 					  					location.reload();
 						    			//would update user data if that were possible with parse... parse sucks
 /*
