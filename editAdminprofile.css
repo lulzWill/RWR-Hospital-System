@@ -1,0 +1,58 @@
+body {
+  background-image: url("bgs/profilebg.jpg");
+  padding-top: 70px;
+}
+
+.continfo {
+	width: 100%;
+}
+.emerginfo {
+	width: 100%;
+}
+
+h1 {
+	color: white;
+	margin-left:1%;
+}
+
+h2 {
+	margin-left: 2%;
+	color: cyan;
+	text-decoration: underline;
+}
+
+h3 {
+	margin-left: 3%;
+	color:white;
+}
+
+h1 a {
+	font-size: .75em;
+	color: yellow;
+	float: right;
+	margin-right: 1%;
+}
+
+h1 a:hover {
+	color: violet
+	text-decoration:underline;
+}
+
+.col-sm-2 {
+	color:gray;
+}
+.col-sm-4 {
+	color:gray;
+}
+.form-control {
+	width: 100%;
+}
+
+.row {
+	padding-bottom: .5%;
+}
+
+.container {
+  width:100%;
+}
+

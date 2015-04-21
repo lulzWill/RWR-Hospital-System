@@ -35,7 +35,7 @@
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-	<link href="editprofile.css" rel="stylesheet">
+	<link href="editAdminprofile.css" rel="stylesheet">
 	<link href="http://eternicode.github.io/bootstrap-datepicker/bootstrap-datepicker/css/datepicker3.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -90,7 +90,7 @@ EOL;
 		echo	'<td class="active tableDiv">' . $object->get("position") . '</th>';
 		echo    '<td class="active tableDiv">';
 
-echo '<a href="#" class="btn btn-warning" data-toggle="modal" data-target="#'. $object->get("position") .'Modal">Edit User</a>';
+echo '<a href="#" class="btn btn-warning" data-toggle="modal" data-target="#'. $object->get("position") .'Modal" data-email="'.$object->get("email").'">Edit User</a>';
 		echo    '</tr>';
 	}
 echo <<<EOL
@@ -102,12 +102,68 @@ echo <<<EOL
 
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		        <h4 class="modal-title" id="myModalLabel">Edit Physician</h4>
+		        <h4 class="modal-title" id="physModalLabel">Edit Physician</h4>
 		      </div>
 
 		      <div class="modal-body">
-		      	<form class="form-horizontal" action="edituserprofile.php" method="post" id="editProfile1" onsubmit="return validateForm()">
+		      	<form class="form-horizontal" action="" method="" id="editProfile1" onsubmit="return validateForm()">
 					<div class="profpic">
+						<h4>User Information</h4>
+						<div class="container">
+						<div class="row">
+							<div class="col-sm-10">
+								<input type="hidden" class="form-control" id="email" name="email" align="left" value="" required>
+			                </div>			
+						</div>
+						</div>
+						<div class="container">
+						<div class="row">
+							<label for="firstName" class="col-sm-2 control-label whitelabel">First Name:</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="firstName" name="firstName" align="left" value="" required>
+			                </div>			
+						</div>
+						</div>
+						<div class="container">
+						<div class="row">
+							<label for="lastName" class="col-sm-2 control-label whitelabel">Last Name:</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="lastName" name="lastName" align="left" value="" required>
+			                </div>			
+						</div>
+						</div>
+						<div class="container">
+						<div class="row">
+							<label for="bday" class="col-sm-2 control-label whitelabel">Birthday:</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="bday" name="bday" align="left" value="" required>
+			                </div>			
+						</div>
+						</div>
+						<div class="container">
+						<div class="row">
+							<label for="role" class="col-sm-2 control-label whitelabel">Position:</label>
+							<div class="col-sm-10 selectContainer">
+					            <select class="form-control" name="role" id="role" required>
+					                <option value="nurse">Nurse</option>
+					                <option value="admin">Administrator</option>
+					                <option value="patient">Patient</option>
+					                <option value="physician">Physician</option>
+					            </select>
+					        </div>
+						</div>
+						</div>
+						<div class="container">
+						<div class="row">
+							<label for="sex" class="col-sm-2 control-label whitelabel">Sex:</label>
+							<div class="col-sm-10">
+								<select class="form-control" name="sex" id="sex" name="sex" required>
+					                <option value="Male">Male</option>
+					                <option value="Female">Female</option>
+					            </select>
+							</div>
+						</div>
+						</div>
 						<h4>Profile Picture</h4>
 						<div class="container">
 						<div class="row">
@@ -130,7 +186,7 @@ echo <<<EOL
 						</div>
 						<div class="container">
 						<div class="row">
-							<label for="school" class="col-sm-2 control-label whitelabel">College/University:</label>
+							<label for="school" class="col-sm-2 control-label whitelabel">University:</label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control" id="school" name="school" value="" required>
 							</div>
@@ -172,22 +228,20 @@ echo <<<EOL
 						<div class="row">
 							<label for="phone" class="col-sm-2 control-label whitelabel">Work/Office Phone:</label>
 							<div class="col-sm-10">
-								<input type="text" size="8" class="form-control" id="phone" name="phone" value="" required>
+								<input type="text" size="20" class="form-control" id="phone" name="phone" value="" required>
 							</div>
 						</div>
-					</div>
-					</div>
+						</div>
 						<div class="container">
 						<div class="row">
-						    <div class="col-sm-offset-2 col-sm-10">
-						      	<button type="submit" class="btn btn-success">Save Settings</button>
-						    </div>
+							<input type="button" class="btn btn-primary pull-right" onclick="UpdatePhys()" value="Save Changes"/>
+						</div>
+						</div>
 					</div>
 					</form>
 			  </div>	
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		        <input type="button" class="btn btn-primary" onclick="Update()" value="Save Changes"/>
 		      </div>
 		      </form>
 		    </div>
@@ -351,41 +405,121 @@ echo <<<EOL
 			  }
 			});	
     	}
+    	function UpdatePhys()
+    	{
+    		Parse.initialize("kHbyXSdw4DIXw4Q0DYDcdM8QTDQnOewKJhc9ppAr", "dnSrc9MZjvPGuruDghO4imSb6OHqoJb3vyElTJAH");
+
+			var usr = Parse.Object.extend("Physician");
+			var query = new Parse.Query(usr);
+			var curEmail = document.getElementById("email").value;
+
+			query.equalTo("email", curEmail);
+			query.first({
+					  success: function(object) {
+					  		
+					  		//object.set("prof_pic", document.getElementById("prof_pic").value);
+					  		object.set("degree", document.getElementById("degree").value);
+					  		object.set("school", document.getElementById("school").value);
+					  		object.set("experience", document.getElementById("experience").value);
+					  		object.set("address", document.getElementById("address").value);
+					  		object.set("citystate", document.getElementById("citystate").value);
+					  		object.set("zipcode", document.getElementById("zipcode").value);
+					  		object.set("phone", document.getElementById("phone").value);
+
+					  		object.save(null, {
+					  				success: function(object) {
+					  					alert("Changes have been successfully made!");
+					  					location.reload();
+						    			//would update user data if that were possible with parse... parse sucks
+/*
+										var usr = Parse.Object.extend("User");
+										var query = new Parse.Query(usr);
+										query.equalTo("email", curEmail);
+										query.first({
+							  			success: function(object) {
+
+										    object.set("firstname", document.getElementById("firstName").value);
+											object.set("lastname", document.getElementById("lastName").value);
+											object.set("dateOfBirth", document.getElementById("bday").value);
+											object.set("position", document.getElementById("role").value);
+											object.set("sex", document.getElementById("sex").value);
+										    
+										    object.save(null, {
+											  success: function(object) {
+											    // Execute any logic that should take place after the object is saved.
+											    console.log("updated new");
+											    location.reload();
+											  },
+											  error: function(object, error) {
+											    // Execute any logic that should take place if the save fails.
+											    // error is a Parse.Error with an error code and message.
+											    alert('Failed to create new object, with error code: ' + error.message);
+											  }
+											});
+										}
+									});
+*/
+					  			},
+								  error: function(object, error) {
+								    // Execute any logic that should take place if the save fails.
+								    // error is a Parse.Error with an error code and message.
+								    alert('Failed to create new object, with error code: ' + error.message);
+								  }
+
+				    		});
+					},
+					  error: function(error) {
+					    alert("Error: " + error.code + " " + error.message);
+					  }
+					});	
+    	}
 
 		$(function(){
 			$('#physicianModal').modal({
 				show:false
 
-			    }).on('show.bs.modal', function() {
-			        var getIdFromRow = $(event.target).closest('tr').data('object-id'); //get the id from tr
-			        
-			        $(this).find('#currentObjectId').html($('<b> current objID: ' + getIdFromRow  + '</b>'));
-			        $(this).find('#currentObjectId2').val(getIdFromRow);
+			    }).on('show.bs.modal', function(event) {
+			    	Parse.initialize("kHbyXSdw4DIXw4Q0DYDcdM8QTDQnOewKJhc9ppAr", "dnSrc9MZjvPGuruDghO4imSb6OHqoJb3vyElTJAH");
 
-			        var date = $(event.target).closest('tr').data('date');
-			        $(this).find('#currentDate').html($('<b> Current date: ' + date  + '</b>'));
-			        $(this).find('#currentDate2').val(date);
+			    	var usr = Parse.Object.extend("Physician");
+					var query = new Parse.Query(usr);
+					var curEmail = $(event.relatedTarget).data('email');
 
-			        var time = $(event.target).closest('tr').data('time');
-			        $(this).find('#currentTime').html($('<b> Current time: ' + time  + '</b>'));
-			        $(this).find('#currentTime2').val(time);
+					query.equalTo("email", curEmail);
+					query.first({
+					  success: function(object) {
+					  		document.getElementById("prof_pic").value = object.get("prof_pic").url();
+					  		document.getElementById("email").value = object.get("email");
+					  		document.getElementById("degree").value = object.get("degree");
+					  		document.getElementById("school").value = object.get("school");
+					  		document.getElementById("experience").value = object.get("experience");
+					  		document.getElementById("address").value = object.get("address");
+					  		document.getElementById("citystate").value = object.get("citystate");
+					  		document.getElementById("zipcode").value = object.get("zipcode");
+					  		document.getElementById("phone").value = object.get("phone");
 
-			        var doctor = $(event.target).closest('tr').data('doctor');
-			        $(this).find('#currentDoctor').html($('<b> Current doctor: ' + doctor  + '</b>'));
-			        $(this).find('#currentDoctor2').val(doctor);
+					  		var usr = Parse.Object.extend("User");
+							var query = new Parse.Query(usr);
+							query.equalTo("email", curEmail);
+							query.first({
+								success: function(object) {
+									document.getElementById("firstName").value = object.get("firstname");
+									document.getElementById("lastName").value = object.get("lastname");
+									document.getElementById("bday").value = object.get("dateOfBirth");
+									document.getElementById("role").value = object.get("position");
+									document.getElementById("sex").value = object.get("sex");
+									document.getElementById("physModalLabel").innerHTML = "Edit Physician - " + object.get("firstname") + " " + object.get("lastname");
+								},
+								error: function(error) {
+									alert("Error: " + error.code + " " + error.message);
+								}
+							})
 
-			        var doctorEmail = $(event.target).closest('tr').data('doctor-email');
-			        $(this).find('#currentDoctorEmail').html($('<b> current doc email: ' + doctorEmail  + '</b>'));
-			        $(this).find('#currentDoctorEmail2').val(doctorEmail);
-
-			        var nurse = $(event.target).closest('tr').data('nurse');
-			        $(this).find('#currentNurse').html($('<b> Current nurse: ' + nurse  + '</b>'));
-			        $(this).find('#currentNurse2').val(nurse);
-
-			        var nurseEmail = $(event.target).closest('tr').data('nurse-email');
-			        $(this).find('#currentNurseEmail').html($('<b> current nurse email: ' + nurseEmail  + '</b>'));
-			        $(this).find('#currentNurseEmail2').val(nurseEmail);
-
+					},
+					  error: function(error) {
+					    alert("Error: " + error.code + " " + error.message);
+					  }
+					});	
 			});
 		});
 
