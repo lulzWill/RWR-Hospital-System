@@ -13,7 +13,8 @@
 	ParseClient::setStorage( new ParseSessionStorage() );
 	$currentUser = ParseUser::getCurrentUser();
 	$currentUser->save();
-	
+	$sessionToken = ParseUser::getCurrentUser()->getSessionToken();
+
 	if(!$currentUser)
 	{
 		header("Location: index.php");
@@ -60,6 +61,11 @@ EOL;
 echo $currentUser->get("email");
 echo <<<EOL
 '/>
+<input hidden="true" id="currSessionToken" value='
+EOL;
+echo $sessionToken;
+echo <<<EOL
+'/>
     </head>
   <body>
 	<body>
@@ -76,7 +82,7 @@ echo <<<EOL
 EOL;
 	$query = ParseUser::query();
 	$query->equalTo("emailVerified", true);
-	$query->ascending("lastname");
+	$query->ascending("position");
 	$results = $query->find();
 
 	for ($i = 0; $i < count($results); $i++) 
@@ -89,8 +95,10 @@ EOL;
 	 	echo	'<td class="active tableDiv">' . $object->get("email") . '</th>';
 		echo	'<td class="active tableDiv">' . $object->get("position") . '</th>';
 		echo    '<td class="active tableDiv">';
-
-echo '<a href="#" class="btn btn-warning" data-toggle="modal" data-target="#'. $object->get("position") .'Modal" data-email="'.$object->get("email").'">Edit User</a>';
+		if($object->get("position") != "admin")
+		{
+			echo '<a href="#" class="btn btn-warning" data-toggle="modal" data-target="#'. $object->get("position") .'Modal" data-email="'.$object->get("email").'">Edit User</a>';
+		}
 		echo    '</tr>';
 	}
 echo <<<EOL
@@ -167,9 +175,14 @@ echo <<<EOL
 						<h4>Profile Picture</h4>
 						<div class="container">
 						<div class="row">
+							<img src="" id="prof_pic_img" width="200" height="200"></img>		
+						</div>
+						</div>
+						<div class="container">
+						<div class="row">
 							<label for="prof_pic" class="col-sm-2 control-label whitelabel">Prof. Pic:</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="prof_pic" name="prof_pic" align="left" value="" required>
+								<input type="file" class="form-control" id="prof_pic" name="prof_pic" align="left" value="" required>
 			                </div>			
 						</div>
 						</div>
@@ -240,9 +253,6 @@ echo <<<EOL
 					</div>
 					</form>
 			  </div>	
-		      <div class="modal-footer">
-		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		      </div>
 		      </form>
 		    </div>
 		  </div>
@@ -254,18 +264,218 @@ echo <<<EOL
 
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		        <h4 class="modal-title" id="myModalLabel">Edit Patient</h4>
+		        <h4 class="modal-title" id="patModalLabel">Edit Patient</h4>
 		      </div>
 
 		      <div class="modal-body">
-
-			  </div>
-
-				
-		      <div class="modal-footer">
-		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		        <input type="button" class="btn btn-primary" onclick="Update()" value="Save Changes"/>
-		      </div>
+		      <form class="form-horizontal" action="" method="" id="editProfile2" onsubmit="return validateForm()">
+					<div class="profpic">
+						<h4>User Information</h4>
+						<div class="container">
+						<div class="row">
+							<div class="col-sm-10">
+								<input type="hidden" class="form-control" id="email_pat" name="email_pat" align="left" value="" required>
+			                </div>			
+						</div>
+						</div>
+						<div class="container">
+						<div class="row">
+							<label for="firstName_pat" class="col-sm-2 control-label whitelabel">First Name:</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="firstName_pat" name="firstName_pat" align="left" value="" required>
+			                </div>			
+						</div>
+						</div>
+						<div class="container">
+						<div class="row">
+							<label for="lastName_pat" class="col-sm-2 control-label whitelabel">Last Name:</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="lastName_pat" name="lastName_pat" align="left" value="" required>
+			                </div>			
+						</div>
+						</div>
+						<div class="container">
+						<div class="row">
+							<label for="bday_pat" class="col-sm-2 control-label whitelabel">Birthday:</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="bday_pat" name="bday_pat" align="left" value="" required>
+			                </div>			
+						</div>
+						</div>
+						<div class="container">
+						<div class="row">
+							<label for="role_pat" class="col-sm-2 control-label whitelabel">Position:</label>
+							<div class="col-sm-10 selectContainer">
+					            <select class="form-control" name="role_pat" id="role_pat" required>
+					                <option value="nurse">Nurse</option>
+					                <option value="admin">Administrator</option>
+					                <option value="patient">Patient</option>
+					                <option value="physician">Physician</option>
+					            </select>
+					        </div>
+						</div>
+						</div>
+						<div class="container">
+						<div class="row">
+							<label for="sex_pat" class="col-sm-2 control-label whitelabel">Sex:</label>
+							<div class="col-sm-10">
+								<select class="form-control" name="sex_pat" id="sex_pat" required>
+					                <option value="Male">Male</option>
+					                <option value="Female">Female</option>
+					            </select>
+							</div>
+						</div>
+						</div>
+						<h4>Profile Picture</h4>
+						<div class="container">
+						<div class="row">
+							<img src="" id="prof_pic_img_pat" width="200" height="200"></img>		
+						</div>
+						</div>
+						<div class="container">
+						<div class="row">
+							<label for="prof_pic_pat" class="col-sm-2 control-label whitelabel">Prof. Pic:</label>
+							<div class="col-sm-10">
+								<input type="file" class="form-control" id="prof_pic_pat" name="prof_pic_pat" align="left" value="" required>
+			                </div>			
+						</div>
+						</div>
+					</div>
+					<div class="continfo">
+						<h4>Patient Contact Information</h4>
+							<div class="container">
+							<div class="row">
+								<label for="address" class="col-sm-2 control-label whitelabel">Address:</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" id="address_pat" name="address_pat" value="" required>
+				                </div>			
+							</div>
+							</div>
+							<div class="container">
+							<div class="row">
+								<label for="citystate" class="col-sm-2 control-label whitelabel">City, State:</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" id="citystate_pat" name="citystate_pat" value="" required>
+								</div>
+							</div>
+							</div>
+							<div class="container">
+							<div class="row">
+								<label for="zipcode" class="col-sm-2 control-label whitelabel">Zipcode:</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" id="zipcode_pat" name="zipcode_pat" value="" required>
+								</div>
+							</div>
+							</div>
+							<div class="container">
+							<div class="row">
+								<label for="homephone" class="col-sm-2 control-label whitelabel">Home Phone:</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" id="homephone" name="homephone" value="" required>
+								</div>
+							</div>
+							</div>
+							<div class="container">
+							<div class="row">
+								<label for="cellphone" class="col-sm-2 control-label whitelabel">Cell Phone:</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" id="cellphone" name="cellphone" value="" required>
+								</div>
+							</div>
+							</div>
+						</div>
+						<div class="emerginfo">
+							<h4>Emergency Contact Information</h4>
+							<h5>Primary</h5>
+							<div class="container">
+							<div class="row">
+								<label for="emerg_name" class="col-sm-2 control-label whitelabel">Emergency Contact Name:</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" id="emerg_name" name="emerg_name" value="" required>
+								</div>
+							</div>
+							</div>
+							<div class="container">
+							<div class="row">
+								<label for="emerg_num" class="col-sm-2 control-label whitelabel">Emergency Contact Number:</label>
+								<div class="col-sm-10">
+									<input type="text" size="8" class="form-control" id="emerg_num" name="emerg_num" value="" required>
+								</div>
+							</div>
+							</div>
+				            <div class="container">
+							<div class="row">
+								<label for="emerg_rel" class="col-sm-2 control-label whitelabel">Relation to Emergency Contact:</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" id="emerg_rel" name="emerg_rel" value="" required>
+								</div>
+							</div>
+							</div>
+							<h5>Secondary</h5>
+							<div class="container">
+							<div class="row">
+								<label for="emerg_name2" class="col-sm-2 control-label whitelabel">Emergency Contact Name:</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" id="emerg_name2" name="emerg_name2" value="" required>
+								</div>
+							</div>
+							</div>
+							<div class="container">
+							<div class="row">
+								<label for="emerg_num2" class="col-sm-2 control-label whitelabel">Emergency Contact Number:</label>
+								<div class="col-sm-10">
+									<input type="text" size="8" class="form-control" id="emerg_num2" name="emerg_num2" value="" required>
+								</div>
+							</div>
+							</div>
+							<div class="container">
+							<div class="row">
+								<label for="emerg_rel2" class="col-sm-2 control-label whitelabel">Relation to Emergency Contact:</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" id="emerg_rel2" name="emerg_rel2" value="" required>
+								</div>
+							</div>
+							</div>
+						</div>
+						<h4>Medical Information</h4>
+						<div class="container">
+						<div class="row">
+							<label for="insurance" class="col-sm-2 control-label whitelabel">Insurance:</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="insurance" name="insurance" align="left" value="" required>
+			                </div>			
+						</div>
+						</div>
+						<div class="container">
+						<div class="row">
+							<label for="pre_conditions" class="col-sm-2 control-label whitelabel">Pre-Existing Conditions:</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="pre_conditions" name="pre_conditions" value="" required>
+			                </div>			
+						</div>
+						</div>
+						<div class="container">
+						<div class="row">
+							<label for="medications" class="col-sm-2 control-label whitelabel">Medications:</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="medications" name="medications" value="" required>
+							</div>
+						</div>
+						</div>
+						<div class="container">
+						<div class="row">
+							<label for="allergies" class="col-sm-2 control-label whitelabel">Allergies:</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="allergies" name="allergies" value="" required>
+							</div>
+						</div>
+						</div>
+						<div class="container">
+						<div class="row">
+							<input type="button" class="btn btn-primary pull-right" id="btnSubPat" onclick="UpdatePat()" value="Save Changes"/>
+						</div>
+						</div>
+					</div>
 		      </form>
 		    </div>
 		  </div>
@@ -277,41 +487,149 @@ echo <<<EOL
 
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		        <h4 class="modal-title" id="myModalLabel">Edit Nurse</h4>
+		        <h4 class="modal-title" id="nurModalLabel">Edit Nurse</h4>
 		      </div>
 
 		      <div class="modal-body">
-
+				<form class="form-horizontal" action="" method="" id="editProfile3" onsubmit="return validateForm()">
+					<div class="profpic">
+						<h4>User Information</h4>
+						<div class="container">
+						<div class="row">
+							<div class="col-sm-10">
+								<input type="hidden" class="form-control" id="email_nur" name="email_nur" align="left" value="" required>
+			                </div>			
+						</div>
+						</div>
+						<div class="container">
+						<div class="row">
+							<label for="firstName_nur" class="col-sm-2 control-label whitelabel">First Name:</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="firstName_nur" name="firstName_nur" align="left" value="" required>
+			                </div>			
+						</div>
+						</div>
+						<div class="container">
+						<div class="row">
+							<label for="lastName_nur" class="col-sm-2 control-label whitelabel">Last Name:</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="lastName_nur" name="lastName_nur" align="left" value="" required>
+			                </div>			
+						</div>
+						</div>
+						<div class="container">
+						<div class="row">
+							<label for="bday_nur" class="col-sm-2 control-label whitelabel">Birthday:</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="bday_nur" name="bday_nur" align="left" value="" required>
+			                </div>			
+						</div>
+						</div>
+						<div class="container">
+						<div class="row">
+							<label for="role_nur" class="col-sm-2 control-label whitelabel">Position:</label>
+							<div class="col-sm-10 selectContainer">
+					            <select class="form-control" name="role_nur" id="role_nur" required>
+					                <option value="nurse">Nurse</option>
+					                <option value="admin">Administrator</option>
+					                <option value="patient">Patient</option>
+					                <option value="physician">Physician</option>
+					            </select>
+					        </div>
+						</div>
+						</div>
+						<div class="container">
+						<div class="row">
+							<label for="sex_nur" class="col-sm-2 control-label whitelabel">Sex:</label>
+							<div class="col-sm-10">
+								<select class="form-control" name="sex_nur" id="sex_nur" required>
+					                <option value="Male">Male</option>
+					                <option value="Female">Female</option>
+					            </select>
+							</div>
+						</div>
+						</div>	      
+						<div class="profpic">
+							<h4>Profile Picture</h4>
+							<div class="container">
+							<div class="row">
+								<img src="" id="prof_pic_img_nur" width="200" height="200"></img>		
+							</div>
+							</div>
+							<div class="container">
+							<div class="row">
+								<label for="prof_pic_nur" class="col-sm-2 control-label whitelabel">Profile Picture Link:</label>
+								<div class="col-sm-10">
+									<input type="file" class="form-control" id="prof_pic_nur" name="prof_pic_nur" align="left" value="" required>
+				                </div>			
+							</div>
+						</div>
+						</div>
+					<div class="continfo">
+						<h4>Nurse Information</h4>
+								<div class="container">
+								<div class="row">
+									<label for="degree_nur" class="col-sm-2 control-label whitelabel">Degree:</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control" id="degree_nur" name="degree_nur" value="" required>
+					                </div>			
+								</div>
+								</div>
+								<div class="container">
+								<div class="row">
+									<label for="school_nur" class="col-sm-2 control-label whitelabel">University:</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control" id="school_nur" name="school_nur" value="" required>
+									</div>
+								</div>
+								</div>
+								<div class="container">
+								<div class="row">
+									<label for="experience_nur" class="col-sm-2 control-label whitelabel">Years of Experience:</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control" id="experience_nur" name="experience_nur" value="" required>
+									</div>
+								</div>
+								</div>
+								<div class="container">
+								<div class="row">
+									<label for="address_nur" class="col-sm-2 control-label whitelabel">Work Address:</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control" id="address_nur" name="address_nur" value="" required>
+									</div>
+								</div>
+								</div>
+								<div class="container">
+								<div class="row">
+									<label for="citystate_nur" class="col-sm-2 control-label whitelabel">City, State:</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control" id="citystate_nur" name="citystate_nur" value="" required>
+									</div>
+								</div>
+								</div>
+								<div class="container">
+								<div class="row">
+									<label for="zipcode_nur" class="col-sm-2 control-label whitelabel">Zipcode:</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control" id="zipcode_nur" name="zipcode_nur" value="" required>
+									</div>
+								</div>
+								</div>
+								<div class="container">
+								<div class="row">
+									<label for="phone_nur" class="col-sm-2 control-label whitelabel">Work/Office Phone:</label>
+									<div class="col-sm-10">
+										<input type="text" size="8" class="form-control" id="phone_nur" name="phone_nur" value="" required>
+									</div>
+								</div>
+								<div class="container">
+								<div class="row">
+										<input type="button" class="btn btn-primary pull-right" id="btnSub_nur" onclick="UpdateNur()" value="Save Changes"/>
+								</div>
+								</div>
+							</div>
+					</form>
 			  </div>
-
-				
-		      <div class="modal-footer">
-		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		        <input type="button" class="btn btn-primary" onclick="Update()" value="Save Changes"/>
-		      </div>
-		      </form>
-		    </div>
-		  </div>
-		</div>
-
-		<div class="modal fade" id="adminModal" tabindex="-1" role="dialog" aria-labelledby="adminModal" aria-hidden="true">
-		  <div class="modal-dialog">
-		    <div class="modal-content">
-
-		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		        <h4 class="modal-title" id="myModalLabel">Edit Admin</h4>
-		      </div>
-
-		      <div class="modal-body">
-
-			  </div>
-
-				
-		      <div class="modal-footer">
-		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		        <input type="button" class="btn btn-primary" onclick="Update()" value="Save Changes"/>
-		      </div>
 		      </form>
 		    </div>
 		  </div>
@@ -323,88 +641,6 @@ echo <<<EOL
 
 	<script type="text/javascript">
 
-
-		function Update(){
-			var currentUser = Parse.User.current();
-        	var getID = document.getElementById("objectid").value;
-        	var getDate = document.getElementById("currentDate2").value;
-        	var getTime = document.getElementById("currentTime2").value;
-        	var getDoctorEmail = document.getElementById("currentDoctorEmail2").value;
-        	var getNurseEamil = document.getElementById("currentNurseEmail2").value;
-        	var newDate = document.getElementById("selectDate").value;
-        	var newTime = document.getElementById("selectTime").value;
-        	
-        	
-        	Parse.initialize("kHbyXSdw4DIXw4Q0DYDcdM8QTDQnOewKJhc9ppAr", "dnSrc9MZjvPGuruDghO4imSb6OHqoJb3vyElTJAH");
-
-
-
-        	// update old appt to available
-        	
-			var appt = Parse.Object.extend("appointments");
-			var query = new Parse.Query(appt);
-			query.equalTo("objectId", getID);
-			query.first({
-			  success: function(object) {
-
-				    object.set("available", "true");
-
-				    object.set("patientEmail", "(undefined)");
-				    object.set("nurseEmail", "(undefined)");
-				    object.set("specialty", "(undefined)");
-
-
-					object.save(null, {
-			  			success: function(object) {
-			    			// Execute any logic that should take place after the object is saved.console.log("updated old");
-		          			// update new appt to taken
-
-							var newAppt = Parse.Object.extend("appointments");
-							var query2 = new Parse.Query(newAppt);
-							console.log(newDate);
-							console.log(newTime);
-							console.log(getDoctorEmail);
-							query2.equalTo("Date", newDate);
-							query2.equalTo("Time", newTime);
-							query2.equalTo("physicianEmail", getDoctorEmail);
-							query2.first({
-					  			success: function(object) {
-
-								    object.set("available", "taken");
-								    //TODO set current nurse email
-								    console.log(object);
-								    object.set("nurseEmail", "none@none.com");
-								    object.set("patientEmail", document.getElementById("currUserID").value);
-
-								    object.save(null, {
-									  success: function(object) {
-									    // Execute any logic that should take place after the object is saved.
-									    console.log("updated new");
-									    location.reload();
-									  },
-									  error: function(object, error) {
-									    // Execute any logic that should take place if the save fails.
-									    // error is a Parse.Error with an error code and message.
-									    alert('Failed to create new object, with error code: ' + error.message);
-									  }
-									});
-								}
-							});
-			  			},
-						  error: function(object, error) {
-						    // Execute any logic that should take place if the save fails.
-						    // error is a Parse.Error with an error code and message.
-						    alert('Failed to create new object, with error code: ' + error.message);
-						  }
-
-		    		});
-
-			},
-			  error: function(error) {
-			    alert("Error: " + error.code + " " + error.message);
-			  }
-			});	
-    	}
     	function UpdatePhys()
     	{
     		Parse.initialize("kHbyXSdw4DIXw4Q0DYDcdM8QTDQnOewKJhc9ppAr", "dnSrc9MZjvPGuruDghO4imSb6OHqoJb3vyElTJAH");
@@ -416,8 +652,14 @@ echo <<<EOL
 			query.equalTo("email", curEmail);
 			query.first({
 					  success: function(object) {
-					  		
-					  		//object.set("prof_pic", document.getElementById("prof_pic").value);
+					  		if(document.getElementById("prof_pic").value != "")
+					  		{
+					  			var fileUploadControl = $("#prof_pic")[0];
+					  			var file = fileUploadControl.files[0];
+
+					  			var parseFile = new Parse.File("prof_pic.jpg", file);
+					  			object.set("prof_pic", parseFile);
+					  		}
 					  		object.set("degree", document.getElementById("degree").value);
 					  		object.set("school", document.getElementById("school").value);
 					  		object.set("experience", document.getElementById("experience").value);
@@ -425,41 +667,182 @@ echo <<<EOL
 					  		object.set("citystate", document.getElementById("citystate").value);
 					  		object.set("zipcode", document.getElementById("zipcode").value);
 					  		object.set("phone", document.getElementById("phone").value);
+					  		object.set("first_name", document.getElementById("firstName").value);
+					  		object.set("last_name", document.getElementById("lastName").value);
+					  		object.set("date_of_birth", document.getElementById("bday").value);
 
 					  		object.save(null, {
 					  				success: function(object) {
 					  					document.getElementById("btnSub").disabled = true;
-					  					location.reload();
-						    			//would update user data if that were possible with parse... parse sucks
-/*
-										var usr = Parse.Object.extend("User");
-										var query = new Parse.Query(usr);
-										query.equalTo("email", curEmail);
-										query.first({
-							  			success: function(object) {
-
-										    object.set("firstname", document.getElementById("firstName").value);
-											object.set("lastname", document.getElementById("lastName").value);
-											object.set("dateOfBirth", document.getElementById("bday").value);
-											object.set("position", document.getElementById("role").value);
-											object.set("sex", document.getElementById("sex").value);
-										    
-										    object.save(null, {
-											  success: function(object) {
-											    // Execute any logic that should take place after the object is saved.
-											    console.log("updated new");
-											    location.reload();
-											  },
-											  error: function(object, error) {
-											    // Execute any logic that should take place if the save fails.
-											    // error is a Parse.Error with an error code and message.
-											    alert('Failed to create new object, with error code: ' + error.message);
-											  }
-											});
-										}
-									});
-*/
+										document.getElementById("btnSub").value = "Please Wait...";
+						    			Parse.User.become(document.getElementById("currSessionToken").value).then(function (user) {
+										  // The current user is now set to user.
+										  Parse.Cloud.run('modifyUser', {email: curEmail, firstname: document.getElementById("firstName").value, lastname: document.getElementById("lastName").value, 
+																		dateOfBirth: document.getElementById("bday").value, position: document.getElementById("role").value, 
+																		sex: document.getElementById("sex").value}, {
+								    		success: function(status)
+								    		{
+								    			setTimeout(function() { 
+								    					location.reload(); },1000); 
+								    			
+								    		},
+								    		error: function(error)
+								    		{
+								    			console.log(error.message);
+								    		}
+								    		});
+										}, function (error) {
+										  // The token could not be validated.
+										});
 					  			},
+								  error: function(object, error) {
+								    // Execute any logic that should take place if the save fails.
+								    // error is a Parse.Error with an error code and message.
+								    alert('Failed to create new object, with error code: ' + error.message);
+								  }
+
+				    		});
+					},
+					  error: function(error) {
+					    alert("Error: " + error.code + " " + error.message);
+					  }
+					});	
+    	}
+
+    	function UpdatePat()
+    	{
+    		Parse.initialize("kHbyXSdw4DIXw4Q0DYDcdM8QTDQnOewKJhc9ppAr", "dnSrc9MZjvPGuruDghO4imSb6OHqoJb3vyElTJAH");
+
+			var usr = Parse.Object.extend("Patient");
+			var query = new Parse.Query(usr);
+			var curEmail = document.getElementById("email_pat").value;
+
+			query.equalTo("email", curEmail);
+			query.first({
+					  success: function(object) {
+					  		
+					  		if(document.getElementById("prof_pic_pat").value != "")
+					  		{
+					  			var fileUploadControl = $("#prof_pic_pat")[0];
+					  			var file = fileUploadControl.files[0];
+
+					  			var parseFile = new Parse.File("prof_pic.jpg", file);
+					  			object.set("prof_pic", parseFile);
+					  		}
+					  		object.set("email", document.getElementById("email_pat").value);
+					  		object.set("address", document.getElementById("address_pat").value);
+					  		object.set("citystate", document.getElementById("citystate_pat").value);
+					  		object.set("zipcode", document.getElementById("zipcode_pat").value);
+					  		object.set("cellphone", document.getElementById("cellphone").value);
+					  		object.set("homephone", document.getElementById("homephone").value);
+					  		object.set("emerg_num", document.getElementById("emerg_num").value);
+					  		object.set("emerg_name", document.getElementById("emerg_name").value);
+					  		object.set("emerg_rel", document.getElementById("emerg_rel").value);
+					  		object.set("emerg_num2", document.getElementById("emerg_num2").value);
+					  		object.set("emerg_name2", document.getElementById("emerg_name2").value);
+					  		object.set("emerg_rel2", document.getElementById("emerg_rel2").value);
+					  		object.set("insurance", document.getElementById("insurance").value);
+					  		object.set("pre_conditions", document.getElementById("pre_conditions").value);
+					  		object.set("allergies", document.getElementById("allergies").value);
+					  		object.set("medications", document.getElementById("medications").value);
+					  		object.set("first_name", document.getElementById("firstName_pat").value);
+					  		object.set("last_name", document.getElementById("lastName_pat").value);
+					  		object.set("date_of_birth", document.getElementById("bday_pat").value);
+					  		object.set("name", document.getElementById("firstName_pat").value.toLowerCase() + " " + document.getElementById("lastName_pat").value.toLowerCase());
+					  		object.set("lower_last_name", document.getElementById("lastName_pat").value.toLowerCase());
+					  		object.set("sex", document.getElementById("sex_pat").value);
+					  		
+					  		object.save(null, {
+					  				success: function(object) {
+					  					document.getElementById("btnSubPat").disabled = true;
+					  					document.getElementById("btnSubPat").value = "Please Wait...";
+						    			Parse.User.become(document.getElementById("currSessionToken").value).then(function (user) {
+										  // The current user is now set to user.
+										  Parse.Cloud.run('modifyUser', {email: curEmail, firstname: document.getElementById("firstName_pat").value, lastname: document.getElementById("lastName_pat").value, 
+																		dateOfBirth: document.getElementById("bday_pat").value, position: document.getElementById("role_pat").value, 
+																		sex: document.getElementById("sex_pat").value}, {
+								    		success: function(status)
+								    		{
+								    			setTimeout(function() { 
+								    					location.reload(); },1000);
+								    		},
+								    		error: function(error)
+								    		{
+								    			console.log(error.message);
+								    		}
+								    		});
+										}, function (error) {
+										  // The token could not be validated.
+										});
+					  			},
+								  error: function(object, error) {
+								    // Execute any logic that should take place if the save fails.
+								    // error is a Parse.Error with an error code and message.
+								    alert('Failed to create new object, with error code: ' + error.message);
+								  }
+
+				    		});
+					},
+					  error: function(error) {
+					    alert("Error: " + error.code + " " + error.message);
+					  }
+					});	
+    	}
+
+    	function UpdateNur()
+    	{
+    		Parse.initialize("kHbyXSdw4DIXw4Q0DYDcdM8QTDQnOewKJhc9ppAr", "dnSrc9MZjvPGuruDghO4imSb6OHqoJb3vyElTJAH");
+
+			var usr = Parse.Object.extend("Nurse");
+			var query = new Parse.Query(usr);
+			var curEmail = document.getElementById("email_nur").value;
+
+			query.equalTo("email", curEmail);
+			query.first({
+					  success: function(object) {
+					  		if(document.getElementById("prof_pic_nur").value != "")
+					  		{
+					  			var fileUploadControl = $("#prof_pic_nur")[0];
+					  			var file = fileUploadControl.files[0];
+
+					  			var parseFile = new Parse.File("prof_pic.jpg", file);
+					  			object.set("prof_pic", parseFile);
+					  		}
+					  		object.set("degree", document.getElementById("degree_nur").value);
+					  		object.set("school", document.getElementById("school_nur").value);
+					  		object.set("experience", document.getElementById("experience_nur").value);
+					  		object.set("address", document.getElementById("address_nur").value);
+					  		object.set("citystate", document.getElementById("citystate_nur").value);
+					  		object.set("zipcode", document.getElementById("zipcode_nur").value);
+					  		object.set("phone", document.getElementById("phone_nur").value);
+					  		object.set("first_name", document.getElementById("firstName_nur").value);
+					  		object.set("last_name", document.getElementById("lastName_nur").value);
+					  		object.set("date_of_birth", document.getElementById("bday_nur").value);
+					  		object.set("sex", document.getElementById("sex_nur").value);
+
+					  		object.save(null, {
+					  				success: function(object) {
+					  					document.getElementById("btnSub_nur").disabled = true;
+					  					document.getElementById("btnSub_nur").value = "Please Wait...";
+					  					Parse.User.become(document.getElementById("currSessionToken").value).then(function (user) {
+										  // The current user is now set to user.
+										  Parse.Cloud.run('modifyUser', {email: curEmail, firstname: document.getElementById("firstName_nur").value, lastname: document.getElementById("lastName_nur").value, 
+																		dateOfBirth: document.getElementById("bday_nur").value, position: document.getElementById("role_nur").value, 
+																		sex: document.getElementById("sex_nur").value}, {
+								    		success: function(status)
+								    		{
+								    			setTimeout(function() { 
+								    					location.reload(); },1000);
+								    		},
+								    		error: function(error)
+								    		{
+								    			console.log(error.message);
+								    		}
+								    		});
+										}, function (error) {
+										  // The token could not be validated.
+										});
+										},
 								  error: function(object, error) {
 								    // Execute any logic that should take place if the save fails.
 								    // error is a Parse.Error with an error code and message.
@@ -488,7 +871,7 @@ echo <<<EOL
 					query.equalTo("email", curEmail);
 					query.first({
 					  success: function(object) {
-					  		document.getElementById("prof_pic").value = object.get("prof_pic").url();
+					  		document.getElementById("prof_pic_img").src = object.get("prof_pic").url();
 					  		document.getElementById("email").value = object.get("email");
 					  		document.getElementById("degree").value = object.get("degree");
 					  		document.getElementById("school").value = object.get("school");
@@ -527,35 +910,56 @@ echo <<<EOL
 			$('#patientModal').modal({
 				show:false
 
-			    }).on('show.bs.modal', function() {
-			        var getIdFromRow = $(event.target).closest('tr').data('object-id'); //get the id from tr
-			        
-			        $(this).find('#currentObjectId').html($('<b> current objID: ' + getIdFromRow  + '</b>'));
-			        $(this).find('#currentObjectId2').val(getIdFromRow);
+			    }).on('show.bs.modal', function(event) {
+			        Parse.initialize("kHbyXSdw4DIXw4Q0DYDcdM8QTDQnOewKJhc9ppAr", "dnSrc9MZjvPGuruDghO4imSb6OHqoJb3vyElTJAH");
 
-			        var date = $(event.target).closest('tr').data('date');
-			        $(this).find('#currentDate').html($('<b> Current date: ' + date  + '</b>'));
-			        $(this).find('#currentDate2').val(date);
+			    	var usr = Parse.Object.extend("Patient");
+					var query = new Parse.Query(usr);
+					var curEmail = $(event.relatedTarget).data('email');
 
-			        var time = $(event.target).closest('tr').data('time');
-			        $(this).find('#currentTime').html($('<b> Current time: ' + time  + '</b>'));
-			        $(this).find('#currentTime2').val(time);
+					query.equalTo("email", curEmail);
+					query.first({
+					  success: function(object) {
+					  		document.getElementById("prof_pic_img_pat").src = object.get("prof_pic").url();
+					  		document.getElementById("email_pat").value = object.get("email");
+					  		document.getElementById("address_pat").value = object.get("address");
+					  		document.getElementById("citystate_pat").value = object.get("citystate");
+					  		document.getElementById("zipcode_pat").value = object.get("zipcode");
+					  		document.getElementById("cellphone").value = object.get("cellphone");
+					  		document.getElementById("homephone").value = object.get("homephone");
+					  		document.getElementById("emerg_num").value = object.get("emerg_num");
+					  		document.getElementById("emerg_name").value = object.get("emerg_name");
+					  		document.getElementById("emerg_rel").value = object.get("emerg_rel");
+					  		document.getElementById("emerg_num2").value = object.get("emerg_num2");
+					  		document.getElementById("emerg_name2").value = object.get("emerg_name2");
+					  		document.getElementById("emerg_rel2").value = object.get("emerg_rel2");
+					  		document.getElementById("insurance").value = object.get("insurance");
+					  		document.getElementById("pre_conditions").value = object.get("pre_conditions");
+					  		document.getElementById("allergies").value = object.get("allergies");
+					  		document.getElementById("medications").value = object.get("medications");
 
-			        var doctor = $(event.target).closest('tr').data('doctor');
-			        $(this).find('#currentDoctor').html($('<b> Current doctor: ' + doctor  + '</b>'));
-			        $(this).find('#currentDoctor2').val(doctor);
+					  		var usr = Parse.Object.extend("User");
+							var query = new Parse.Query(usr);
+							query.equalTo("email", curEmail);
+							query.first({
+								success: function(object) {
+									document.getElementById("firstName_pat").value = object.get("firstname");
+									document.getElementById("lastName_pat").value = object.get("lastname");
+									document.getElementById("bday_pat").value = object.get("dateOfBirth");
+									document.getElementById("role_pat").value = object.get("position");
+									document.getElementById("sex_pat").value = object.get("sex");
+									document.getElementById("patModalLabel").innerHTML = "Edit Patient - " + object.get("firstname") + " " + object.get("lastname");
+								},
+								error: function(error) {
+									alert("Error: " + error.code + " " + error.message);
+								}
+							})
 
-			        var doctorEmail = $(event.target).closest('tr').data('doctor-email');
-			        $(this).find('#currentDoctorEmail').html($('<b> current doc email: ' + doctorEmail  + '</b>'));
-			        $(this).find('#currentDoctorEmail2').val(doctorEmail);
-
-			        var nurse = $(event.target).closest('tr').data('nurse');
-			        $(this).find('#currentNurse').html($('<b> Current nurse: ' + nurse  + '</b>'));
-			        $(this).find('#currentNurse2').val(nurse);
-
-			        var nurseEmail = $(event.target).closest('tr').data('nurse-email');
-			        $(this).find('#currentNurseEmail').html($('<b> current nurse email: ' + nurseEmail  + '</b>'));
-			        $(this).find('#currentNurseEmail2').val(nurseEmail);
+					},
+					  error: function(error) {
+					    alert("Error: " + error.code + " " + error.message);
+					  }
+					});	
 
 			});
 		});
@@ -564,72 +968,48 @@ echo <<<EOL
 			$('#nurseModal').modal({
 				show:false
 
-			    }).on('show.bs.modal', function() {
-			        var getIdFromRow = $(event.target).closest('tr').data('object-id'); //get the id from tr
-			        
-			        $(this).find('#currentObjectId').html($('<b> current objID: ' + getIdFromRow  + '</b>'));
-			        $(this).find('#currentObjectId2').val(getIdFromRow);
+			    }).on('show.bs.modal', function(event) {
+			        Parse.initialize("kHbyXSdw4DIXw4Q0DYDcdM8QTDQnOewKJhc9ppAr", "dnSrc9MZjvPGuruDghO4imSb6OHqoJb3vyElTJAH");
 
-			        var date = $(event.target).closest('tr').data('date');
-			        $(this).find('#currentDate').html($('<b> Current date: ' + date  + '</b>'));
-			        $(this).find('#currentDate2').val(date);
+			    	var usr = Parse.Object.extend("Nurse");
+					var query = new Parse.Query(usr);
+					var curEmail = $(event.relatedTarget).data('email');
 
-			        var time = $(event.target).closest('tr').data('time');
-			        $(this).find('#currentTime').html($('<b> Current time: ' + time  + '</b>'));
-			        $(this).find('#currentTime2').val(time);
+					query.equalTo("email", curEmail);
+					query.first({
+					  success: function(object) {
+					  		document.getElementById("prof_pic_img_nur").src = object.get("prof_pic").url();
+					  		document.getElementById("email_nur").value = object.get("email");
+					  		document.getElementById("degree_nur").value = object.get("degree");
+					  		document.getElementById("school_nur").value = object.get("school");
+					  		document.getElementById("experience_nur").value = object.get("experience");
+					  		document.getElementById("address_nur").value = object.get("address");
+					  		document.getElementById("citystate_nur").value = object.get("citystate");
+					  		document.getElementById("zipcode_nur").value = object.get("zipcode");
+					  		document.getElementById("phone_nur").value = object.get("phone");
 
-			        var doctor = $(event.target).closest('tr').data('doctor');
-			        $(this).find('#currentDoctor').html($('<b> Current doctor: ' + doctor  + '</b>'));
-			        $(this).find('#currentDoctor2').val(doctor);
+					  		var usr = Parse.Object.extend("User");
+							var query = new Parse.Query(usr);
+							query.equalTo("email", curEmail);
+							query.first({
+								success: function(object) {
+									document.getElementById("firstName_nur").value = object.get("firstname");
+									document.getElementById("lastName_nur").value = object.get("lastname");
+									document.getElementById("bday_nur").value = object.get("dateOfBirth");
+									document.getElementById("role_nur").value = object.get("position");
+									document.getElementById("sex_nur").value = object.get("sex");
+									document.getElementById("nurModalLabel").innerHTML = "Edit Nurse - " + object.get("firstname") + " " + object.get("lastname");
+								},
+								error: function(error) {
+									alert("Error: " + error.code + " " + error.message);
+								}
+							})
 
-			        var doctorEmail = $(event.target).closest('tr').data('doctor-email');
-			        $(this).find('#currentDoctorEmail').html($('<b> current doc email: ' + doctorEmail  + '</b>'));
-			        $(this).find('#currentDoctorEmail2').val(doctorEmail);
-
-			        var nurse = $(event.target).closest('tr').data('nurse');
-			        $(this).find('#currentNurse').html($('<b> Current nurse: ' + nurse  + '</b>'));
-			        $(this).find('#currentNurse2').val(nurse);
-
-			        var nurseEmail = $(event.target).closest('tr').data('nurse-email');
-			        $(this).find('#currentNurseEmail').html($('<b> current nurse email: ' + nurseEmail  + '</b>'));
-			        $(this).find('#currentNurseEmail2').val(nurseEmail);
-
-			});
-		});
-
-		$(function(){
-			$('#adminModal').modal({
-				show:false
-
-			    }).on('show.bs.modal', function() {
-			        var getIdFromRow = $(event.target).closest('tr').data('object-id'); //get the id from tr
-			        
-			        $(this).find('#currentObjectId').html($('<b> current objID: ' + getIdFromRow  + '</b>'));
-			        $(this).find('#currentObjectId2').val(getIdFromRow);
-
-			        var date = $(event.target).closest('tr').data('date');
-			        $(this).find('#currentDate').html($('<b> Current date: ' + date  + '</b>'));
-			        $(this).find('#currentDate2').val(date);
-
-			        var time = $(event.target).closest('tr').data('time');
-			        $(this).find('#currentTime').html($('<b> Current time: ' + time  + '</b>'));
-			        $(this).find('#currentTime2').val(time);
-
-			        var doctor = $(event.target).closest('tr').data('doctor');
-			        $(this).find('#currentDoctor').html($('<b> Current doctor: ' + doctor  + '</b>'));
-			        $(this).find('#currentDoctor2').val(doctor);
-
-			        var doctorEmail = $(event.target).closest('tr').data('doctor-email');
-			        $(this).find('#currentDoctorEmail').html($('<b> current doc email: ' + doctorEmail  + '</b>'));
-			        $(this).find('#currentDoctorEmail2').val(doctorEmail);
-
-			        var nurse = $(event.target).closest('tr').data('nurse');
-			        $(this).find('#currentNurse').html($('<b> Current nurse: ' + nurse  + '</b>'));
-			        $(this).find('#currentNurse2').val(nurse);
-
-			        var nurseEmail = $(event.target).closest('tr').data('nurse-email');
-			        $(this).find('#currentNurseEmail').html($('<b> current nurse email: ' + nurseEmail  + '</b>'));
-			        $(this).find('#currentNurseEmail2').val(nurseEmail);
+					},
+					  error: function(error) {
+					    alert("Error: " + error.code + " " + error.message);
+					  }
+					});	
 
 			});
 		});

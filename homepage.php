@@ -13,7 +13,7 @@
 	ParseClient::setStorage( new ParseSessionStorage() );
 	
 	$currentUser = ParseUser::getCurrentUser();
-	
+
 	if(!$currentUser)
 	{
 		header("Location: test.php");
@@ -61,7 +61,8 @@
 	}
 
 	</script>
-	
+	<!-- Include Parse Stuff -->
+    <script src="//www.parsecdn.com/js/parse-1.3.5.min.js"></script>
   </head>
   
   <body>
