@@ -50,9 +50,9 @@
 		  	<body>
 			  <a href="editmyprofile.php">
 			    <div class="myprofilecontainerright">
-				<h3>Edit Profile Information</h3></a><br><a href="editmymedical.php"><h3>Edit Medical Information</h3></a><a href="viewappointments.php"><h3>View Scheduled Appointments</h3></a></div>
-				<div class="myprofilecontainerleft">
-		  		<h1>
+				<h3>Edit Profile Information</h3></a><br><a href="editmymedical.php"><h3>Edit Medical Information</h3></a><a href="viewappointments.php"><h3>View Scheduled Appointments</h3></a></div
+		  		<div class="myprofilecontainerlowleft">
+				<h1 style="margin-left: 5%;">
 			  
 EOL;
 				echo $currentUser->get("firstname") . "'s Profile";
@@ -66,7 +66,7 @@ EOL;
 		if(!empty($patient->get("prof_pic")))
 		{
 			$profilePhoto = $patient->get("prof_pic");
-			echo '<img src="' . $profilePhoto->getURL() . '">';
+			echo '<img style="margin-left: 5%" src="' . $profilePhoto->getURL() . '">';
 		}
 		else if($currentUser->get("sex") === "Female")
 	    {
@@ -75,7 +75,7 @@ EOL;
 			$file->save();
 			$patient->set("prof_pic", $file);
 			$patient->save();
-			echo '<img src="bgs/Female.jpg"/>';
+			echo '<img style="margin-left: 5%" src="bgs/Female.jpg"/>';
 		} 
 		else if($currentUser->get("sex") === "Male")
 		{
@@ -84,9 +84,9 @@ EOL;
 			$file->save();
 			$patient->set("prof_pic", $file);
 			$patient->save();
-			echo '<img src="bgs/Male.jpg"/>';
+			echo '<img style="margin-left: 5%" src="bgs/Male.jpg"/>';
 		}
-		echo "<h4>Patient Contact Information</h4>";
+		echo '</div><div class="myprofilecontainerlowleft" style="float: left;"><h4>Patient Contact Information</h4>';
 		echo "<h2> Patient Name: " . $patient->get("first_name") . " " . $patient->get("last_name") . "</br>";
 		if(!empty($patient->get("address")))
 		{
@@ -108,10 +108,13 @@ EOL;
 		echo "<h2> Secondary's Name: " . $patient->get("emerg_name2") . "</br>";
 		echo "Secondary's Number: " . $patient->get("emerg_num2") . "</br>";
 		echo "Secondary's Relationship: " . $patient->get("emerg_rel2") . "</br>";
-		echo "</h2>";
-		
-		echo '<a href="medicalrecords.php"><h5>Link to Medical Information</h5></a></div>';
-		
+		echo '</h2></div><div class="myprofilecontainerright" style="float: right;">';
+		echo '<h4>Patient Medical Information</h4>';
+		echo '<h2>Insurance: ' . $patient->get("insurance"). '</br>';
+		echo 'Pre-Existing Conditions: ' . $patient->get("pre_conditions"). '</br>';
+		echo 'Medications: ' . $patient->get("medications"). '</br>';
+		echo 'Allergies: ' . $patient->get("allergies"). '</br>';
+		echo '</h2></div>';
 	}
 	if($currentUser->get("position") == "physician")
 	{

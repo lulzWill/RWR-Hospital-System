@@ -95,7 +95,7 @@ EOL;
   		echo '<tr class="active"  data-target="#basicModal" data-id =" '.$i.' " data-object-id="'.$results[$i]->getObjectId().'" data-date =" '.$object->get("Date").' " data-time =" '.$object->get("Time").' "
   		 data-doctor =" ' . $innerResults[0]->get("first_name") . ' ' . $innerResults[0]->get("last_name") . ' " data-doctor-email="'. $object->get("physicianEmail") .'"
   		 data-nurse=" ' . $nurseResults[0]->get("first_name") . ' ' . $nurseResults[0]->get("last_name") . ' " data-nurse-email" ' . $object->get("nurseEmail") . ' " data-payment-status ="'.$object->get("paymentStatus").'"
-  		 data-reason ="'.$object->get("specialty").'" data-cost ="'.$object->get("price").'" data-notes ="'.$object->get("apptInfo").'" data-notes-init ="'.$object->get("reason").'">';
+  		 data-reason ="'.$object->get("specialty").'" data-cost ="'.$object->get("price").'" data-notes ="'.$object->get("notes").'" data-notes-init ="'.$object->get("reason").'">';
 	 	echo	'<td class="active tableDiv">' . $object->get("Date") . '</th>';
 		echo	'<td class="active tableDiv">Dr. ' . $innerResults[0]->get("first_name") . ' ' . $innerResults[0]->get("last_name") . '</th>';
 		

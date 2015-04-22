@@ -13,6 +13,7 @@ h1 {
 	color: white;
 }
 
+
 h2 {
 	margin-left: 10%;
 	margin-top: 1%;
@@ -78,6 +79,11 @@ img {
 .myprofilecontainerright {
 	width: 50%;
 	float: right;
+}
+
+.myprofilecontainerlowleft {
+	width: 50%;
+	float: left;
 }
 
 
