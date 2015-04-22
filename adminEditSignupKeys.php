@@ -78,7 +78,6 @@ EOL;
 	$results = $query->find();
 	for ($i = 0; $i < count($results); $i++) 
 	{ 
-  		
 		echo	'<td class="active tableDiv">' . $results[$i]->get("position") . '</th>';
 	 	echo	'<td class="active tableDiv"><input type="text" class="form-control" style="width: 100%;"id="key';
 	 	echo     $i;
@@ -92,7 +91,54 @@ EOL;
 echo <<<EOL
 		</table>
 EOL;
-		echo    '<input type="button" class="btn btn-primary pull-right" id="btnSub" onclick="UpdateKeys()" value="Update Keys" style="margin-right: 10%; margin-top: 0%;"/>';
+		echo    '<input type="button" class="btn btn-primary pull-right" id="btnSub" onclick="UpdateKeys()" value="Updates Keys" style="margin-right: 10%; margin-top: 0%;"/>';
+echo <<<EOL
+		</div>
+
+
+
+
+
+
+		<div class="container" style="float: left; width: 50%;">
+		<table class="table table-hover table-bordered table-condensed table-striped" style="margin-left: 10%; width: 80% !important; margin-bottom: 1%;">
+	 		<tr class="active">
+	 			<th class="active tableDiv">Specialty</th>
+	 			<th class="active tableDiv">Action</th>
+	 			<th class="active tableDiv">Specialty</th>
+	 			<th class="active tableDiv">Action</th>
+	 		</tr>
+EOL;
+	$query = new ParseQuery("Specialties");
+	$query->ascending("name");
+	$results = $query->find();
+	for ($i = 0; $i < count($results); $i++) 
+	{ 
+		echo 	'<input type="hidden" class="form-control" name="removespec';
+		echo 	$i;
+		echo 	'" id="removespec';
+		echo    $i;
+		echo    '" value="';
+		echo 	$results[$i]->getObjectId();
+		echo 	'">'; 
+		echo	'<td class="active tableDiv">' . $results[$i]->get("name") . '</th>';
+		echo	'<td class="active tableDiv"><input type="button" class="btn btn-danger pull-right" name="button"id="';
+		echo    $i;
+		echo    '" onclick="RemoveSpecialty(this.id)" value="Remove" style="margin-right: 10%; margin-top: 0%;"/></th>';
+		if(($i+1)%2==0)
+		{
+			echo    '</tr>';
+		}
+	}
+
+	echo	'<td class="active tableDiv"><input type="text" class="form-control" style="width: 100%;"id="newspec" name="newspec" required></th>';
+	echo	'<td class="active tableDiv"><input type="button" class="btn btn-primary pull-right" id="btnSub2" onclick="AddSpecialty()" value="Add New" style="margin-right: 10%; margin-top: 0%;"/></th>';
+
+
+
+echo <<<EOL
+		</table>
+EOL;
 echo <<<EOL
 		</div>
 	</body>
@@ -144,7 +190,58 @@ echo <<<EOL
 					    alert("Error: " + error.code + " " + error.message);
 					  }
 			});
-			location.reload();
+			document.getElementById("btnSub").disabled = true;
+			document.getElementById("btnSub").value = "Please Wait...";
+			setTimeout(function(){location.reload(); },1000); 
+		}
+
+
+
+		function AddSpecialty() {
+
+			Parse.initialize("kHbyXSdw4DIXw4Q0DYDcdM8QTDQnOewKJhc9ppAr", "dnSrc9MZjvPGuruDghO4imSb6OHqoJb3vyElTJAH");
+			var Specialty = Parse.Object.extend("Specialties");
+			var spec = new Specialty();
+			spec.set("name", document.getElementById("newspec").value);
+
+			spec.save(null, {
+			  success: function(gameScore) {
+			    // Execute any logic that should take place after the object is saved.
+			    document.getElementById("btnSub2").disabled = true;
+				document.getElementById("btnSub2").value = "Please Wait...";
+				setTimeout(function(){location.reload(); },1000); 
+			  },
+			  error: function(gameScore, error) {
+			    // Execute any logic that should take place if the save fails.
+			  }
+			});
+		}
+
+		function RemoveSpecialty(x) {
+			Parse.initialize("kHbyXSdw4DIXw4Q0DYDcdM8QTDQnOewKJhc9ppAr", "dnSrc9MZjvPGuruDghO4imSb6OHqoJb3vyElTJAH");
+			var g = "removespec" + x;
+			var Specialty = Parse.Object.extend("Specialties");
+			var query = new Parse.Query(Specialty);
+			query.equalTo("objectId", document.getElementById(g).value);
+			query.first({
+            		success: function(object) {
+					  	object.destroy({
+						  success: function(myObject) {
+						    // The object was deleted from the Parse Cloud.
+						    document.getElementById(x).disabled = true;
+							document.getElementById(x).value = "Please Wait...";
+							location.reload(); 
+						  },
+						  error: function(myObject, error) {
+						    // The delete failed.
+						    // error is a Parse.Error with an error code and message.
+						  }
+						});
+					  },
+					  error: function(error) {
+					    alert("Error: " + error.code + " " + error.message);
+					  }
+			});
 		}
 	</script>
 </html>
