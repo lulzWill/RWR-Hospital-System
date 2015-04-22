@@ -82,7 +82,7 @@ echo <<<EOL
 EOL;
 	$query = ParseUser::query();
 	$query->equalTo("emailVerified", true);
-	$query->ascending("position");
+	$query->descending("position");
 	$results = $query->find();
 
 	for ($i = 0; $i < count($results); $i++) 
@@ -389,7 +389,7 @@ echo <<<EOL
 							<h5>Primary</h5>
 							<div class="container">
 							<div class="row">
-								<label for="emerg_name" class="col-sm-2 control-label whitelabel">Emergency Contact Name:</label>
+								<label for="emerg_name" class="col-sm-2 control-label whitelabel">Name:</label>
 								<div class="col-sm-10">
 									<input type="text" class="form-control" id="emerg_name" name="emerg_name" value="" required>
 								</div>
@@ -397,7 +397,7 @@ echo <<<EOL
 							</div>
 							<div class="container">
 							<div class="row">
-								<label for="emerg_num" class="col-sm-2 control-label whitelabel">Emergency Contact Number:</label>
+								<label for="emerg_num" class="col-sm-2 control-label whitelabel">Number:</label>
 								<div class="col-sm-10">
 									<input type="text" size="8" class="form-control" id="emerg_num" name="emerg_num" value="" required>
 								</div>
@@ -405,7 +405,7 @@ echo <<<EOL
 							</div>
 				            <div class="container">
 							<div class="row">
-								<label for="emerg_rel" class="col-sm-2 control-label whitelabel">Relation to Emergency Contact:</label>
+								<label for="emerg_rel" class="col-sm-2 control-label whitelabel">Relation:</label>
 								<div class="col-sm-10">
 									<input type="text" class="form-control" id="emerg_rel" name="emerg_rel" value="" required>
 								</div>
@@ -414,7 +414,7 @@ echo <<<EOL
 							<h5>Secondary</h5>
 							<div class="container">
 							<div class="row">
-								<label for="emerg_name2" class="col-sm-2 control-label whitelabel">Emergency Contact Name:</label>
+								<label for="emerg_name2" class="col-sm-2 control-label whitelabel">Name:</label>
 								<div class="col-sm-10">
 									<input type="text" class="form-control" id="emerg_name2" name="emerg_name2" value="" required>
 								</div>
@@ -422,7 +422,7 @@ echo <<<EOL
 							</div>
 							<div class="container">
 							<div class="row">
-								<label for="emerg_num2" class="col-sm-2 control-label whitelabel">Emergency Contact Number:</label>
+								<label for="emerg_num2" class="col-sm-2 control-label whitelabel">Number:</label>
 								<div class="col-sm-10">
 									<input type="text" size="8" class="form-control" id="emerg_num2" name="emerg_num2" value="" required>
 								</div>
@@ -430,7 +430,7 @@ echo <<<EOL
 							</div>
 							<div class="container">
 							<div class="row">
-								<label for="emerg_rel2" class="col-sm-2 control-label whitelabel">Relation to Emergency Contact:</label>
+								<label for="emerg_rel2" class="col-sm-2 control-label whitelabel">Relation:</label>
 								<div class="col-sm-10">
 									<input type="text" class="form-control" id="emerg_rel2" name="emerg_rel2" value="" required>
 								</div>
