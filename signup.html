@@ -28,7 +28,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
-
+    <script src="/twitter-bootstrap/twitter-bootstrap-v2/js/bootstrap-tooltip.js"></script>  
+	<script src="/twitter-bootstrap/twitter-bootstrap-v2/js/bootstrap-popover.js"></script> 
     <!-- Include Bootstrap Datepicker -->
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.min.css" />
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />
@@ -64,8 +65,13 @@
 		
 		<script type="text/javascript" src="js/bootstrap.js"></script>
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+		
+		<div id="errorMes" class="alert alert-warning alert-dismissible" hidden = "true" role="alert">
+		  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		  <p id="error_par"><strong>Warning!</strong> Better check yourself, you're not looking too good.</p>
+		</div>
 
-		<h1>
+		<h1 style="margin-top: 5%;">
 			RWR Hospital Management System
 		</h1>
 		<h2 id="title">
@@ -75,7 +81,7 @@
 		<form class="form-horizontal" action="signupuser.php" method="post" id="signupForm" onsubmit="return validateForm()">
 
 			<div class="container">
-			<div class="row">
+			<div class="row" id="emailDiv">
 				<label for="username" class="col-sm-2 control-label whitelabel">Email Address:</label>
 				<div class="col-sm-10">
 					<input type="email" class="form-control" id="username" name="username" placeholder="Please enter your email address!" required>
@@ -83,7 +89,7 @@
 			</div>
 			</div>
 			<div class="container">
-			<div class="row">
+			<div class="row" id="firstNameDiv">
 				<label for="firstname" class="col-sm-2 control-label whitelabel">First Name:</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" id="firstname" name="firstname" placeholder="Your First Name" required>
@@ -91,7 +97,7 @@
 			</div>
 			</div>
 			<div class="container">
-			<div class="row">
+			<div class="row" id="lastNameDiv">
 				<label for="lastname" class="col-sm-2 control-label whitelabel">Last Name:</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" id="lastname" name="lastname" placeholder="Your Last Name" required>
@@ -100,7 +106,7 @@
             
 			</div>
 			<div class="container">
-			<div class="row">
+			<div class="row" id="sexDiv">
 				<label for="sex" class="col-sm-2 control-label whitelabel">Sex:</label>
 				<div class="col-sm-10">
 					<select class="form-control" name="sex" id="sex" name="sex" required>
@@ -113,7 +119,7 @@
 			
 			</div>
 			<div class="container">
-			<div class="row">
+			<div class="row" id="bdDiv">
 				<label for="dateofbirth" class="col-sm-2 control-label whitelabel">Birthdate:</label>
 				<div class="col-sm-2">
 					<div class="input-group input-append date" id="dateRangePicker">
@@ -125,7 +131,7 @@
 
 			</div>
 			<div class="container">
-			<div class="row">
+			<div class="row" id="posDiv">
 				<label for="role" class="col-sm-2 control-label whitelabel">Position:</label>
 				<div class="col-sm-10 selectContainer">
 		            <select class="form-control" name="role" onchange="validateRole()" required>
@@ -140,7 +146,7 @@
 
 			</div>
 			<div class="container">
-			<div class="row">
+			<div class="row" id="passwordDiv">
 			    <label for="password" class="col-sm-2 control-label whitelabel">Password</label>
 			    <div class="col-sm-10">
 			      	<input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
@@ -149,7 +155,7 @@
 
 			</div>
 			<div class="container">
-			<div class="row">
+			<div class="row" id="confDiv">
 			    <label for="confirmPassword" class="col-sm-2 control-label whitelabel">Confirm Password</label>
 			    <div class="col-sm-10">
 			      	<input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Re-Enter Password" required>
@@ -164,8 +170,6 @@
 			    </div>
 			</div>
 		</form>
-
-		
 
 		<script>
 			$(document).ready(function() {
@@ -251,11 +255,19 @@
 			        alert("Email must be filled out");
 			        return false;
 			    }
+			    else
+			    {
+			    	document.getElementById("emailDiv").className = "row has-success";
+			    }
 
 			    var b = document.forms["signupForm"]["firstname"].value;
 			    if (b == null || b == "") {
 			        alert("First name must be filled out");
 			        return false;
+			    }
+			    else
+			    {
+			    	document.getElementById("firstNameDiv").className = "row has-success";
 			    }
 
 			    var c = document.forms["signupForm"]["lastname"].value;
@@ -263,17 +275,30 @@
 			        alert("Last name must be filled out");
 			        return false;
 			    }
+			    else
+			    {
+			    	document.getElementById("lastNameDiv").className = "row has-success";
+			    }
 
 			    var d = document.forms["signupForm"]["role"].value;
 			    if (d == null || d == "") {
 			        alert("Position must be selected");
 			        return false;
 			    }
+			    else
+			    {
+			    	document.getElementById("posDiv").className = "row has-success";
+			    }
 
-			    var e = document.forms["signupForm"]["password"].value;
+			    var e = document.forms["signupForm"]["password"].value;	
+
 			    if (e == null || e == "") {
 			        alert("Must enter a password");
 			        return false;
+			    }
+			    else
+			    {
+			    	document.getElementById("passwordDiv").className = "row has-success";
 			    }
 
 			    var f = document.forms["signupForm"]["confirmPassword"].value;
@@ -293,6 +318,41 @@
 					alert("Select a sex");
 					return false;
 				}
+				else
+			    {
+			    	document.getElementById("sexDiv").className = "row has-success";
+			    }
+
+			    document.getElementById("bdDiv").className = "row has-success";
+
+			    if(e.length < 6 || e.length > 12)
+			    {
+			    	document.getElementById("error_par").innerHTML = "Password is of invalid length, Passwords must be between 6 and 12 characters";
+			    	document.getElementById("errorMes").hidden = false;
+			    	document.getElementById("passwordDiv").className = "row has-error";
+			    	document.getElementById("confDiv").className = "row has-error";
+			    	return false;
+			    }
+
+			    var regex = new RegExp("^[a-zA-Z0-9]+$");
+			    var key = e;
+			    if (!regex.test(key)) {
+
+			       	document.getElementById("error_par").innerHTML = "Password contains invalid characters, Passwords cannot contain special characters";
+			    	document.getElementById("errorMes").hidden = false;
+			    	document.getElementById("passwordDiv").className = "row has-error";
+			    	document.getElementById("confDiv").className = "row has-error";
+			       	return false;
+			    }
+
+				if(f != e)
+				{
+					document.getElementById("error_par").innerHTML = "Passwords do not match";
+			    	document.getElementById("errorMes").hidden = false;
+			    	document.getElementById("passwordDiv").className = "row has-success";
+			    	return false;
+				}
+				document.getElementById("confDiv").className = "row has-success";
 			}
 			
 			function validateRole()
