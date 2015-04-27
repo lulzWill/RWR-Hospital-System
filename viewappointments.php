@@ -765,12 +765,12 @@ EOL;
 				<th class="active tableDiv">Appt Info</th>
 				<th class="active tableDiv">Appt Status</th>
 				<th class="active tableDiv">Price</th>
-				<th class="active tableDiv">Bill</th>
 	 		</tr>
 EOL;
 	$query = new ParseQuery("appointments");
 	$query->equalTo("physicianEmail", $currentUser->get("email"));
 	$query->containedIn("available", ["taken", "complete"]);
+	$query->notContainedIn("paymentStatus", ["paid"]);
 	$results = $query->find();
 
 	for ($i = 0; $i < count($results); $i++) { 
@@ -854,7 +854,7 @@ echo <<<EOL
 		  </div>
 		  <div class="modal-footer">
 			<button type="button" class="btn btn-default" id="closeBtn" data-dismiss="modal">Close</button>
-			<input type="button" class="btn btn-primary" id="submitBtn" onclick="saveNotes()" value="Save Changes"/>
+			<input type="button" class="btn btn-success" id="submitBtn" onclick="saveNotes()" value="Complete Appointment"/>
 		  </div>
 		</div>
 	  </div>
@@ -975,63 +975,20 @@ EOL;
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 if($object->get("available")== "taken")
 {
-	echo    '<td class="active tableDiv">';
-	echo <<<EOL
-			<form method="POST" action="complete.php" id="object">
-			   <input type="hidden" class="form-control" name="status" id="status" value="complete">
-              <input type="hidden" class="form-control" name="objectid" id="objectid" value="
-EOL;
-echo $results[$i]->getObjectId();
-echo <<<EOL
-"> 
-               <button type="submit" class="btn btn-warning">Incomplete</button>
-            </form>
-		</th>
-EOL;
+	echo    '<td class="active tableDiv">Incomplete</th>';
 }
 else if($object->get("available")=="complete")
 {
-	echo    '<td class="active tableDiv">';
-	echo <<<EOL
-			<form method="POST" action="complete.php" id="object">
-			  <input type="hidden" class="form-control" name="status" id="status" value="taken">
-              <input type="hidden" class="form-control" name="objectid" id="objectid" value="
-EOL;
-echo $results[$i]->getObjectId();
-echo <<<EOL
-"> 
-               <button type="submit" class="btn btn-success">Complete</button>
-            </form>
-		</th>
-EOL;
+	echo    '<td class="active tableDiv">Pending Approval</th>';
+}
+else if($object->get("available")=="approved")
+{
+	echo    '<td class="active tableDiv">Bill Sent</th>';
 }
 
 echo    '<td class="active tableDiv">' . $object->get("price") . '</th>';
-echo    '<td class="active tableDiv">' . $object->get("paymentStatus") . '</th>';
-		
 echo <<<EOL
 		</tr>
 EOL;
