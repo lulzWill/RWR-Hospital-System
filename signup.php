@@ -15,6 +15,11 @@
 	
 	if(!$currentUser)
 	{
+		if(isset($_GET["error_message"]))
+		{
+			echo $_GET["error_message"];
+		}
+
 		include_once("signup.html");
 	}
 	else

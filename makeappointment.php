@@ -243,7 +243,7 @@ echo <<<EOL
 					  	Physician = results[0];
 					  	document.getElementById("docModalLbl").innerHTML = "Doctor " + Physician.get("first_name") + " " + Physician.get("last_name");
 
-					  	document.getElementById("docInfoDiv").innerHTML = '<img height="65%" width="65%" src="' + Physician.get("prof_pic").url() + '"></br>Name: ' + Physician.get("first_name") + " " + Physician.get("last_name") +
+					  	document.getElementById("docInfoDiv").innerHTML = '<img height="250px" width="250px" src="' + Physician.get("prof_pic").url() + '"></br>Name: ' + Physician.get("first_name") + " " + Physician.get("last_name") +
 					  														'</br>Years of Experience: ' + Physician.get("experience") +
 					  														'</br>Degree: ' + Physician.get("degree") +
 					  														'</br>School: ' + Physician.get("school") +
