@@ -150,48 +150,66 @@ echo <<<EOL
 		function UpdateKeys() {
 
 			Parse.initialize("kHbyXSdw4DIXw4Q0DYDcdM8QTDQnOewKJhc9ppAr", "dnSrc9MZjvPGuruDghO4imSb6OHqoJb3vyElTJAH");
+			if(!document.getElementById("key0").value || !document.getElementById("key1").value || !document.getElementById("key2").value)
+			{
+				if(!document.getElementById("key0").value)
+				{
+					alert("ERROR: Admin Signup Key is blank!");
+				}
+				else if(!document.getElementById("key1").value)
+				{
+					alert("ERROR: Nurse Signup Key is blank!");
+				}
+				else
+				{
+					alert("ERROR: Physician Signup Key is blank!");
+				}
+			}
+			else
+			{
 
-			var keys = Parse.Object.extend("signupKeys");
-			var query = new Parse.Query(keys);
-			query.equalTo("position", "admin");
-			query.first({
-            		success: function(object) {
-					  	object.set("key", document.getElementById("key0").value);
-					  	object.save();
-					  },
-					  error: function(error) {
-					    alert("Error: " + error.code + " " + error.message);
-					  }
-			});
+				var keys = Parse.Object.extend("signupKeys");
+				var query = new Parse.Query(keys);
+				query.equalTo("position", "admin");
+				query.first({
+						success: function(object) {
+							object.set("key", document.getElementById("key0").value);
+							object.save();
+						  },
+						  error: function(error) {
+							alert("Error: " + error.code + " " + error.message);
+						  }
+				});
 
-			var keys = Parse.Object.extend("signupKeys");
-			var query = new Parse.Query(keys);
-			query.equalTo("position", "nurse");
-			query.first({
-					success: function(object) {
-					  	object.set("key", document.getElementById("key1").value);
-					  	object.save();
-					  },
-					  error: function(error) {
-					    alert("Error: " + error.code + " " + error.message);
-					  }
-			});
+				var keys = Parse.Object.extend("signupKeys");
+				var query = new Parse.Query(keys);
+				query.equalTo("position", "nurse");
+				query.first({
+						success: function(object) {
+							object.set("key", document.getElementById("key1").value);
+							object.save();
+						  },
+						  error: function(error) {
+							alert("Error: " + error.code + " " + error.message);
+						  }
+				});
 
-			var keys = Parse.Object.extend("signupKeys");
-			var query = new Parse.Query(keys);
-			query.equalTo("position", "physician");
-			query.first({
-					success: function(object) {
-					  	object.set("key", document.getElementById("key2").value);
-					  	object.save();
-					  },
-					  error: function(error) {
-					    alert("Error: " + error.code + " " + error.message);
-					  }
-			});
-			document.getElementById("btnSub").disabled = true;
-			document.getElementById("btnSub").value = "Please Wait...";
-			setTimeout(function(){location.reload(); },1000); 
+				var keys = Parse.Object.extend("signupKeys");
+				var query = new Parse.Query(keys);
+				query.equalTo("position", "physician");
+				query.first({
+						success: function(object) {
+							object.set("key", document.getElementById("key2").value);
+							object.save();
+						  },
+						  error: function(error) {
+							alert("Error: " + error.code + " " + error.message);
+						  }
+				});
+				document.getElementById("btnSub").disabled = true;
+				document.getElementById("btnSub").value = "Please Wait...";
+				setTimeout(function(){location.reload(); },1000); 
+			}
 		}
 
 
