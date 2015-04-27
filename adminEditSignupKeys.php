@@ -104,8 +104,7 @@ echo <<<EOL
 		<table class="table table-hover table-bordered table-condensed table-striped" style="margin-left: 10%; width: 80% !important; margin-bottom: 1%;">
 	 		<tr class="active">
 	 			<th class="active tableDiv">Specialty</th>
-	 			<th class="active tableDiv">Action</th>
-	 			<th class="active tableDiv">Specialty</th>
+				<th class="active tableDiv">Base Salary</th>
 	 			<th class="active tableDiv">Action</th>
 	 		</tr>
 EOL;
@@ -122,16 +121,16 @@ EOL;
 		echo 	$results[$i]->getObjectId();
 		echo 	'">'; 
 		echo	'<td class="active tableDiv">' . $results[$i]->get("name") . '</th>';
+		echo    '<td class="active tableDiv">$';
+		echo    $ecurrentsalary = number_format($results[$i]->get("salary"));
+		echo    '</th>';
 		echo	'<td class="active tableDiv"><input type="button" class="btn btn-danger pull-right" name="button"id="';
 		echo    $i;
-		echo    '" onclick="RemoveSpecialty(this.id)" value="Remove" style="margin-right: 10%; margin-top: 0%;"/></th>';
-		if(($i+1)%2==0)
-		{
-			echo    '</tr>';
-		}
+		echo    '" onclick="RemoveSpecialty(this.id)" value="Remove" style="margin-right: 10%; margin-top: 0%;"/></th></tr>';
 	}
 
-	echo	'<td class="active tableDiv"><input type="text" class="form-control" style="width: 100%;"id="newspec" name="newspec" required></th>';
+	echo	'<td class="active tableDiv"><input type="text" class="form-control" style="width: 100%;"id="newspec" name="newspec" placeholder="Specialty Title" required></th>';
+	echo	'<td class="active tableDiv"><input type="number" class="form-control" style="width: 100%;"id="newsal" name="newsal" placeholder="Number Value" required></th>';
 	echo	'<td class="active tableDiv"><input type="button" class="btn btn-primary pull-right" id="btnSub2" onclick="AddSpecialty()" value="Add New" style="margin-right: 10%; margin-top: 0%;"/></th>';
 
 
@@ -202,19 +201,35 @@ echo <<<EOL
 			Parse.initialize("kHbyXSdw4DIXw4Q0DYDcdM8QTDQnOewKJhc9ppAr", "dnSrc9MZjvPGuruDghO4imSb6OHqoJb3vyElTJAH");
 			var Specialty = Parse.Object.extend("Specialties");
 			var spec = new Specialty();
-			spec.set("name", document.getElementById("newspec").value);
+			if(!document.getElementById("newspec").value || !document.getElementById("newsal").value)
+			{
+				if(!document.getElementById("newspec").value)
+				{
+					alert("ERROR: Specialty Title was not specified");
+				}
+				else if(!document.getElementById("newsal").value)
+				{
+					alert("ERROR: Salary was not specified or not a number");
+				}
+			}
+			else
+			{
+				
+				spec.set("name", document.getElementById("newspec").value);
+				spec.set("salary", +document.getElementById("newsal").value);
 
-			spec.save(null, {
-			  success: function(gameScore) {
-			    // Execute any logic that should take place after the object is saved.
-			    document.getElementById("btnSub2").disabled = true;
-				document.getElementById("btnSub2").value = "Please Wait...";
-				setTimeout(function(){location.reload(); },1000); 
-			  },
-			  error: function(gameScore, error) {
-			    // Execute any logic that should take place if the save fails.
-			  }
-			});
+				spec.save(null, {
+				  success: function(gameScore) {
+					// Execute any logic that should take place after the object is saved.
+					document.getElementById("btnSub2").disabled = true;
+					document.getElementById("btnSub2").value = "Please Wait...";
+					setTimeout(function(){location.reload(); },1000); 
+				  },
+				  error: function(gameScore, error) {
+					// Execute any logic that should take place if the save fails.
+				  }
+				});
+			}
 		}
 
 		function RemoveSpecialty(x) {
