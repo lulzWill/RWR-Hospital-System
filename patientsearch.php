@@ -111,7 +111,6 @@ EOL;
 	}
 	else
 	{
-		echo 'HI';
 		echo $_POST["patientname"];
 		//header('Location: viewprofile.php');
 	}
