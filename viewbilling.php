@@ -75,7 +75,7 @@ echo <<<EOL
 EOL;
 	$query = new ParseQuery("appointments");
 	$query->equalTo("patientEmail", $currentUser->get("email"));
-	$query->containedIn("available", ["complete", "approved"]);
+	$query->containedIn("available", ["approved"]);
 	$results = $query->find();
 
 	for ($i = 0; $i < count($results); $i++) 

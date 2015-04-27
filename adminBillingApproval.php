@@ -27,7 +27,7 @@
   <html lang="en">
   <head>
   	<title>
-  		Edit SignupKeys
+  		Approve/Deny Billing
   	</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -75,8 +75,8 @@ echo <<<EOL
 				<th class="active tableDiv">Doctor</th>
 				<th class="active tableDiv">Patient</th>
 				<th class="active tableDiv">Proposed Price</th>
+				<th class="active tableDive">View Notes</th>
 				<th class="active tableDiv">Approve/Deny</th>
-				
 	 		</tr>
 EOL;
 	$query = new ParseQuery("appointments");
@@ -118,6 +118,7 @@ echo <<<EOL
 		</th>
 EOL;
 		echo	'<td class="active tableDiv">$' . number_format($results[$i]->get("apptprice")) . '</th>';
+		echo    '<td class="active tableDiv"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#notesModal" data-notes="'.$results[$i]->get("notes") .'">View Notes</button></th>';
 		echo	'<td class="active tableDiv"><input type="button" class="btn btn-success pull-left" name="button"id="';
 		echo    $i;
 		echo    '1" onclick="Approve(this.id)" value="Approve" style="margin-right: 1%; margin-top: 0%;"/>';
@@ -129,6 +130,23 @@ echo <<<EOL
 		</table>
 EOL;
 echo <<<EOL
+		<div class="modal fade" id="notesModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Appointment Notes</h4>
+		      </div>
+		      <div class="modal-body">
+				<textarea readonly="true" class="form-control1" rows="10" style="width:100%" id="notes" name="notes">
+				</textarea>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
 		</div>
 	</body>
 	<script type="text/javascript">
@@ -173,6 +191,18 @@ echo <<<EOL
 						  }
 				});
 		}
+
+		$(function(){
+		
+
+			$('#notesModal').modal({
+				show:false
+
+			    }).on('show.bs.modal', function(event) {
+			        var note = $(event.relatedTarget).data('notes');
+			        document.getElementById("notes").value = note;
+			});
+		});
 	</script>
 </html>
 EOL;
