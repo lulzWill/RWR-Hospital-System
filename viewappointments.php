@@ -97,7 +97,7 @@ EOL;
 
   		$nurseResults = $nurseQuery->find();
 
-  		echo '<tr class="active"  data-target="#basicModal" data-id =" '.$i.' " data-object-id=" '.$results[$i]->getObjectId().' " data-date =" '.$object->get("Date").' " data-time =" '.$object->get("Time").' "
+  		echo '<tr class="active"  data-target="#basicModal" data-id =" '.$i.' " data-object-id="'.$results[$i]->getObjectId().'" data-date =" '.$object->get("Date").' " data-time =" '.$object->get("Time").' "
   		 data-doctor =" ' . $innerResults[0]->get("first_name") . ' ' . $innerResults[0]->get("last_name") . ' " data-doctor-email="'. $object->get("physicianEmail") .'"
   		 data-nurse=" ' . $nurseResults[0]->get("first_name") . ' ' . $nurseResults[0]->get("last_name") . ' " data-nurse-email="' . $object->get("nurseEmail") . '"
 		 data-specialty="' .$object->get("specialty"). '">';
@@ -315,6 +315,53 @@ EOL;
 
 	<script type="text/javascript">
 
+		function fillDates() {
+			console.log("fill");
+			//removeOptions(document.getElementById("selectDate"));
+
+			var myDoctor = document.getElementById("currentDoctorEmail2").value;
+
+			Parse.initialize("kHbyXSdw4DIXw4Q0DYDcdM8QTDQnOewKJhc9ppAr", "dnSrc9MZjvPGuruDghO4imSb6OHqoJb3vyElTJAH");
+
+			var appt = Parse.Object.extend("appointments");
+			var query = new Parse.Query(appt);
+			
+			query.equalTo("physicianEmail", myDoctor);
+			query.ascending("Date");
+
+			var option = document.createElement("option");
+			option.label = "Choose one";
+			document.getElementById("selectDate").add(option);
+
+			var datesArray = [];
+
+			query.find({
+					  success: function(results) {
+					  	for(var i = 0; i < results.length; i++)
+					  	{
+					  					var tempDate = results[i].get("Date");
+
+							  			if ((datesArray.indexOf(tempDate) >= 0) || tempDate == "") {
+							  				
+							  			} else {
+							  				datesArray.push(tempDate);
+							  				
+							  				var option = document.createElement("option");
+					  						option.label = results[i].get("Date");
+					  						option.value = results[i].get("Date");
+					  						document.getElementById("selectDate").add(option);
+					  						console.log("added");
+							  			}
+					  		
+					  	}
+					  },
+					  error: function(error) {
+					    alert("Error: " + error.code + " " + error.message);
+					  }
+			});
+
+		}
+
 		function dateChange() {
 
 			removeOptions(document.getElementById("selectTime"));
@@ -333,7 +380,7 @@ EOL;
 			
 			query.equalTo("Date", myDate);
 			query.equalTo("available", "true");
-			//query.equalTo("physicianEmail", myDoctor);
+			query.equalTo("physicianEmail", myDoctor);
 			query.ascending("Time");
 
 			var option = document.createElement("option");
@@ -362,18 +409,25 @@ EOL;
 		    var i;
 		    for(i=selectbox.options.length-1;i>=0;i--)
 		    {
+		    	console.log("remove");
 		        selectbox.remove(i);
 		    }
 		}
 		
 		function Update(){
 			var currentUser = Parse.User.current();
-        	var getID = document.getElementById("objectid").value;
+			//var currentPatient = document.getElementById("currUserID").value;
+        	//var getID = document.getElementById("objectid").value;
+        	var getID = document.getElementById("currentObjectId2").value;
+        	console.log('*' + getID + '*');
         	var getDate = document.getElementById("currentDate2").value;
         	var getTime = document.getElementById("currentTime2").value;
         	var getDoctorEmail = document.getElementById("currentDoctorEmail2").value;
         	var getNurseEamil = document.getElementById("currentNurseEmail2").value;
 			var getSpecialty = document.getElementById("specialty2").value;
+
+			//var newDoctor = document.getElementById("doctorSelect").value;
+			//var newNurse = document.getElementById("nurseSelect").value;
         	var newDate = document.getElementById("selectDate").value;
         	var newTime = document.getElementById("selectTime").value;
         	
@@ -387,6 +441,7 @@ EOL;
 			var appt = Parse.Object.extend("appointments");
 			var query = new Parse.Query(appt);
 			query.equalTo("objectId", getID);
+
 			query.first({
 			  success: function(object) {
 
@@ -400,6 +455,8 @@ EOL;
 				    object.unset("specialty");
 					object.unset("paymentStatus");
 					object.unset("price");
+					object.unset("apptInfo");
+					object.unset("reason");
 
 
 					object.save(null, {
@@ -411,14 +468,18 @@ EOL;
 							var query2 = new Parse.Query(newAppt);
 							console.log(newDate);
 							console.log(newTime);
-							console.log(getDoctorEmail);
+							//console.log(newDoctor);
+							console.log("1");
+							query2.equalTo("physicianEmail", getDoctorEmail);
+
+							console.log("1.5");
 							query2.equalTo("Date", newDate);
 							query2.equalTo("Time", newTime);
-							query2.equalTo("physicianEmail", getDoctorEmail);
 							query2.first({
 					  			success: function(object) {
 
 								    object.set("available", "taken");
+								    console.log("2");
 								    //TODO set current nurse email and specialty
 								    console.log(object);
 									object.set("specialty", spec)
@@ -430,6 +491,7 @@ EOL;
 									    // Execute any logic that should take place after the object is saved.
 									    console.log("updated new");
 
+									    /*
 									    var theForm, newInput1, newInput2;
 									  	// Start by creating a <form>
 									  	theForm = document.createElement('form');
@@ -439,7 +501,7 @@ EOL;
 										newInput1 = document.createElement('input');
 									  	newInput1.type = 'hidden';
 									  	newInput1.name = 'patientEmail';
-									  	newInput1.value = document.getElementById("currUserID").value;
+									  	newInput1.value = document.getElementById("currentPatient2").value;
 									  	newInput2 = document.createElement('input');
 									  	newInput2.type = 'hidden';
 									  	newInput2.name = 'nurseEmail';
@@ -481,6 +543,9 @@ EOL;
 									  	document.getElementById('selectDate').disabled = true;
 									  	document.getElementById('selectTime').disabled = true;
 									  	theForm.submit();
+									  	*/
+
+									  	location.reload();
 
 									  },
 									  error: function(object, error) {
@@ -510,13 +575,14 @@ EOL;
 
 		$(function(){
 		
+			removeOptions($('#selectDate').get(0));
 
 			$('#basicModal').modal({
 				show:false
 
 			    }).on('show.bs.modal', function() {
+
 			        var getIdFromRow = $(event.target).closest('tr').data('object-id'); //get the id from tr
-			        
 			        $(this).find('#currentObjectId').html($('<b> current objID: ' + getIdFromRow  + '</b>'));
 			        $(this).find('#currentObjectId2').val(getIdFromRow);
 
@@ -548,7 +614,13 @@ EOL;
 			        $(this).find('#currentNurseEmail').html($('<b> current nurse email: ' + nurseEmail  + '</b>'));
 			        $(this).find('#currentNurseEmail2').val(nurseEmail);
 
-			});
+			        fillDates();
+
+				}).on('hidden.bs.modal', function () {
+  					removeOptions($('#selectDate').get(0));
+				});
+
+			
 		});
 
 	</script>
