@@ -817,7 +817,7 @@ echo <<<EOL
  <td class="active tableDiv">
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-info="
 EOL;
-echo $object->get("notes") . '" data-objectid="' . $object->getObjectId() . '" data-price="' . $object->get("price"). '" data-paymentstatus="' . $object->get("paymentStatus") . '"';
+echo $object->get("notes") . '" data-objectid="' . $object->getObjectId() . '" data-apptprice="' . $object->get("apptprice"). '" data-paymentstatus="' . $object->get("paymentStatus") . '"';
 echo 'data-person="'. $innerResults[0]->get("first_name").' '.$innerResults[0]->get("last_name") .'" data-date="'.$object->get("Date").'"';
 echo <<<EOL
 ">
@@ -845,9 +845,9 @@ echo <<<EOL
 		  <div class="modal-body">
 		     <form>
 			    <input type="hidden" class="theid" name="myid" id="myid">
-			    <label for="price" class="control-label">Price:</label>
-				<input type="text" class="form-control" id="price" name="price">
-				<label for="notes" class="control-label" style="margin-top: 1px;">Appointment Notes:</label>
+			    <label for="apptprice" class="control-label">Price:</label>
+				<input type="number" class="form-control" id="apptprice" name="apptprice" placeholder="Integer Value">
+				<label for="notes" class="control-label" style="margin-top: 1px;" placeholder="Information viewable by patient detailing appointment">Appointment Notes:</label>
 				<textarea class="form-control1" rows="10" style="width:100%" id="notes" name="notes">
 				</textarea>
 			 </form>
@@ -866,106 +866,120 @@ echo <<<EOL
 		var notes = button.data('info') // Extract info from data-* attributes
 		var person = button.data('person')
 		var date = button.data('date')
-		var price = button.data('price')
+		var apptprice = button.data('apptprice')
 		var objectid = button.data('objectid')
 		// If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
 		// Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
 		var modal = $(this)
 		modal.find('.modal-title').text('Appointment for ' + person + ' on ' + date)
-		modal.find('.form-control').val(price)
+		modal.find('.form-control').val(apptprice)
 		modal.find('.form-control1').text(notes)
 		modal.find('.theid').val(objectid)
 })
 
     function saveNotes()
 	{
-		var getID = document.getElementById("myid").value;
-		var getNotes = document.getElementById("notes").value;
-		var getPrice = document.getElementById("price").value;
-		
-		Parse.initialize("kHbyXSdw4DIXw4Q0DYDcdM8QTDQnOewKJhc9ppAr", "dnSrc9MZjvPGuruDghO4imSb6OHqoJb3vyElTJAH");
-		
-		var appt = Parse.Object.extend("appointments");
-		var query = new Parse.Query(appt);
-		query.equalTo("objectId", getID);
-		query.first({
-		success: function(object) {
+		if(!document.getElementById("apptprice").value || !document.getElementById("notes").value)
+		{
+			if(!document.getElementById("apptprice").value)
+			{
+				alert("Appointment price left blank or contains invalid input! Unable to Submit");
+			}
+			else
+			{
+				alert("Appointment notes left blank! Unable to Submit");
+			}
+		}
+		else
+		{
+			var getID = document.getElementById("myid").value;
+			var getNotes = document.getElementById("notes").value;
+			var getPrice = document.getElementById("apptprice").value;
+			
+			Parse.initialize("kHbyXSdw4DIXw4Q0DYDcdM8QTDQnOewKJhc9ppAr", "dnSrc9MZjvPGuruDghO4imSb6OHqoJb3vyElTJAH");
+			
+			var appt = Parse.Object.extend("appointments");
+			var query = new Parse.Query(appt);
+			query.equalTo("objectId", getID);
+			query.first({
+			success: function(object) {
 
-		object.set("price", getPrice);
-		object.set("notes", getNotes);
-		object.set("available", "complete");
+			object.set("apptprice", +getPrice);
+			object.set("notes", getNotes);
+			object.set("available", "complete");
 
-			object.save(null, {
-				success: function(object) {
-					// Execute any logic that should take place after the object is saved.console.log("updated old");
-					// update new appt to taken
-					var theForm, newInput1, newInput2;
-					// Start by creating a <form>
-					theForm = document.createElement('form');
-				  	theForm.action = 'notifyComplete.php';
-				  	theForm.method = 'post';
-				  	// Next create the <input>s in the form and give them names and values
-					newInput1 = document.createElement('input');
-				  	newInput1.type = 'hidden';
-				  	newInput1.name = 'patientEmail';
-				  	newInput1.value = object.get("patientEmail");
-				  	newInput2 = document.createElement('input');
-					newInput2.type = 'hidden';
-				 	newInput2.name = 'nurseEmail';
-				  	newInput2.value = object.get("nurseEmail");
-				  	newInput3 = document.createElement('input');
-				  	newInput3.type = 'hidden';
-				  	newInput3.name = 'physicianEmail';
-				  	newInput3.value = object.get("physicianEmail");
-				  	newInput4 = document.createElement('input');
-				  	newInput4.type = 'hidden';
-				  	newInput4.name = 'aptNotes';
-				  	newInput4.value = object.get("notes");
-				  	newInput5 = document.createElement('input');
-				  	newInput5.type = 'hidden';
-				  	newInput5.name = 'aptPrice';
-				  	newInput5.value = object.get("price");
-				  	newInput6 = document.createElement('input');
-				  	newInput6.type = 'hidden';
-				  	newInput6.name = 'aptDate';
-				  	newInput6.value = object.get("Date");
-				  	newInput7 = document.createElement('input');
-				  	newInput7.type = 'hidden';
-				  	newInput7.name = 'aptTime';
-				  	newInput7.value = object.get("Time");
-				  	// Now put everything together...
-				  	theForm.appendChild(newInput1);
-					theForm.appendChild(newInput2);
-				  	theForm.appendChild(newInput3);
-				  	theForm.appendChild(newInput4);
-				  	theForm.appendChild(newInput5);
-				  	theForm.appendChild(newInput6);
-				  	theForm.appendChild(newInput7);
-				  	// ...and it to the DOM...
-				  	document.getElementById('hidden_form_container').appendChild(theForm);
-				  	// ...and submit it
-				  	document.getElementById('submitBtn').disabled = true;
-				  	document.getElementById('submitBtn').value = "Please Wait";
-				  	document.getElementById('closeBtn').disabled = true;
-				  	document.getElementById('price').disabled = true;
-				  	document.getElementById('notes').disabled = true;
+				object.save(null, {
+					success: function(object) {
+						// Execute any logic that should take place after the object is saved.console.log("updated old");
+						// update new appt to taken
+						var theForm, newInput1, newInput2;
+						// Start by creating a <form>
+						theForm = document.createElement('form');
+						theForm.action = 'notifyComplete.php';
+						theForm.method = 'post';
+						// Next create the <input>s in the form and give them names and values
+						newInput1 = document.createElement('input');
+						newInput1.type = 'hidden';
+						newInput1.name = 'patientEmail';
+						newInput1.value = object.get("patientEmail");
+						newInput2 = document.createElement('input');
+						newInput2.type = 'hidden';
+						newInput2.name = 'nurseEmail';
+						newInput2.value = object.get("nurseEmail");
+						newInput3 = document.createElement('input');
+						newInput3.type = 'hidden';
+						newInput3.name = 'physicianEmail';
+						newInput3.value = object.get("physicianEmail");
+						newInput4 = document.createElement('input');
+						newInput4.type = 'hidden';
+						newInput4.name = 'aptNotes';
+						newInput4.value = object.get("notes");
+						newInput5 = document.createElement('input');
+						newInput5.type = 'hidden';
+						newInput5.name = 'aptPrice';
+						newInput5.value = object.get("apptprice");
+						newInput6 = document.createElement('input');
+						newInput6.type = 'hidden';
+						newInput6.name = 'aptDate';
+						newInput6.value = object.get("Date");
+						newInput7 = document.createElement('input');
+						newInput7.type = 'hidden';
+						newInput7.name = 'aptTime';
+						newInput7.value = object.get("Time");
+						// Now put everything together...
+						theForm.appendChild(newInput1);
+						theForm.appendChild(newInput2);
+						theForm.appendChild(newInput3);
+						theForm.appendChild(newInput4);
+						theForm.appendChild(newInput5);
+						theForm.appendChild(newInput6);
+						theForm.appendChild(newInput7);
+						// ...and it to the DOM...
+						document.getElementById('hidden_form_container').appendChild(theForm);
+						// ...and submit it
+						document.getElementById('submitBtn').disabled = true;
+						document.getElementById('submitBtn').value = "Please Wait";
+						document.getElementById('closeBtn').disabled = true;
+						document.getElementById('apptprice').disabled = true;
+						document.getElementById('notes').disabled = true;
 
-				  	theForm.submit();
+						theForm.submit();
+
+					},
+					  error: function(object, error) {
+						// Execute any logic that should take place if the save fails.
+						// error is a Parse.Error with an error code and message.
+						alert('Failed to create new object, with error code: ' + error.message);
+					  }
+
+				});
 
 				},
-				  error: function(object, error) {
-					// Execute any logic that should take place if the save fails.
-					// error is a Parse.Error with an error code and message.
-					alert('Failed to create new object, with error code: ' + error.message);
+				  error: function(error) {
+					alert("Error: " + error.code + " " + error.message);
 				  }
-
-			});
-
-			},
-			  error: function(error) {
-			    alert("Error: " + error.code + " " + error.message);
-			  }
-			});
+				});
+		}
 	}
  </script>
 EOL;
@@ -988,7 +1002,7 @@ else if($object->get("available")=="approved")
 	echo    '<td class="active tableDiv">Bill Sent</th>';
 }
 
-echo    '<td class="active tableDiv">' . $object->get("price") . '</th>';
+echo    '<td class="active tableDiv">$' . number_format($object->get("apptprice")) . '</th>';
 echo <<<EOL
 		</tr>
 EOL;

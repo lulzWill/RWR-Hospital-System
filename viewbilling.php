@@ -75,7 +75,7 @@ echo <<<EOL
 EOL;
 	$query = new ParseQuery("appointments");
 	$query->equalTo("patientEmail", $currentUser->get("email"));
-	$query->equalTo("available", "complete");
+	$query->containedIn("available", ["complete", "approved"]);
 	$results = $query->find();
 
 	for ($i = 0; $i < count($results); $i++) 
@@ -95,7 +95,8 @@ EOL;
   		echo '<tr class="active"  data-target="#basicModal" data-id =" '.$i.' " data-object-id="'.$results[$i]->getObjectId().'" data-date =" '.$object->get("Date").' " data-time =" '.$object->get("Time").' "
   		 data-doctor =" ' . $innerResults[0]->get("first_name") . ' ' . $innerResults[0]->get("last_name") . ' " data-doctor-email="'. $object->get("physicianEmail") .'"
   		 data-nurse=" ' . $nurseResults[0]->get("first_name") . ' ' . $nurseResults[0]->get("last_name") . ' " data-nurse-email" ' . $object->get("nurseEmail") . ' " data-payment-status ="'.$object->get("paymentStatus").'"
-  		 data-reason ="'.$object->get("specialty").'" data-cost ="'.$object->get("price").'" data-notes ="'.$object->get("notes").'" data-notes-init ="'.$object->get("reason").'">';
+  		 data-reason ="'.$object->get("specialty").'" data-cost ="$'.number_format($object->get("apptprice")).'" data-notes ="'.$object->get("notes").'" data-notes-init ="'.$object->get("reason").'"
+		 data-availability="'.$object->get("available").'">';
 	 	echo	'<td class="active tableDiv">' . $object->get("Date") . '</th>';
 		echo	'<td class="active tableDiv">Dr. ' . $innerResults[0]->get("first_name") . ' ' . $innerResults[0]->get("last_name") . '</th>';
 		
@@ -117,10 +118,6 @@ EOL;
 echo <<<EOL
 		</table>
 
-
-		
-
-		
 		<div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
 		  <div class="modal-dialog">
 		    <div class="modal-content">
@@ -255,14 +252,7 @@ EOL;
 							  			 echo $innerResults[$j]->get("Date");
 							  			echo '</option>';
 							  		}
-
-							  		
-
 				            	}
-
-				            	
-
-
 				            	echo <<<EOL
 				    </select>
 				  </div>
@@ -377,7 +367,7 @@ EOL;
 						  	newInput5 = document.createElement('input');
 						  	newInput5.type = 'hidden';
 						  	newInput5.name = 'aptPrice';
-						  	newInput5.value = object.get("price");
+						  	newInput5.value = object.get("apptprice");
 						  	newInput6 = document.createElement('input');
 						  	newInput6.type = 'hidden';
 						  	newInput6.name = 'aptDate';
@@ -442,15 +432,22 @@ EOL;
 
 			        var paymentStatus = $(event.target).closest('tr').data('payment-status');
 			        var p = 'paid';
+					var approved = $(event.target).closest('tr').data('availability');
+			        var a = 'approved';
 			        var cost = $(event.target).closest('tr').data('cost');
 			        if (paymentStatus == p) {
 			        	$(this).find('#apptCost').html($('<b> Payment Due: ' + ' PAID '  + '</b>'));
 			        	$(this).find('#payButton').hide();
 			        }
-			        else {
+			        else if(approved == a) {
 			        	$(this).find('#apptCost').html($('<b> Payment Due: ' + cost  + '</b>'));
 			        	$(this).find('#payButton').show();
 			        }
+					else
+					{
+						$(this).find('#apptCost').html($('<b> Payment Due: ' + ' Awaiting Approval '  + '</b>'));
+			        	$(this).find('#payButton').hide();
+					}
 			        $(this).find('#apptCost2').val(cost);
 
 			        var notesInit = $(event.target).closest('tr').data('notes-init');

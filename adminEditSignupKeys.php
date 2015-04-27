@@ -94,12 +94,6 @@ EOL;
 		echo    '<input type="button" class="btn btn-primary pull-right" id="btnSub" onclick="UpdateKeys()" value="Updates Keys" style="margin-right: 10%; margin-top: 0%;"/>';
 echo <<<EOL
 		</div>
-
-
-
-
-
-
 		<div class="container" style="float: left; width: 50%;">
 		<table class="table table-hover table-bordered table-condensed table-striped" style="margin-left: 10%; width: 80% !important; margin-bottom: 1%;">
 	 		<tr class="active">
@@ -141,10 +135,6 @@ EOL;
 echo <<<EOL
 		</div>
 	</body>
-
-
-
-
 	<script type="text/javascript">
 
 		function UpdateKeys() {
