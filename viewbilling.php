@@ -60,6 +60,40 @@ EOL;
 echo $currentUser->get("email");
 echo <<<EOL
 '/>
+
+/*
+	<input hidden="true" id="currUserName" value='
+EOL;
+echo $currentUser->get("firstname");
+echo " ";
+echo $currentUser->get("lastname");
+echo <<<EOL
+'/>
+
+<input hidden="true" id="currUserBday" value='
+EOL;
+echo $currentUser->get("dateOfBirth");
+echo <<<EOL
+'/>
+
+<input hidden="true" id="currUserSex" value='
+EOL;
+echo $currentUser->get("sex");
+echo <<<EOL
+'/>
+
+<input hidden="true" id="currUserInsurance" value='
+EOL;
+echo $currentUser->get("insurance");
+echo <<<EOL
+'/>
+
+<input hidden="true" id="currUserConditions" value='
+EOL;
+echo $currentUser->get("pre_conditions");
+echo <<<EOL
+'/>
+*/
     </head>
   <body>
 	<body>
@@ -69,7 +103,7 @@ echo <<<EOL
 		<table class="table table-hover table-bordered table-condensed table-striped" style="margin-left: auto; margin-right: auto; margin-top: 2%; width: 60% !important;">
 	 		<tr class="active">
 	 			<th class="active tableDiv">Date of Appointment</th>
-				<th class="active tableDiv">Doctor Seen</th>
+				<th class="active tableDiv">Specialist Seen</th>
 				<th class="active tableDiv">Payment Information</th>
 	 		</tr>
 EOL;
@@ -105,6 +139,7 @@ echo    '<td class="active tableDiv">';
 echo '<a href="#" class="btn btn-info" data-toggle="modal" data-target="#basicModal">View</a>';
 		echo    '</tr>';
 		echo <<<EOL
+
 			
               <input type="hidden" class="form-control" name="objectid" id="objectid" value="
 EOL;
@@ -124,7 +159,7 @@ echo <<<EOL
 
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		        <h4 class="modal-title" id="myModalLabel">Invoice Details</h4>
+		        <h4 class="modal-title" id="myModalLabel">Appointment Details</h4>
 		      </div>
 
 		      <div class="modal-body">
@@ -218,8 +253,7 @@ echo <<<EOL
 					<input type="hidden" id="currentNurseEmail2" name="currentNurseEmail2" class="form-control" value=''/>
 				</div>
 				</div>
-	
-		    <!--    
+
 
 				<div class="form-group">
 				  <label class="col-md-2 control-label" for="selectDate">Select a New Date</label>
@@ -264,14 +298,15 @@ EOL;
 				    <select id="selectTime" name="selectTime" class="form-control" disabled="true">
 
 
-				    </select>
-				  </div>
-				</div>
-			-->
+	
+
 				
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-default" id="closeBtn" data-dismiss="modal">Close</button>
+		        <button type="button" onClick="redirect()" class="btn btn-info" id="invoiceBtn" data-dismiss="modal">View Invoice</button>
+		        <!--
 		        <input type="button" id="payButton" class="btn btn-success" onclick="Update()" value="Pay Now"/>
+		        -->
 		      </div>
 		      </form>
 		    </div>
@@ -286,6 +321,18 @@ EOL;
 
 
 	<script type="text/javascript">
+
+
+		function redirect() {
+			sessionStorage.setItem("aDate", document.getElementById("currentDate2").value);
+			sessionStorage.setItem("aReason", document.getElementById("apptNotesInit2").value);
+			sessionStorage.setItem("aNotes", document.getElementById("apptNotes2").value);
+			sessionStorage.setItem("aCost", document.getElementById("apptCost2").value);
+			sessionStorage.setItem("docName", document.getElementById("currentDoctor2").value);
+			sessionStorage.setItem("docEmail", document.getElementById("currentDoctorEmail2").value);
+			sessionStorage.setItem("apptID", document.getElementById("currentObjectId2").value);
+			window.location.href = "invoice.php";
+		}
 
 		function dateChange() {
 
@@ -388,6 +435,7 @@ EOL;
 						  	document.getElementById('payButton').value = "Please Wait";
 						  	document.getElementById('closeBtn').disabled = true;
 						  	theForm.submit();	
+						  	location.reload();
 			  			},
 						  error: function(object, error) {
 						    // Execute any logic that should take place if the save fails.
@@ -419,6 +467,7 @@ EOL;
 			        var date = $(event.target).closest('tr').data('date');
 			        $(this).find('#currentDate').html($('<b> Appointment Date: ' + date  + '</b>'));
 			        $(this).find('#currentDate2').val(date);
+			        sessionStorage.setItem("date", date);
 
 			        var time = $(event.target).closest('tr').data('time');
 			        $(this).find('#currentTime').html($('<b> Appointment Time: ' + time  + '</b>'));
