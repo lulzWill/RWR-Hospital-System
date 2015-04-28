@@ -255,49 +255,7 @@ echo <<<EOL
 				</div>
 
 
-				<div class="form-group">
-				  <label class="col-md-2 control-label" for="selectDate">Select a New Date</label>
-				  <div class="col-md-10">
-				    <select id="selectDate" name="selectDate" class="form-control" onChange="dateChange()">
-EOL;
-
-				            	$query = new ParseQuery("appointments");
-								$query->equalTo("patientEmail", $currentUser->get("email"));
-				            	$results = $query->find();
-
-
-
-				            	for($i = 0; $i < count($results); $i++)
-				            	{
-
-				            		$object = $results[$i];
-
-				            		$innerQuery = new ParseQuery("appointments");
-							  		$innerQuery->equalTo("available", "true");
-							  		$innerQuery->equalTo("physicianEmail", $results[$i]->get("physicianEmail"));
-							  		$innerQuery->ascending("Date");
-
-							  		$innerResults = $innerQuery->find();
-
-							  		for($j = 0; $j < count($innerResults); $j++)
-				            		{
-				            			
-							  			echo '<option value="'; echo $innerResults[$j]->get("Date"); echo '">';
-							  			 echo $innerResults[$j]->get("Date");
-							  			echo '</option>';
-							  		}
-				            	}
-				            	echo <<<EOL
-				    </select>
-				  </div>
-				</div>
-
-				<div class="form-group">
-				  <label class="col-md-2 control-label" for="selectTime">Select a New Time</label>
-				  <div class="col-md-10">
-				    <select id="selectTime" name="selectTime" class="form-control" disabled="true">
-
-
+				
 	
 
 				
