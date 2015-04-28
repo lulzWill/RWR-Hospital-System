@@ -289,6 +289,7 @@ echo <<<EOL
 			sessionStorage.setItem("docName", document.getElementById("currentDoctor2").value);
 			sessionStorage.setItem("docEmail", document.getElementById("currentDoctorEmail2").value);
 			sessionStorage.setItem("apptID", document.getElementById("currentObjectId2").value);
+			//$('#basicModal').modal('hide');
 			window.location.href = "invoice.php";
 		}
 
@@ -410,6 +411,10 @@ echo <<<EOL
 			
     	}
 
+    	function modalFill() {
+
+    	}
+
 		$(function(){
 		
 
@@ -480,6 +485,10 @@ echo <<<EOL
 			        var nurseEmail = $(event.target).closest('tr').data('nurse-email');
 			        $(this).find('#currentNurseEmail').html($('<b> current nurse email: ' + nurseEmail  + '</b>'));
 			        $(this).find('#currentNurseEmail2').val(nurseEmail);
+
+			        $('#basicModal').modal('hide');
+
+			        redirect();
 
 			});
 		});
