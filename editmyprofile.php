@@ -389,11 +389,11 @@ echo <<<EOL
 			</div>
 			<div class="container">
 			<div class="row">
-				<label for="experience" class="col-sm-2 control-label whitelabel">Years of Experience:</label>
+				<label for="years" class="col-sm-2 control-label whitelabel">Years of Experience:</label>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" id="experience" name="experience" value="
+					<input type="number" class="form-control" id="years" name="years" value="
 EOL;
-echo $physician->get("experience");
+echo $physician->get("years");
 echo <<<EOL
 " required>
 				</div>
@@ -538,11 +538,11 @@ echo <<<EOL
 			</div>
 			<div class="container">
 			<div class="row">
-				<label for="experience" class="col-sm-2 control-label whitelabel">Years of Experience:</label>
+				<label for="years" class="col-sm-2 control-label whitelabel">Years of Experience:</label>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" id="experience" name="experience" value="
+					<input type="text" class="form-control" id="years" name="years" value="
 EOL;
-echo $nurse->get("experience");
+echo $nurse->get("years");
 echo <<<EOL
 " required>
 				</div>

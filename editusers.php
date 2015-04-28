@@ -207,9 +207,9 @@ echo <<<EOL
 						</div>
 						<div class="container">
 						<div class="row">
-							<label for="experience" class="col-sm-2 control-label whitelabel">Years of Experience:</label>
+							<label for="years" class="col-sm-2 control-label whitelabel">Years of Experience:</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="experience" name="experience" value="" required>
+								<input type="number" class="form-control" id="years" name="years" value="" required>
 							</div>
 						</div>
 						</div>
@@ -585,9 +585,9 @@ echo <<<EOL
 								</div>
 								<div class="container">
 								<div class="row">
-									<label for="experience_nur" class="col-sm-2 control-label whitelabel">Years of Experience:</label>
+									<label for="years_nur" class="col-sm-2 control-label whitelabel">Years of Experience:</label>
 									<div class="col-sm-10">
-										<input type="text" class="form-control" id="experience_nur" name="experience_nur" value="" required>
+										<input type="number" class="form-control" id="years_nur" name="years_nur" value="" required>
 									</div>
 								</div>
 								</div>
@@ -662,7 +662,7 @@ echo <<<EOL
 					  		}
 					  		object.set("degree", document.getElementById("degree").value);
 					  		object.set("school", document.getElementById("school").value);
-					  		object.set("experience", document.getElementById("experience").value);
+					  		object.set("years", +document.getElementById("years").value);
 					  		object.set("address", document.getElementById("address").value);
 					  		object.set("citystate", document.getElementById("citystate").value);
 					  		object.set("zipcode", document.getElementById("zipcode").value);
@@ -810,7 +810,7 @@ echo <<<EOL
 					  		}
 					  		object.set("degree", document.getElementById("degree_nur").value);
 					  		object.set("school", document.getElementById("school_nur").value);
-					  		object.set("experience", document.getElementById("experience_nur").value);
+					  		object.set("years", +document.getElementById("years_nur").value);
 					  		object.set("address", document.getElementById("address_nur").value);
 					  		object.set("citystate", document.getElementById("citystate_nur").value);
 					  		object.set("zipcode", document.getElementById("zipcode_nur").value);
@@ -875,7 +875,7 @@ echo <<<EOL
 					  		document.getElementById("email").value = object.get("email");
 					  		document.getElementById("degree").value = object.get("degree");
 					  		document.getElementById("school").value = object.get("school");
-					  		document.getElementById("experience").value = object.get("experience");
+					  		document.getElementById("years").value = object.get("years");
 					  		document.getElementById("address").value = object.get("address");
 					  		document.getElementById("citystate").value = object.get("citystate");
 					  		document.getElementById("zipcode").value = object.get("zipcode");
@@ -982,7 +982,7 @@ echo <<<EOL
 					  		document.getElementById("email_nur").value = object.get("email");
 					  		document.getElementById("degree_nur").value = object.get("degree");
 					  		document.getElementById("school_nur").value = object.get("school");
-					  		document.getElementById("experience_nur").value = object.get("experience");
+					  		document.getElementById("years_nur").value = object.get("years");
 					  		document.getElementById("address_nur").value = object.get("address");
 					  		document.getElementById("citystate_nur").value = object.get("citystate");
 					  		document.getElementById("zipcode_nur").value = object.get("zipcode");

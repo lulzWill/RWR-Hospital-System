@@ -57,7 +57,8 @@
 		$physician->set("degree", $_POST["degree"]);
 		$physician->set("school", $_POST["school"]);
 		$physician->set("area_of_spec", $_POST["area_of_spec"]);
-		$physician->set("experience", $_POST["experience"]);
+		$number = intval($_POST["years"]);
+		$physician->set("years", $number);
 		$physician->set("address", $_POST["address"]);
 		$physician->set("citystate", $_POST["citystate"]);
 		$physician->set("phone", $_POST["phone"]);
@@ -95,7 +96,8 @@
 		$nurse=$query->first();
 		$nurse->set("degree", $_POST["degree"]);
 		$nurse->set("school", $_POST["school"]);
-		$nurse->set("experience", $_POST["experience"]);
+		$number = intval($_POST["years"]);
+		$nurse->set("years", $number);
 		$nurse->set("address", $_POST["address"]);
 		$nurse->set("citystate", $_POST["citystate"]);
 		$nurse->set("zipcode", $_POST["zipcode"]);
