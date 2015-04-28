@@ -540,7 +540,7 @@ echo <<<EOL
 			<div class="row">
 				<label for="years" class="col-sm-2 control-label whitelabel">Years of Experience:</label>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" id="years" name="years" value="
+					<input type="number" class="form-control" id="years" name="years" value="
 EOL;
 echo $nurse->get("years");
 echo <<<EOL
