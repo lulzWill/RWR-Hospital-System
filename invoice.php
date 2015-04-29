@@ -255,7 +255,7 @@ echo <<<EOL
     }
 
     function Update(){
-          Parse.initialize("kHbyXSdw4DIXw4Q0DYDcdM8QTDQnOewKJhc9ppAr", "dnSrc9MZjvPGuruDghO4imSb6OHqoJb3vyElTJAH");
+      Parse.initialize("kHbyXSdw4DIXw4Q0DYDcdM8QTDQnOewKJhc9ppAr", "dnSrc9MZjvPGuruDghO4imSb6OHqoJb3vyElTJAH");
 
       var currentUser = Parse.User.current();
       var getID = sessionStorage.getItem("apptID");
@@ -308,6 +308,42 @@ echo <<<EOL
                 document.getElementById('closeBtn').disabled = true;
                 theForm.submit(); 
                 */
+                
+                
+                
+                var doctor = Parse.Object.extend("Physician");
+                var docQuery = new Parse.Query(doctor);
+                docQuery.equalTo("email", sessionStorage.getItem("docEmail"));
+                console.log(sessionStorage.getItem("docEmail"));
+                docQuery.first({
+                      success: function(results) {
+                        var doctorPayout = sessionStorage.getItem("aCost") * 0.8;
+                        var pay = doctorPayout + results.get("apptBonuses");
+                        results.set("apptBonuses", pay);
+                        
+                      },
+                      error: function(error) {
+                        alert("Error: " + error.code + " " + error.message);
+                      }
+                });
+                
+                var nurse = Parse.Object.extend("Nurse");
+                var nurseQuery = new Parse.Query(nurse);
+                nurseQuery.equalTo("email", sessionStorage.getItem("nurseEmail"));
+                console.log(sessionStorage.getItem("nurseEmail"));
+                nurseQuery.first({
+                      success: function(results) {
+                        var nursePayout = sessionStorage.getItem("aCost") * 0.2;
+                        var npay = nursePayout + results.get("apptBonuses");
+                        results.set("apptBonuses", npay);
+                        
+                      },
+                      error: function(error) {
+                        alert("Error: " + error.code + " " + error.message);
+                      }
+                });
+                
+                
                 window.location.href = "viewbilling.php";
               },
               error: function(object, error) {

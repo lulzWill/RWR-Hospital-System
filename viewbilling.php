@@ -289,6 +289,7 @@ echo <<<EOL
 			sessionStorage.setItem("docName", document.getElementById("currentDoctor2").value);
 			sessionStorage.setItem("docEmail", document.getElementById("currentDoctorEmail2").value);
 			sessionStorage.setItem("apptID", document.getElementById("currentObjectId2").value);
+			sessionStorage.setItem("nurseEmail", document.getElementById("currentNurseEmail2").value);
 			//$('#basicModal').modal('hide');
 			window.location.href = "invoice.php";
 		}
