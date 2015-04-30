@@ -125,10 +125,13 @@ EOL;
   		$nurseQuery->equalTo("email", $object->get("nurseEmail"));
 
   		$nurseResults = $nurseQuery->find();
+		  
+		//error_log(print_r($nurseResults[0]->get("email"), true));
+		//error_log(print_r($object->get("nurseEmail"), true));
 
   		echo '<tr class="active"  data-target="#basicModal" data-id =" '.$i.' " data-object-id="'.$results[$i]->getObjectId().'" data-date =" '.$object->get("Date").' " data-time =" '.$object->get("Time").' "
   		 data-doctor =" ' . $innerResults[0]->get("first_name") . ' ' . $innerResults[0]->get("last_name") . ' " data-doctor-email="'. $object->get("physicianEmail") .'"
-  		 data-nurse=" ' . $nurseResults[0]->get("first_name") . ' ' . $nurseResults[0]->get("last_name") . ' " data-nurse-email" ' . $object->get("nurseEmail") . ' " data-payment-status ="'.$object->get("paymentStatus").'"
+  		 data-nurse=" ' . $nurseResults[0]->get("first_name") . ' ' . $nurseResults[0]->get("last_name") . ' " data-n="'.$object->get("nurseEmail").'" data-payment-status ="'.$object->get("paymentStatus").'"
   		 data-reason ="'.$object->get("specialty").'" data-cost ="$'.number_format($object->get("apptprice")).'" data-notes ="'.$object->get("notes").'" data-notes-init ="'.$object->get("reason").'"
 		 data-availability="'.$object->get("available").'">';
 	 	echo	'<td class="active tableDiv">' . $object->get("Date") . '</th>';
@@ -289,6 +292,7 @@ echo <<<EOL
 			sessionStorage.setItem("docName", document.getElementById("currentDoctor2").value);
 			sessionStorage.setItem("docEmail", document.getElementById("currentDoctorEmail2").value);
 			sessionStorage.setItem("apptID", document.getElementById("currentObjectId2").value);
+			sessionStorage.setItem("nEmail", document.getElementById("currentNurseEmail2").value);
 			//$('#basicModal').modal('hide');
 			window.location.href = "invoice.php";
 		}
@@ -482,7 +486,7 @@ echo <<<EOL
 			        $(this).find('#currentNurse').html($('<b> Nursing: ' + nurse  + '</b>'));
 			        $(this).find('#currentNurse2').val(nurse);
 
-			        var nurseEmail = $(event.target).closest('tr').data('nurse-email');
+			        var nurseEmail = $(event.target).closest('tr').data('n');
 			        $(this).find('#currentNurseEmail').html($('<b> current nurse email: ' + nurseEmail  + '</b>'));
 			        $(this).find('#currentNurseEmail2').val(nurseEmail);
 
