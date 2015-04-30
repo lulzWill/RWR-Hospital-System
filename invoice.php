@@ -263,7 +263,6 @@ echo <<<EOL
       var appt = Parse.Object.extend("appointments");
       var query = new Parse.Query(appt);
       query.equalTo("objectId", getID);
-
       query.first({
         success: function(object) {
 
@@ -309,40 +308,100 @@ echo <<<EOL
                 theForm.submit(); 
                 */
                 
-                
-                
                 var doctor = Parse.Object.extend("Physician");
                 var docQuery = new Parse.Query(doctor);
                 docQuery.equalTo("email", sessionStorage.getItem("docEmail"));
-                console.log(sessionStorage.getItem("docEmail"));
+                var s = sessionStorage.getItem("aCost");
+                while(s.charAt(0) === '$')
+                    s = s.substr(1);
                 docQuery.first({
                       success: function(results) {
-                        var doctorPayout = sessionStorage.getItem("aCost") * 0.8;
-                        var pay = doctorPayout + results.get("apptBonuses");
+                        var doctorPayout =  parseInt(s,10) * 0.8;
+                        var pay = parseInt(doctorPayout,10) + results.get("apptBonuses");
                         results.set("apptBonuses", pay);
                         
+                        results.save(null, {
+              			  			success: function(object) {
+              							   console.log("doc updated");
+                               
+                               var nurse = Parse.Object.extend("Nurse");
+                                var nurseQuery = new Parse.Query(nurse);
+                                nurseQuery.equalTo("email", sessionStorage.getItem("nEmail"));
+                                var q = sessionStorage.getItem("aCost");
+                                while(q.charAt(0) === '$')
+                                    q = q.substr(1);
+                                nurseQuery.first({
+                                      success: function(results) {
+                                        var nursePayout =  parseInt(q,10) * 0.2;
+                                        var npay = parseInt(nursePayout,10) + results.get("apptBonuses");
+                                        results.set("apptBonuses", npay);
+                                        
+                                        results.save(null, {
+                              			  			success: function(object) {
+                              							   console.log("nurse updated");
+                                               sessionStorage.clear();
+                              					
+                              			  			},
+                              						  error: function(object, error) {
+                              						    // Execute any logic that should take place if the save fails.
+                              						    // error is a Parse.Error with an error code and message.
+                              						    alert('Failed to create new object, with error code: ' + error.message);
+                              						  }
+                              		    		});
+                                        
+                                      },
+                                      error: function(error) {
+                                        alert("Error: " + error.code + " " + error.message);
+                                      }
+                                });
+                               
+              					 	     
+              			  			},
+              						  error: function(object, error) {
+              						    // Execute any logic that should take place if the save fails.
+              						    // error is a Parse.Error with an error code and message.
+              						    alert('Failed to create new object, with error code: ' + error.message);
+              						  }
+              		    		});
+                        
                       },
                       error: function(error) {
-                        alert("Error: " + error.code + " " + error.message);
+                        alert("Error ONE: " + error.code + " " + error.message);
                       }
                 });
                 
+                /*
                 var nurse = Parse.Object.extend("Nurse");
                 var nurseQuery = new Parse.Query(nurse);
-                nurseQuery.equalTo("email", sessionStorage.getItem("nurseEmail"));
-                console.log(sessionStorage.getItem("nurseEmail"));
+                nurseQuery.equalTo("email", sessionStorage.getItem("nEmail"));
+                var q = sessionStorage.getItem("aCost");
+                while(q.charAt(0) === '$')
+                    q = q.substr(1);
                 nurseQuery.first({
                       success: function(results) {
-                        var nursePayout = sessionStorage.getItem("aCost") * 0.2;
-                        var npay = nursePayout + results.get("apptBonuses");
+                        var nursePayout =  parseInt(q,10) * 0.2;
+                        var npay = parseInt(nursePayout,10) + results.get("apptBonuses");
                         results.set("apptBonuses", npay);
+                        
+                        results.save(null, {
+              			  			success: function(object) {
+              							   console.log("nurse updated");
+                               sessionStorage.clear();
+              					
+              			  			},
+              						  error: function(object, error) {
+              						    // Execute any logic that should take place if the save fails.
+              						    // error is a Parse.Error with an error code and message.
+              						    alert('Failed to create new object, with error code: ' + error.message);
+              						  }
+              		    		});
                         
                       },
                       error: function(error) {
                         alert("Error: " + error.code + " " + error.message);
                       }
                 });
-                
+                */
                 
                 window.location.href = "viewbilling.php";
               },
@@ -355,7 +414,7 @@ echo <<<EOL
 
         },
         error: function(error) {
-          alert("Error: " + error.code + " " + error.message);
+          alert("Error TWO: " + error.code + " " + error.message);
         }
       });
       
