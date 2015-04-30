@@ -490,11 +490,13 @@ echo <<<EOL
 			        $(this).find('#currentNurseEmail').html($('<b> current nurse email: ' + nurseEmail  + '</b>'));
 			        $(this).find('#currentNurseEmail2').val(nurseEmail);
 
-			        $('#basicModal').modal('hide');
+			      
 
 			        redirect();
 
 			});
+			
+			
 		});
 
 
