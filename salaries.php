@@ -121,7 +121,9 @@ EOL;
 		echo	'<td class="active tableDiv">$ ' .$docResults[0]->get("apptBonuses"). '</th>';
 		echo	'<td class="active tableDiv">' .$docResults[0]->get("lastPaid"). '</th>';
 		echo    '<td class="active tableDiv">';
-		echo	'<a href="#" id="payDocButton" class="btn btn-success" data-email="'.$object->get("email").'" data-salary="'.$adjustedSalary.'" data-bonuses="'.$docResults[0]->get("apptBonuses").'" onclick="releasePayment()">Pay</a>';
+		echo	'<a href="#" id="doctor';
+		echo $i;
+		echo    '" class="btn btn-success" data-email="'.$object->get("email").'" data-salary="'.$adjustedSalary.'" data-bonuses="'.$docResults[0]->get("apptBonuses").'" onclick="releasePayment(this.id)">Pay</a>';
 		if($object->get("position") != "admin")
 		{
 			//echo '<a href="#" class="btn btn-warning" data-toggle="modal" data-target="#'. $object->get("position") .'Modal" data-email="'.$object->get("email").'">Edit User</a>';
@@ -183,7 +185,7 @@ EOL;
 		echo	'<td class="active tableDiv">$ ' .$docResults2[0]->get("apptBonuses"). '</th>';
 		echo	'<td class="active tableDiv">' .$docResults2[0]->get("lastPaid"). '</th>';
 		echo    '<td class="active tableDiv">';
-		echo	'<a href="#" id="payNurseButton" class="btn btn-success" data-email="'.$object2->get("email").'" data-salary="'.$adjustedSalary2.'" data-bonuses="'.$docResults2[0]->get("apptBonuses").'" onclick="releaseNursePayment()">Pay</a>';
+		echo	'<a href="#" id="payNurseButton'.$i.'" class="btn btn-success" data-email="'.$object2->get("email").'" data-salary="'.$adjustedSalary2.'" data-bonuses="'.$docResults2[0]->get("apptBonuses").'" onclick="releaseNursePayment(this.id)">Pay</a>';
 		if($object->get("position") != "admin")
 		{
 			//echo '<a href="#" class="btn btn-warning" data-toggle="modal" data-target="#'. $object->get("position") .'Modal" data-email="'.$object->get("email").'">Edit User</a>';
@@ -239,7 +241,7 @@ echo <<<EOL
 
 	<script type="text/javascript">
 	
-		function releasePayment() {
+		function releasePayment(btnId) {
 			
 			Parse.initialize("kHbyXSdw4DIXw4Q0DYDcdM8QTDQnOewKJhc9ppAr", "dnSrc9MZjvPGuruDghO4imSb6OHqoJb3vyElTJAH");
 			
@@ -251,7 +253,7 @@ echo <<<EOL
 			
 			 	var doc = Parse.Object.extend("Physician");
                 var docQuery = new Parse.Query(doc);
-                docQuery.equalTo("email", document.getElementById('payDocButton').getAttribute("data-email"));
+                docQuery.equalTo("email", document.getElementById(btnId).getAttribute("data-email"));
                 docQuery.first({
                       success: function(results) {
 		                        results.set("apptBonuses", 0);
@@ -276,7 +278,7 @@ echo <<<EOL
 		}
 		
 		
-		function releaseNursePayment() {
+		function releaseNursePayment(nurseId) {
 			
 			Parse.initialize("kHbyXSdw4DIXw4Q0DYDcdM8QTDQnOewKJhc9ppAr", "dnSrc9MZjvPGuruDghO4imSb6OHqoJb3vyElTJAH");
 			
@@ -288,7 +290,7 @@ echo <<<EOL
 			
 			 	var nurse = Parse.Object.extend("Nurse");
                 var nurseQuery = new Parse.Query(nurse);
-                nurseQuery.equalTo("email", document.getElementById('payNurseButton').getAttribute("data-email"));
+                nurseQuery.equalTo("email", document.getElementById(nurseId).getAttribute("data-email"));
                 nurseQuery.first({
                       success: function(results) {
 		                        results.set("apptBonuses", 0);

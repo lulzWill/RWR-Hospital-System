@@ -100,6 +100,7 @@ echo <<<EOL
 	 			<th class="active tableDiv">Specialty</th>
 				<th class="active tableDiv">Base Salary</th>
 	 			<th class="active tableDiv">Action</th>
+				<th class="active tableDiv">Edit</th>
 	 		</tr>
 EOL;
 	$query = new ParseQuery("Specialties");
@@ -107,6 +108,7 @@ EOL;
 	$results = $query->find();
 	for ($i = 0; $i < count($results); $i++) 
 	{ 
+		echo '<tr class="active" data-specialty="'. $results[$i]->get("name") .'" >';
 		echo 	'<input type="hidden" class="form-control" name="removespec';
 		echo 	$i;
 		echo 	'" id="removespec';
@@ -120,7 +122,12 @@ EOL;
 		echo    '</th>';
 		echo	'<td class="active tableDiv"><input type="button" class="btn btn-danger pull-right" name="button"id="';
 		echo    $i;
-		echo    '" onclick="RemoveSpecialty(this.id)" value="Remove" style="margin-right: 10%; margin-top: 0%;"/></th></tr>';
+		echo    '" onclick="RemoveSpecialty(this.id)" value="Remove" style="margin-right: 10%; margin-top: 0%;"/></th>';
+		echo	'<td class="active tableDiv"><input type="button" class="btn btn-warning pull-right" name="button"id="';
+		echo    $i;
+		echo    '" onclick="" data-toggle="modal" data-target="#basicModal" data-specialty="' . $results[$i]->get("name") . '" value="Edit" style="margin-right: 10%; margin-top: 0%;"/></th></tr>';
+		echo    '</th>';
+		echo	'</tr>';
 	}
 
 	echo	'<td class="active tableDiv"><input type="text" class="form-control" style="width: 100%;"id="newspec" name="newspec" placeholder="Specialty Title" required></th>';
@@ -133,6 +140,41 @@ echo <<<EOL
 		</table>
 EOL;
 echo <<<EOL
+		</div>
+		
+		<div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        <h4 class="modal-title" id="myModalLabel">Appointment Details</h4>
+		      </div>
+
+		      <div class="modal-body">
+			  <form class="form-horizontal" id="object" name="myForm" action="#">
+
+		      	<div class="container">
+				<div class="row">
+					<label id="editLabel" for="editLabel" class="col-sm-12 control-label blacklabel" style="text-align: left;"></label>
+  					<input type="text" class="form-control" id="editBox">
+				</div>
+				</div>
+				
+	
+
+				
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" id="closeBtn" data-dismiss="modal">Close</button>
+		        <button type="button" onClick="UpdateSpecialty()" class="btn btn-info" id="updateBtn" data-dismiss="modal">Change Salary</button>
+		        <!--
+		        <input type="button" id="payButton" class="btn btn-success" onclick="Update()" value="Pay Now"/>
+		        -->
+		      </div>
+			  </form>
+
+		    </div>
+		  </div>
 		</div>
 	</body>
 	<script type="text/javascript">
@@ -266,6 +308,53 @@ echo <<<EOL
 					  }
 			});
 		}
+		
+		
+		function UpdateSpecialty(x) {
+			Parse.initialize("kHbyXSdw4DIXw4Q0DYDcdM8QTDQnOewKJhc9ppAr", "dnSrc9MZjvPGuruDghO4imSb6OHqoJb3vyElTJAH");
+			var g = "removespec" + x;
+			var Specialty = Parse.Object.extend("Specialties");
+			var query = new Parse.Query(Specialty);
+			query.equalTo("objectId", document.getElementById(g).value);
+			query.first({
+            		success: function(object) {
+						object.set("salary", document.getElementById().value);
+					  	object.save(null, {
+						  success: function(myObject) {
+						    // The object was deleted from the Parse Cloud.
+						    document.getElementById(x).disabled = true;
+							document.getElementById(x).value = "Please Wait...";
+							location.reload(); 
+						  },
+						  error: function(myObject, error) {
+						    // The delete failed.
+						    // error is a Parse.Error with an error code and message.
+						  }
+						});
+					  },
+					  error: function(error) {
+					    alert("Error: " + error.code + " " + error.message);
+					  }
+			});
+		}
+		
+		$(function(){
+		
+
+			$('#basicModal').modal({
+				show:false
+
+			    }).on('show.bs.modal', function() {
+			        var specialty = $(event.target).closest('tr').data('specialty'); //get the id from tr
+			        console.log(specialty);
+			        $(this).find('editLabel').html($('<b> Set new salary for: ' + specialty  + '</b>'));
+			        //$(this).find('#currentObjectId2').val(getIdFromRow);
+
+			        
+				});
+			
+			
+			});
 	</script>
 </html>
 EOL;

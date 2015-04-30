@@ -257,7 +257,6 @@ echo <<<EOL
     function Update(){
       Parse.initialize("kHbyXSdw4DIXw4Q0DYDcdM8QTDQnOewKJhc9ppAr", "dnSrc9MZjvPGuruDghO4imSb6OHqoJb3vyElTJAH");
 
-      var currentUser = Parse.User.current();
       var getID = sessionStorage.getItem("apptID");
       // update appt to paid
       var appt = Parse.Object.extend("appointments");
@@ -270,44 +269,8 @@ echo <<<EOL
 
           object.save(null, {
               success: function(object) {
-              /*
-              // update new appt to taken
-              var theForm, newInput1, newInput2;
-              // Start by creating a <form>
-              theForm = document.createElement('form');
-                theForm.action = 'notifyPaid.php';
-                theForm.method = 'post';
-                // Next create the <input>s in the form and give them names and values
-              newInput1 = document.createElement('input');
-                newInput1.type = 'hidden';
-                newInput1.name = 'patientEmail';
-                newInput1.value = object.get("patientEmail");
-                newInput5 = document.createElement('input');
-                newInput5.type = 'hidden';
-                newInput5.name = 'aptPrice';
-                newInput5.value = object.get("price");
-                newInput6 = document.createElement('input');
-                newInput6.type = 'hidden';
-                newInput6.name = 'aptDate';
-                newInput6.value = object.get("Date");
-                newInput7 = document.createElement('input');
-                newInput7.type = 'hidden';
-                newInput7.name = 'aptTime';
-                newInput7.value = object.get("Time");
-                // Now put everything together...
-                theForm.appendChild(newInput1);
-                theForm.appendChild(newInput5);
-                theForm.appendChild(newInput6);
-                theForm.appendChild(newInput7);
-                // ...and it to the DOM...
-                document.getElementById('hidden_form_container').appendChild(theForm);
-                // ...and submit it
-                document.getElementById('payButton').disabled = true;
-                document.getElementById('payButton').value = "Please Wait";
-                document.getElementById('closeBtn').disabled = true;
-                theForm.submit(); 
-                */
-                
+              
+                event.preventDefault();
                 var doctor = Parse.Object.extend("Physician");
                 var docQuery = new Parse.Query(doctor);
                 docQuery.equalTo("email", sessionStorage.getItem("docEmail"));
@@ -315,7 +278,8 @@ echo <<<EOL
                 while(s.charAt(0) === '$')
                     s = s.substr(1);
                 docQuery.first({
-                      success: function(results) {
+                  success: function (results) {
+                        
                         var doctorPayout =  parseInt(s,10) * 0.8;
                         var pay = parseInt(doctorPayout,10) + results.get("apptBonuses");
                         results.set("apptBonuses", pay);
