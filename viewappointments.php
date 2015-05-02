@@ -976,7 +976,7 @@ echo <<<EOL
 			query.first({
 			success: function(object) {
 
-			object.set("apptprice", +getPrice);
+			object.set("apptprice", getPrice);
 			object.set("notes", getNotes);
 			object.set("available", "complete");
 
