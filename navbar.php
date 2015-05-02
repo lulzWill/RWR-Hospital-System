@@ -17,8 +17,6 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
 	    <li><a class="navbar-brand" href="index.php">RWR</a></li>
-        <li class="active"><a href="https://github.com/lulzWill/RWR-Hospital-System">GitHub <span class="sr-only">(current)</span></a></li>
-        <li><a href="https://parse.com/apps/hospital-management-system--2/collections#class/_User">Parse DB</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
 <?php
