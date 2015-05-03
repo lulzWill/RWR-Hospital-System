@@ -163,6 +163,54 @@ echo <<<EOL
 							object.save();
 							document.getElementById(x).disabled = true;
 							document.getElementById(x).value = "Approving...";
+
+							// update new appt to taken
+							var theForm, newInput1, newInput2;
+							// Start by creating a <form>
+							theForm = document.createElement('form');
+							theForm.action = 'notifyComplete.php';
+							theForm.method = 'post';
+							// Next create the <input>s in the form and give them names and values
+							newInput1 = document.createElement('input');
+							newInput1.type = 'hidden';
+							newInput1.name = 'patientEmail';
+							newInput1.value = object.get("patientEmail");
+							newInput2 = document.createElement('input');
+							newInput2.type = 'hidden';
+							newInput2.name = 'nurseEmail';
+							newInput2.value = object.get("nurseEmail");
+							newInput3 = document.createElement('input');
+							newInput3.type = 'hidden';
+							newInput3.name = 'physicianEmail';
+							newInput3.value = object.get("physicianEmail");
+							newInput4 = document.createElement('input');
+							newInput4.type = 'hidden';
+							newInput4.name = 'aptNotes';
+							newInput4.value = object.get("notes");
+							newInput5 = document.createElement('input');
+							newInput5.type = 'hidden';
+							newInput5.name = 'aptPrice';
+							newInput5.value = object.get("price");
+							newInput6 = document.createElement('input');
+							newInput6.type = 'hidden';
+							newInput6.name = 'aptDate';
+							newInput6.value = object.get("Date");
+							newInput7 = document.createElement('input');
+							newInput7.type = 'hidden';
+							newInput7.name = 'aptTime';
+							newInput7.value = object.get("Time");
+							// Now put everything together...
+							theForm.appendChild(newInput1);
+							theForm.appendChild(newInput2);
+							theForm.appendChild(newInput3);
+							theForm.appendChild(newInput4);
+							theForm.appendChild(newInput5);
+							theForm.appendChild(newInput6);
+							theForm.appendChild(newInput7);
+							// ...and it to the DOM...
+							document.getElementById('hidden_form_container').appendChild(theForm);
+							// ...and submit it
+							theForm.submit();
 							setTimeout(function(){location.reload(); },1000); 
 						  },
 						  error: function(error) {

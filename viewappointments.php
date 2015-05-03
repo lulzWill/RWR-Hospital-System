@@ -491,7 +491,6 @@ EOL;
 									    // Execute any logic that should take place after the object is saved.
 									    console.log("updated new");
 
-									    /*
 									    var theForm, newInput1, newInput2;
 									  	// Start by creating a <form>
 									  	theForm = document.createElement('form');
@@ -543,7 +542,7 @@ EOL;
 									  	document.getElementById('selectDate').disabled = true;
 									  	document.getElementById('selectTime').disabled = true;
 									  	theForm.submit();
-									  	*/
+									  	
 
 									  	location.reload();
 
@@ -983,6 +982,7 @@ echo <<<EOL
 				object.save(null, {
 					success: function(object) {
 						// Execute any logic that should take place after the object is saved.console.log("updated old");
+						/*
 						// update new appt to taken
 						var theForm, newInput1, newInput2;
 						// Start by creating a <form>
@@ -1029,13 +1029,15 @@ echo <<<EOL
 						// ...and it to the DOM...
 						document.getElementById('hidden_form_container').appendChild(theForm);
 						// ...and submit it
+						theForm.submit();
+						*/
 						document.getElementById('submitBtn').disabled = true;
 						document.getElementById('submitBtn').value = "Please Wait";
 						document.getElementById('closeBtn').disabled = true;
 						document.getElementById('price').disabled = true;
 						document.getElementById('notes').disabled = true;
 
-						theForm.submit();
+						
 
 					},
 					  error: function(object, error) {
