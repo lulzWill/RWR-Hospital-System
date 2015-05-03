@@ -60,7 +60,7 @@ EOL;
 echo $currentUser->get("email");
 echo <<<EOL
 '/>
-
+EOL;
 /*
 	<input hidden="true" id="currUserName" value='
 EOL;
@@ -94,6 +94,7 @@ echo $currentUser->get("pre_conditions");
 echo <<<EOL
 '/>
 */
+echo <<<EOL
     </head>
   <body>
 	<body>
@@ -256,10 +257,6 @@ echo <<<EOL
 					<input type="hidden" id="currentNurseEmail2" name="currentNurseEmail2" class="form-control" value=''/>
 				</div>
 				</div>
-
-
-				
-	
 
 				
 		      <div class="modal-footer">
