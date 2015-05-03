@@ -889,7 +889,7 @@ echo <<<EOL
  <td class="active tableDiv">
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-info="
 EOL;
-echo $object->get("notes") . '" data-objectid="' . $object->getObjectId() . '" data-apptprice="' . $object->get("apptprice"). '" data-paymentstatus="' . $object->get("paymentStatus") . '"';
+echo $object->get("notes") . '" data-objectid="' . $object->getObjectId() . '" data-price="' . $object->get("price"). '" data-paymentstatus="' . $object->get("paymentStatus") . '"';
 echo 'data-person="'. $innerResults[0]->get("first_name").' '.$innerResults[0]->get("last_name") .'" data-date="'.$object->get("Date").'"';
 echo <<<EOL
 ">
@@ -917,8 +917,8 @@ echo <<<EOL
 		  <div class="modal-body">
 		     <form>
 			    <input type="hidden" class="theid" name="myid" id="myid">
-			    <label for="apptprice" class="control-label">Price:</label>
-				<input type="number" class="form-control" id="apptprice" name="apptprice" placeholder="Integer Value">
+			    <label for="price" class="control-label">Price:</label>
+				<input type="number" class="form-control" id="price" name="price" placeholder="Integer Value">
 				<label for="notes" class="control-label" style="margin-top: 1px;" placeholder="Information viewable by patient detailing appointment">Appointment Notes:</label>
 				<textarea class="form-control1" rows="10" style="width:100%" id="notes" name="notes">
 				</textarea>
@@ -938,22 +938,22 @@ echo <<<EOL
 		var notes = button.data('info') // Extract info from data-* attributes
 		var person = button.data('person')
 		var date = button.data('date')
-		var apptprice = button.data('apptprice')
+		var price = button.data('price')
 		var objectid = button.data('objectid')
 		// If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
 		// Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
 		var modal = $(this)
 		modal.find('.modal-title').text('Appointment for ' + person + ' on ' + date)
-		modal.find('.form-control').val(apptprice)
+		modal.find('.form-control').val(price)
 		modal.find('.form-control1').text(notes)
 		modal.find('.theid').val(objectid)
 })
 
     function saveNotes()
 	{
-		if(!document.getElementById("apptprice").value || !document.getElementById("notes").value)
+		if(!document.getElementById("price").value || !document.getElementById("notes").value)
 		{
-			if(!document.getElementById("apptprice").value)
+			if(!document.getElementById("price").value)
 			{
 				alert("Appointment price left blank or contains invalid input! Unable to Submit");
 			}
@@ -966,7 +966,7 @@ echo <<<EOL
 		{
 			var getID = document.getElementById("myid").value;
 			var getNotes = document.getElementById("notes").value;
-			var getPrice = document.getElementById("apptprice").value;
+			var getPrice = document.getElementById("price").value;
 			
 			Parse.initialize("kHbyXSdw4DIXw4Q0DYDcdM8QTDQnOewKJhc9ppAr", "dnSrc9MZjvPGuruDghO4imSb6OHqoJb3vyElTJAH");
 			
@@ -976,7 +976,7 @@ echo <<<EOL
 			query.first({
 			success: function(object) {
 
-			object.set("apptprice", getPrice);
+			object.set("price", +getPrice);
 			object.set("notes", getNotes);
 			object.set("available", "complete");
 
@@ -1009,7 +1009,7 @@ echo <<<EOL
 						newInput5 = document.createElement('input');
 						newInput5.type = 'hidden';
 						newInput5.name = 'aptPrice';
-						newInput5.value = object.get("apptprice");
+						newInput5.value = object.get("price");
 						newInput6 = document.createElement('input');
 						newInput6.type = 'hidden';
 						newInput6.name = 'aptDate';
@@ -1032,7 +1032,7 @@ echo <<<EOL
 						document.getElementById('submitBtn').disabled = true;
 						document.getElementById('submitBtn').value = "Please Wait";
 						document.getElementById('closeBtn').disabled = true;
-						document.getElementById('apptprice').disabled = true;
+						document.getElementById('price').disabled = true;
 						document.getElementById('notes').disabled = true;
 
 						theForm.submit();
@@ -1074,7 +1074,7 @@ else if($object->get("available")=="approved")
 	echo    '<td class="active tableDiv">Bill Sent</th>';
 }
 
-echo    '<td class="active tableDiv">$' . number_format($object->get("apptprice")) . '</th>';
+echo    '<td class="active tableDiv">$' . number_format($object->get("price")) . '</th>';
 echo <<<EOL
 		</tr>
 EOL;

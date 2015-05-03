@@ -117,7 +117,7 @@ echo <<<EOL
             </form>
 		</th>
 EOL;
-		echo	'<td class="active tableDiv">$' . number_format($results[$i]->get("apptprice")) . '</th>';
+		echo	'<td class="active tableDiv">$' . number_format($results[$i]->get("price")) . '</th>';
 		echo    '<td class="active tableDiv"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#notesModal" data-notes="'.$results[$i]->get("notes") .'">View Notes</button></th>';
 		echo	'<td class="active tableDiv"><input type="button" class="btn btn-success pull-left" name="button"id="';
 		echo    $i;

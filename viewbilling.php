@@ -132,7 +132,7 @@ EOL;
   		echo '<tr class="active"  data-target="#basicModal" data-id =" '.$i.' " data-object-id="'.$results[$i]->getObjectId().'" data-date =" '.$object->get("Date").' " data-time =" '.$object->get("Time").' "
   		 data-doctor =" ' . $innerResults[0]->get("first_name") . ' ' . $innerResults[0]->get("last_name") . ' " data-doctor-email="'. $object->get("physicianEmail") .'"
   		 data-nurse=" ' . $nurseResults[0]->get("first_name") . ' ' . $nurseResults[0]->get("last_name") . ' " data-n="'.$object->get("nurseEmail").'" data-payment-status ="'.$object->get("paymentStatus").'"
-  		 data-reason ="'.$object->get("specialty").'" data-cost ="$'.number_format($object->get("apptprice")).'" data-notes ="'.$object->get("notes").'" data-notes-init ="'.$object->get("reason").'"
+  		 data-reason ="'.$object->get("specialty").'" data-cost ="$'.number_format($object->get("price")).'" data-notes ="'.$object->get("notes").'" data-notes-init ="'.$object->get("reason").'"
 		 data-availability="'.$object->get("available").'">';
 	 	echo	'<td class="active tableDiv">' . $object->get("Date") . '</th>';
 		echo	'<td class="active tableDiv">Dr. ' . $innerResults[0]->get("first_name") . ' ' . $innerResults[0]->get("last_name") . '</th>';
@@ -377,7 +377,7 @@ echo <<<EOL
 						  	newInput5 = document.createElement('input');
 						  	newInput5.type = 'hidden';
 						  	newInput5.name = 'aptPrice';
-						  	newInput5.value = object.get("apptprice");
+						  	newInput5.value = object.get("price");
 						  	newInput6 = document.createElement('input');
 						  	newInput6.type = 'hidden';
 						  	newInput6.name = 'aptDate';
