@@ -152,7 +152,7 @@ echo <<<EOL
 		     <form>
 			    <input type="hidden" class="object" id="object" name="object">
 				<input type="hidden" class="name" id="name" name="name">
-			    <label for="updatesal" class="control-label">Salary:</label>
+			    <label for="updatesal" class="control-label" style="float: left; margin-right: 0px; padding-top 5px;">Salary:  $</label>
 				<input type="number" class="form-control" id="updatesal" name="updatesal">
 			 </form>
 		  </div>
