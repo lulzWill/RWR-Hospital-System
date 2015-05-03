@@ -500,7 +500,7 @@ EOL;
 										newInput1 = document.createElement('input');
 									  	newInput1.type = 'hidden';
 									  	newInput1.name = 'patientEmail';
-									  	newInput1.value = document.getElementById("currentPatient2").value;
+									  	newInput1.value = document.getElementById("currUserID").value;
 									  	newInput2 = document.createElement('input');
 									  	newInput2.type = 'hidden';
 									  	newInput2.name = 'nurseEmail';
@@ -542,9 +542,6 @@ EOL;
 									  	document.getElementById('selectDate').disabled = true;
 									  	document.getElementById('selectTime').disabled = true;
 									  	theForm.submit();
-									  	
-
-									  	location.reload();
 
 									  },
 									  error: function(object, error) {
