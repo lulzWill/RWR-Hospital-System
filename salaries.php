@@ -109,7 +109,7 @@ EOL;
 		$salaryQuery->equalTo("name", $firstSpecialty[0]);
 		$salaryResults = $salaryQuery->find();
 		
-		$adjustedSalary = intval($salaryResults[0]->get("salary")) * intval($docResults[0]->get("years"));
+		$adjustedSalary = intval($salaryResults[0]->get("salary")) + intval($docResults[0]->get("years"))*(.01)*intval($salaryResults[0]->get("salary"));
 		  
   		echo '<tr class="active"  data-target="#basicModal" data-id =" '.$i.' " data-object-id="'.$object->getObjectId().' " data-name ="'.$object->get("firstname").' '.$object->get("lastname").'" data-email ="'.$object->get("email").'"
   		data-position="'. $object->get("position") .'" ">';
@@ -117,8 +117,8 @@ EOL;
 	 	//echo	'<td class="active tableDiv">' . $object->get("email") . '</th>';
 		echo	'<td class="active tableDiv">' .$firstSpecialty[0]. '</th>';
 		echo	'<td class="active tableDiv">' .$docResults[0]->get("years"). ' years</th>';
-		echo	'<td class="active tableDiv">$ ' . $adjustedSalary . '</th>';
-		echo	'<td class="active tableDiv">$ ' .$docResults[0]->get("apptBonuses"). '</th>';
+		echo	'<td class="active tableDiv">$ ' . number_format($adjustedSalary) . '</th>';
+		echo	'<td class="active tableDiv">$ ' .number_format($docResults[0]->get("apptBonuses")). '</th>';
 		echo	'<td class="active tableDiv">' .$docResults[0]->get("lastPaid"). '</th>';
 		echo    '<td class="active tableDiv">';
 		echo	'<a href="#" id="doctor';
@@ -172,8 +172,8 @@ EOL;
 		$salaryResults = $salaryQuery->find();
 		*/
 		
-		//$adjustedSalary = intval($salaryResults[0]->get("salary")) * intval($docResults[0]->get("years"));
-		$adjustedSalary2 = 60000 * intval($docResults2[0]->get("years"));
+		$adjustedSalary2 = intval($salaryResults[0]->get("salary"))*(.3) + intval($docResults2[0]->get("years"))*(.005)*intval($salaryResults[0]->get("salary"));
+		//$adjustedSalary2 = 60000 * intval($docResults2[0]->get("years"));
 		  
   		echo '<tr class="active"  data-target="#basicModal" data-id =" '.$i.' " data-object-id="'.$object2->getObjectId().' " data-name ="'.$object2->get("firstname").' '.$object2->get("lastname").'" data-email ="'.$object2->get("email").'"
   		data-position="'. $object2->get("position") .'" ">';
@@ -181,8 +181,8 @@ EOL;
 	 	//echo	'<td class="active tableDiv">' . $object->get("email") . '</th>';
 		echo	'<td class="active tableDiv">Nursing</th>';
 		echo	'<td class="active tableDiv">' .$docResults2[0]->get("years"). ' years</th>';
-		echo	'<td class="active tableDiv">$ ' . $adjustedSalary2 . '</th>';
-		echo	'<td class="active tableDiv">$ ' .$docResults2[0]->get("apptBonuses"). '</th>';
+		echo	'<td class="active tableDiv">$ ' . number_format($adjustedSalary2) . '</th>';
+		echo	'<td class="active tableDiv">$ ' .number_format($docResults2[0]->get("apptBonuses")). '</th>';
 		echo	'<td class="active tableDiv">' .$docResults2[0]->get("lastPaid"). '</th>';
 		echo    '<td class="active tableDiv">';
 		echo	'<a href="#" id="payNurseButton'.$i.'" class="btn btn-success" data-email="'.$object2->get("email").'" data-salary="'.$adjustedSalary2.'" data-bonuses="'.$docResults2[0]->get("apptBonuses").'" onclick="releaseNursePayment(this.id)">Pay</a>';
