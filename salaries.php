@@ -106,22 +106,7 @@ EOL;
 		  
 		$salaryQuery = new ParseQuery("Specialties");
 		$firstSpecialty = $docResults[0]->get("specialties");
-
-		$localMax = 0;
-		$maxSpec;
-		for($j = 0; $j < count($firstSpecialty); $j++)
-		{
-			$localSpec = $salaryQuery->equalTo("name", $firstSpecialty[$j]);
-			$localSpec = $localSpec->find();
-
-			if($localSpec[0]->get("salary") > $localMax)
-			{
-				$localMax = $localSpec[0]->get("salary");
-				$maxSpec = $localSpec[0]->get("name");
-			}
-		}
-		
-		$salaryQuery->equalTo("name", $maxSpec);
+		$salaryQuery->equalTo("name", $firstSpecialty[0]);
 		$salaryResults = $salaryQuery->find();
 		
 		$adjustedSalary = intval($salaryResults[0]->get("salary")) + intval($docResults[0]->get("years"))*(.01)*intval($salaryResults[0]->get("salary"));
@@ -130,7 +115,7 @@ EOL;
   		data-position="'. $object->get("position") .'" ">';
 	 	echo	'<td class="active tableDiv">' . $object->get("lastname") . ', ' . $object->get("firstname") .'</th>';
 	 	//echo	'<td class="active tableDiv">' . $object->get("email") . '</th>';
-		echo	'<td class="active tableDiv">' .$maxSpec. '</th>';
+		echo	'<td class="active tableDiv">' .$firstSpecialty[0]. '</th>';
 		echo	'<td class="active tableDiv">' .$docResults[0]->get("years"). ' years</th>';
 		echo	'<td class="active tableDiv">$ ' . number_format($adjustedSalary) . '</th>';
 		echo	'<td class="active tableDiv">$ ' .number_format($docResults[0]->get("apptBonuses")). '</th>';
