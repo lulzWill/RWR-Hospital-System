@@ -17,7 +17,16 @@
 	{
 		if(isset($_GET["error_message"]))
 		{
-			echo $_GET["error_message"];
+			echo <<<EOL
+			<div id="errorMesLoad" class="alert alert-warning alert-dismissible" role="alert">
+		  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">
+		</span></button>
+EOL;
+		echo $_GET["error_message"];
+		echo <<<EOL
+		</div>
+EOL;
+			
 		}
 
 		include_once("signup.html");
