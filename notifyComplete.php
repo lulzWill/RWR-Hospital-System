@@ -18,10 +18,10 @@
 
 	if(mail($to,$subject,$content,$headers))
 	{
-		header("location: viewappointments.php");
+		header("location: adminBillingApproval.php");
 	}
 	else
 	{
-		header("location: viewappointments.php");
+		header("location: adminBillingApproval.php");
 	}
 ?>
