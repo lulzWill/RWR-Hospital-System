@@ -233,7 +233,7 @@ EOL;
 echo <<<EOL
 		</table>
 -->		
-		
+		<div id="hidden_form_container" style="display:none;"></div>
 	</body>
 
 
@@ -245,11 +245,10 @@ echo <<<EOL
 			
 			Parse.initialize("kHbyXSdw4DIXw4Q0DYDcdM8QTDQnOewKJhc9ppAr", "dnSrc9MZjvPGuruDghO4imSb6OHqoJb3vyElTJAH");
 			
-			/*
-			var monthlySalary = document.getElementById('payDocButton').getAttribute("data-salary");
-			var monthlyBonus = document.getElementById('payDocButton').getAttribute("data-bonuses");
+			
+			var monthlySalary = document.getElementById(btnId).getAttribute("data-salary");
+			var monthlyBonus = document.getElementById(btnId).getAttribute("data-bonuses");
 			var monthPay = parseInt(monthlySalary,10) + parseInt(monthlyBonus,10);
-			*/
 			
 			 	var doc = Parse.Object.extend("Physician");
                 var docQuery = new Parse.Query(doc);
@@ -258,10 +257,45 @@ echo <<<EOL
                       success: function(results) {
 		                        results.set("apptBonuses", 0);
 								var today = todaysDate();
+								var lastPaid = results.get("lastPaid");
 								results.set("lastPaid", today);
 		                        results.save(null, {
               			  			success: function(object) {
-											location.reload();
+              			  					document.getElementById(btnId).disabled = true;
+              			  					document.getElementById(btnId).innerHTML = "Please Wait...";
+              			  					
+
+											var theForm, newInput1, newInput2;
+											// Start by creating a <form>
+											theForm = document.createElement('form');
+											theForm.action = 'notifySalaryPaid.php';
+											theForm.method = 'post';
+											// Next create the <input>s in the form and give them names and values
+											newInput1 = document.createElement('input');
+											newInput1.type = 'hidden';
+											newInput1.name = 'doctorEmail';
+											newInput1.value = results.get("email");
+											newInput6 = document.createElement('input');
+											newInput6.type = 'hidden';
+											newInput6.name = 'lastPaid';
+											newInput6.value = lastPaid;
+											newInput7 = document.createElement('input');
+											newInput7.type = 'hidden';
+											newInput7.name = 'today';
+											newInput7.value = today;
+											newInput8 = document.createElement('input');
+											newInput8.type = 'hidden';
+											newInput8.name = 'payment';
+											newInput8.value = monthPay;
+											// Now put everything together...
+											theForm.appendChild(newInput1);
+											theForm.appendChild(newInput6);
+											theForm.appendChild(newInput7);
+											theForm.appendChild(newInput8);
+											// ...and it to the DOM...
+											document.getElementById('hidden_form_container').appendChild(theForm);
+											// ...and submit it
+											theForm.submit();
               			  			},
               						  error: function(object, error) {
               						    // Execute any logic that should take place if the save fails.
@@ -282,11 +316,9 @@ echo <<<EOL
 			
 			Parse.initialize("kHbyXSdw4DIXw4Q0DYDcdM8QTDQnOewKJhc9ppAr", "dnSrc9MZjvPGuruDghO4imSb6OHqoJb3vyElTJAH");
 			
-			/*
-			var monthlySalary = document.getElementById('payDocButton').getAttribute("data-salary");
-			var monthlyBonus = document.getElementById('payDocButton').getAttribute("data-bonuses");
+			var monthlySalary = document.getElementById(nurseId).getAttribute("data-salary");
+			var monthlyBonus = document.getElementById(nurseId).getAttribute("data-bonuses");
 			var monthPay = parseInt(monthlySalary,10) + parseInt(monthlyBonus,10);
-			*/
 			
 			 	var nurse = Parse.Object.extend("Nurse");
                 var nurseQuery = new Parse.Query(nurse);
@@ -295,10 +327,45 @@ echo <<<EOL
                       success: function(results) {
 		                        results.set("apptBonuses", 0);
 								var today = todaysDate();
+								var lastPaid = results.get("lastPaid");
 								results.set("lastPaid", today);
 		                        results.save(null, {
               			  			success: function(object) {
-											location.reload();
+											document.getElementById(nurseId).disabled = true;
+              			  					document.getElementById(nurseId).innerHTML = "Please Wait...";
+              			  					
+
+											var theForm, newInput1, newInput2;
+											// Start by creating a <form>
+											theForm = document.createElement('form');
+											theForm.action = 'notifySalaryPaid.php';
+											theForm.method = 'post';
+											// Next create the <input>s in the form and give them names and values
+											newInput1 = document.createElement('input');
+											newInput1.type = 'hidden';
+											newInput1.name = 'doctorEmail';
+											newInput1.value = results.get("email");
+											newInput6 = document.createElement('input');
+											newInput6.type = 'hidden';
+											newInput6.name = 'lastPaid';
+											newInput6.value = lastPaid;
+											newInput7 = document.createElement('input');
+											newInput7.type = 'hidden';
+											newInput7.name = 'today';
+											newInput7.value = today;
+											newInput8 = document.createElement('input');
+											newInput8.type = 'hidden';
+											newInput8.name = 'payment';
+											newInput8.value = monthPay;
+											// Now put everything together...
+											theForm.appendChild(newInput1);
+											theForm.appendChild(newInput6);
+											theForm.appendChild(newInput7);
+											theForm.appendChild(newInput8);
+											// ...and it to the DOM...
+											document.getElementById('hidden_form_container').appendChild(theForm);
+											// ...and submit it
+											theForm.submit();
               			  			},
               						  error: function(object, error) {
               						    // Execute any logic that should take place if the save fails.

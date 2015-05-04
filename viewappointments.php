@@ -1034,7 +1034,7 @@ echo <<<EOL
 						document.getElementById('price').disabled = true;
 						document.getElementById('notes').disabled = true;
 
-						
+						location.reload();
 
 					},
 					  error: function(object, error) {

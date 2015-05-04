@@ -148,6 +148,7 @@ echo <<<EOL
 		  </div>
 		</div>
 		</div>
+		<div id="hidden_form_container" style="display:none;"></div>
 	</body>
 	<script type="text/javascript">
 		function Approve(x) {

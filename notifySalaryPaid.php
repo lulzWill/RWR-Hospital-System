@@ -11,17 +11,17 @@
 	
 	ParseClient::setStorage( new ParseSessionStorage() );
 
-	$to = $_POST["patientEmail"];
-	$subject = "Appointment Available For Payment";
-	$content= "Your appointment made for: " . $_POST["aptDate"] . " at " . $_POST["aptTime"] . " has been completed and is ready to be paid for! \n\nAppointment Notes:\n" . $_POST["aptNotes"] . "\n\n\nAppointment Price:\n$" . $_POST["aptPrice"];
+	$to = $_POST["doctorEmail"];
+	$subject = "Monthly Salary Payment";
+	$content= "You have been paid for: " . $_POST["lastPaid"] . " to " . $_POST["today"] . "\n\nAmount Paid:\n$" . $_POST["payment"];
 	$headers = "From:Appointments@rwrso.ls\r\n";
 
 	if(mail($to,$subject,$content,$headers))
 	{
-		header("location: viewappointments.php");
+		header("location: salaries.php");
 	}
 	else
 	{
-		header("location: viewappointments.php");
+		header("location: salaries.php");
 	}
 ?>
